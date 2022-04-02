@@ -1,31 +1,40 @@
 <?php
-	//PHP-код
-	$menu_admin=Array(
-		"/edit/vacancy.php"=>"Вакансии",
-		"/edit/cv.php"=>"Резюме",
-		"/edit/advertise.php"=>"Объявления",
-		"/edit/users.php"=>"Пользователи",
-		"/edit/categories.php"=>"Категории"
-	);
-	
-	$menu_aspirant=Array(		
-		"/edit/cv.php"=>"Мои резюме"		
-	);
-	
-	$menu_employer=Array(
-		"/edit/vacancy.php"=>"Мои вакансии"
-	);
-	
-	$menu_advertiser=Array(		
-		"/edit/advertise.php"=>"Мои объявления"		
-	);
-	
-	$menu_items=Array();
-	
-	if(user_is_admin()) {$menu_items=$menu_admin;$profile_page="admin.php";}
-	elseif (user_is_aspirant()) {$menu_items=$menu_aspirant;$profile_page="aspirant.php";}
-	elseif (user_is_employer()) {$menu_items=$menu_employer;$profile_page="employer.php";}
-	elseif (user_is_advertiser()) {$menu_items=$menu_advertiser;$profile_page="advertiser.php";}
+    //PHP-код
+    $menu_admin = [
+        "/edit/vacancy.php" => "Вакансии",
+        "/edit/cv.php" => "Резюме",
+        "/edit/advertise.php" => "Объявления",
+        "/edit/users.php" => "Пользователи",
+        "/edit/categories.php" => "Категории"
+    ];
+
+    $menu_aspirant = [
+        "/edit/cv.php" => "Мои резюме"
+    ];
+
+    $menu_employer = [
+        "/edit/vacancy.php" => "Мои вакансии"
+    ];
+
+    $menu_advertiser = [
+        "/edit/advertise.php" => "Мои объявления"
+    ];
+
+    $menu_items = [];
+
+    if (user_is_admin()) {
+        $menu_items = $menu_admin;
+        $profile_page = "admin.php";
+    } elseif (user_is_aspirant()) {
+        $menu_items = $menu_aspirant;
+        $profile_page = "aspirant.php";
+    } elseif (user_is_employer()) {
+        $menu_items = $menu_employer;
+        $profile_page = "employer.php";
+    } elseif (user_is_advertiser()) {
+        $menu_items = $menu_advertiser;
+        $profile_page = "advertiser.php";
+    }
 ?>
 <!--Стили-->
 <style>
@@ -63,7 +72,7 @@
 <!--xmp><?//print_r($_SESSION)?></xmp-->
 <!--HTML-код-->
 <div id="usermenu">
-	<?if(user_authorized()) :?>
+	<?if (user_authorized()) :?>
 	<div id="welcome">
 		<span>Здравствуйте, <?=user_name()?>!</span>
 		<ul>
@@ -73,7 +82,7 @@
 		</ul>
 	</div>
 	<ul>
-		<?foreach($menu_items As $k=>$v):?>
+		<?foreach ($menu_items as $k => $v):?>
 		<li><a href="<?=$k?>"><?=$v?></a></li>
 		<?endforeach;?>
 	</ul>

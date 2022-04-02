@@ -11,8 +11,8 @@
 		<?require_once("$_SERVER[DOCUMENT_ROOT]/../includes/header.inc");?>
 				<h1>Резюме</h1>
 				<table width="100%" border="1">
-				<?_DBFetchQuery(NULL,Array("reset"=>1));?>
-				<?while($item=DBFetchCV(-1,(int)$_GET["section_id"])):?>
+				<?_DBFetchQuery(null, ["reset" => 1]);?>
+				<?while ($item = DBFetchCV(-1, (int) $_GET["section_id"])):?>
 				<tr>
 					<td width="20%"><?=$item["DateTime"]?></td>
 					<td width="10%"><?=$item["Author"]?></td>
