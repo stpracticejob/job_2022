@@ -18,7 +18,10 @@
         }
     ],
     "scripts": {
-        "dev": "php -S localhost:8000 www/index.php",
+        "dev": [
+	    "Composer\\Config::disableProcessTimeout",
+	    "php -S localhost:8000 www/info.php"
+	],
         "fix": "vendor/bin/php-cs-fixer fix"
     } 
 }
