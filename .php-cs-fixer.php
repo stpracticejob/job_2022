@@ -14,4 +14,5 @@ return $config->setRules([
         'array_syntax' => ['syntax' => 'short'],
     ])
     ->setFinder($finder)
+    ->setLineEnding(PHP_EOL)
 ;
