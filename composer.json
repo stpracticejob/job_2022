@@ -1,0 +1,24 @@
+{
+    "name": "eu-141/job_2022",
+    "type": "project",
+    "require": {
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Job\\": "www/"
+        }
+    },
+    "authors": [
+        {
+            "name": "EU-141",
+            "email": "eu-141@example.com"
+        }
+    ],
+    "scripts": {
+        "dev": "php -S localhost:8000 www/index.php",
+        "fix": "vendor/bin/php-cs-fixer fix"
+    } 
+}
