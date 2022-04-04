@@ -11,8 +11,8 @@
 		<?require_once("$_SERVER[DOCUMENT_ROOT]/../includes/header.inc");?>
 				<h1>Реклама</h1>
 				
-				<?_DBFetchQuery(NULL,Array("reset"=>1));?>
-				<?while($item=DBFetchAdvertise()):?>
+				<?_DBFetchQuery(null, ["reset" => 1]);?>
+				<?while ($item = DBFetchAdvertise()):?>
 				
 					<h2><?=$item["Title"]?></h2>
 					<?=$item["Content"]?>

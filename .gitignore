@@ -1,1 +1,2 @@
-www/Tools
+.php-cs-fixer.cache
+/vendor/
