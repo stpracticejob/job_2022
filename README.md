@@ -21,13 +21,16 @@
     composer dev
 
 
+Запустить сервер HTTP для отладки API по адресу http://localhost:9000 :
 
+    composer api
 
+Установить библиотеки для Swagger UI:
 
+    cd swagger-ui
+    npm install
 
+Запустить Swagger UI:
 
-
-
-
-
-
+    cd swagger-ui
+    npm start
