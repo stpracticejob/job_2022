@@ -90,7 +90,7 @@
 		<br/>
 		
 		<form action="" method="POST">
-			<input id="f_name" name="f_name" type="text" size="50" value="<?=$form_fields["f_name"]?>"/>			
+			<input id="f_name" name="f_name" type="text" size="50" value="<?=$form_fields["f_name"] ?? '' ?>"/>
 			<?if (isset($form_fields["f_ID"])):?>
 			<input name="f_ID" type="hidden" value="<?=$form_fields["f_ID"]?>"/>
 			<?endif;?>			

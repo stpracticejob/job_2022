@@ -6,11 +6,11 @@
     if (isset($_REQUEST[session_name()]) || isset($_COOKIE[session_name()])) {	//die("Test");
         session_start();
         //Авторизован как пользователь
-        if (md5($_SERVER["REMOTE_ADDR"]) == $_SESSION["authorized_ip"]) {
+        if (isset($_SESSION["authorized_ip"]) && md5($_SERVER["REMOTE_ADDR"]) == $_SESSION["authorized_ip"]) {
             $_user_authorized = true;
         }
         //Авторизован как администратор
-        if (md5($_SERVER["REMOTE_ADDR"]) == $_SESSION["admin_authorized_ip"]) {
+        if (isset($_SESSION["admin_authorized_ip"]) && md5($_SERVER["REMOTE_ADDR"]) == $_SESSION["admin_authorized_ip"]) {
             $_admin_authorized = true;
         }
     }
