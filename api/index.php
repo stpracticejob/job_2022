@@ -1,4 +1,5 @@
 <?php
+
 require_once "$_SERVER[DOCUMENT_ROOT]/../auth/auth.inc.php";
 require_once "$_SERVER[DOCUMENT_ROOT]/../db/dal.inc.php";
 require_once "$_SERVER[DOCUMENT_ROOT]/inc/functions.php";

@@ -5,7 +5,7 @@ $items = [];
 
 _DBFetchQuery(null, ["reset" => 1]);
 while ($item = DBFetchCV(-1, $section_id)) {
-	$items[] = $item;
+    $items[] = $item;
 }
 
 return $items;
