@@ -110,6 +110,11 @@ Flight::route('GET /logout', function () {
 });
 
 
+Flight::route('GET /cv', function () {
+    Flight::render('cv/index');
+});
+
+
 Flight::route('/edit/vacancy', function () {
     Flight::render('edit/vacancy');
 });
