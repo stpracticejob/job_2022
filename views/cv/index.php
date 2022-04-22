@@ -13,54 +13,74 @@
 		<script type="text/javascript">
 			$(function() {
 				var dataTable = $('#tovar_data').DataTable({
-						"language": {"url":"http://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
-						"processing":true,
-						"serverSide":true,
-						"order":[],
-						"ajax":{
-							url:"/rest/tovary",
-							type:"POST"
-						},
-						"columnDefs":[
-							{
-								"targets":[6, 7], // Столбцы, по которым не нужна сортировка
-								"orderable":false,
-							},
-						],
+                    language: {"url":"http://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
+                    processing: true,
+                    serverSide: true,
+                    order: [],
+                    ajax: {
+                        url:"/api/cv",
+                        type:"GET"
+                    },
+                    columns: [
+                        { data: 'UserName' },
+                        { data: 'SectionName' },
+                        { data: 'Title' },
+                        { data: 'Content' },
+                        { data: 'DateTime' },
+                        {
+                            data: 'ID',
+                            render: function(data, type) {
+                                return '<button type="button" name="update" id="'
+                                    + data + '" class="btn btn-warning btn-xs update">Редактировать</button>';
+                            }
+                        },
+                        {
+                            data: 'ID',
+                            render: function(data, type) {
+                                return '<button type="button" name="delete" id="'
+                                    + data + '" class="btn btn-danger btn-xs delete">Удалить</button>';
+                            }
+                        },
+                    ],
+                    columnDefs: [
+                        {
+                            "targets": [5, 6], // Столбцы, по которым не нужна сортировка
+                            "orderable": false,
+                        },
+                    ],
 				});	
 				
 				$(document).on('submit', '#tovar_form', function(event){
 					event.preventDefault();					
 					
 					var tovar_info = {
-						"Nazvanie":$("#Nazvanie").val(),
-						"Cena":$("#Cena").val(),
-						"Kol":$("#Kol").val(),
-						"God":$("#God").val(),
-						"Strana":$("#Strana").val(),
-						"Opisanie":$("#Opisanie").val()
+						"UserName":$("#Nazvanie").val(),
+						"SectionName":$("#SectionName").val(),
+						"Title":$("#Title").val(),
+						"Content":$("#Content").val(),
+						"DateTime":$("#DateTime").val()
 					}
 					
 					var method="PUT";
 					if($("#tovarModal #operation").val()==1) {
 						method="PATCH";
-						tovar_info.ID = $("#tovar_ID").val();						
+						tovar_info.ID = $("#cv_ID").val();						
 					}					
 					
 					$.ajax({
-								url:"/rest/tovar",
-								method: method,
-								data: JSON.stringify(tovar_info),
-								headers: {
-									"Content-type":"application/json"
-								},
-								success:function(data)
-								{									
-									$('#tovar_form')[0].reset();
-									$('#tovarModal').modal('hide');
-									dataTable.ajax.reload();
-								}
-							});
+                        url:"/api/cv",
+                        method: method,
+                        data: JSON.stringify(tovar_info),
+                        headers: {
+                            "Content-type":"application/json"
+                        },
+                        success:function(data)
+                        {									
+                            $('#tovar_form')[0].reset();
+                            $('#tovarModal').modal('hide');
+                            dataTable.ajax.reload();
+                        }
+                    });
 				});
 				
 				$(document).on('click', '.update', function(event){
@@ -68,32 +88,32 @@
 					var ID = $(this).attr("ID");					
 					
 					$.ajax({
-								url:"/rest/tovar?ID="+ID,
-								method:'GET',
-								dataType: "json",								
-								success:function(data)
-								{
-									//Заголовок окна
-									$('.modal-title').text("Редактировать товар");
-									
-									$("#tovarModal #Nazvanie").val(data.Nazvanie);
-									$("#tovarModal #Cena").val(data.Cena);
-									$("#tovarModal #Kol").val(data.Kol);
-									$("#tovarModal #God").val(data.God);
-									$("#tovarModal #Strana").val(data.Strana);
-									$("#tovarModal #Opisanie").val(data.Opisanie);
-									$('#tovarModal #tovar_ID').val(ID);									
-									
-									//Флаг операции (1 - редактирование)
-									$("#tovarModal #operation").val("1");
-									
-									//Текст на кнопке
-									$("#tovarModal #action").val("Сохранить изменения");
-									
-									//Отобразить форму
-									$('#tovarModal').modal('show');									
-								}
-							});
+                        url:"/api/cv/"+ID,
+                        method:'GET',
+                        dataType: "json",								
+                        success:function(data)
+                        {
+                            //Заголовок окна
+                            $('.modal-title').text("Редактировать товар");
+                            
+                            $("#tovarModal #Nazvanie").val(data.Nazvanie);
+                            $("#tovarModal #Cena").val(data.Cena);
+                            $("#tovarModal #Kol").val(data.Kol);
+                            $("#tovarModal #God").val(data.God);
+                            $("#tovarModal #Strana").val(data.Strana);
+                            $("#tovarModal #Opisanie").val(data.Opisanie);
+                            $('#tovarModal #tovar_ID').val(ID);									
+                            
+                            //Флаг операции (1 - редактирование)
+                            $("#tovarModal #operation").val("1");
+                            
+                            //Текст на кнопке
+                            $("#tovarModal #action").val("Сохранить изменения");
+                            
+                            //Отобразить форму
+                            $('#tovarModal').modal('show');									
+                        }
+                    });
 					
 					event.preventDefault();
 				});
@@ -228,12 +248,11 @@
 				<table id="tovar_data" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th width="10%">Название</th>
-							<th width="10%">Цена</th>
-							<th width="10%">Количество</th>
-							<th width="10%">Год</th>
-							<th width="10%">Страна</th>
+							<th width="10%">Категория</th>
+							<th width="10%">Пользователь</th>
+							<th width="10%">Заголовок</th>
 							<th width="10%">Описание</th>
+							<th width="10%">Дата</th>
 							<th width="10%"></th>
 							<th width="10%"></th>
 						</tr>
