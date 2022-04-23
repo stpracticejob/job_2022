@@ -1,15 +1,21 @@
 {
     "name": "eu-141/job_2022",
     "type": "project",
+    "description": "Job site",
+    "license": "proprietary",
     "require": {
+        "php": "^8.1",
+	"ext-json": "*",
+	"ext-mysqli": "*",
+        "ext-pdo_mysql": "*",
+        "mikecao/flight": "^2.0",
+        "illuminate/validation": "^9.7"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.8"
     },
     "autoload": {
-        "psr-4": {
-            "Job\\": "www/"
-        }
+        "classmap": ["src/"]
     },
     "authors": [
         {
@@ -19,9 +25,9 @@
     ],
     "scripts": {
         "dev": [
-	    "Composer\\Config::disableProcessTimeout",
-	    "php -c php.ini -S localhost:8000 -t ./www/"
-	],
+            "Composer\\Config::disableProcessTimeout",
+            "php -c php.ini -S localhost:8000"
+        ],
         "fix": "vendor/bin/php-cs-fixer fix"
-    } 
+    }
 }
