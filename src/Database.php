@@ -102,4 +102,62 @@ class DB extends PDO
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function countCv()
+    {
+        $stmt = $this->prepare('SELECT COUNT(*) FROM cv');
+        $stmt->execute();
+        return $stmt->fetch()[0];
+    }
+
+    public function fetchCvs()
+    {
+        $stmt = $this->prepare(
+            'SELECT cv.ID, cv.UserID, users.UserName,
+            cv.SectionID, sections.Name as SectionName,
+            cv.Title, cv.Content, cv.DateTime
+            FROM cv, sections, users
+            WHERE cv.SectionID = Sections.ID AND cv.UserID = Users.ID
+            ORDER BY DateTime DESC'
+        );
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function fetchCv($id)
+    {
+        $stmt = $this->prepare('SELECT * FROM cv WHERE ID = :id LIMIT 1');
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function addCv($user_id, $section_id, $title, $content, $datetime)
+    {
+        return $this->prepare(
+            'INSERT INTO cv(UserID, SectionID, Title, Content, DateTime)
+            VALUES (:user_id, :section_id, :title, :content, :datetime)'
+        )->execute([
+            'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
+            'content' => $content, 'datetime' => $datetime
+        ]);
+    }
+    
+    public function updateCv($id, $user_id, $section_id, $title, $content, $datetime)
+    {
+        return $this->prepare(
+            'UPDATE cv SET UserID = :user_id, SectionID = :section_id,
+            Title = :title, Content = :content, DateTime = :datetime
+            WHERE ID = :id'
+        )->execute([
+            'id' => $id,
+            'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
+            'content' => $content, 'datetime' => $datetime
+        ]);
+    }
+
+    public function deleteCv($id)
+    {
+        return $this->prepare('DELETE FROM cv WHERE ID = :id LIMIT 1')
+            ->execute(['id' => $id]);
+    }
 }

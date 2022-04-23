@@ -1,0 +1,83 @@
+openapi: "3.0.0"
+info:
+  version: "0.0.1"
+  title: "API"
+  description: "Сайт Job"
+servers:
+  - url: "http://localhost:8000"
+paths:
+  /api/cvs:
+    get:
+      summary: "Получить список резюме"
+      responses:
+        200:
+          description: "OK"
+    post:
+      summary: "Добавить резюме"
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: section_id
+          type: number
+          required: true
+      responses:
+        200:
+          description: "OK"
+  /api/cvs/{id}:
+    get:
+      summary: "Получить резюме"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    put:
+      summary: "Изменить резюме"
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: formData
+          name: user_id
+          type: number
+          required: true
+        - in: formData
+          name: section_id
+          type: number
+          required: true
+        - in: formData
+          name: title
+          type: string
+          required: true
+        - in: formData
+          name: content
+          type: string
+          required: true
+        - in: formData
+          name: datetime
+          type: string
+          required: true
+      responses:
+        200:
+          description: "OK"
+  /api/cvs/{id}/delete:
+    post:
+      summary: "Удалить резюме"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
