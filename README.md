@@ -20,16 +20,12 @@ composer fix
 composer dev
 ```
 
-Запустить сервер HTTP для отладки API по адресу http://localhost:9000 :
-
-    composer api
-
 Установить библиотеки для Swagger UI:
 
     cd swagger-ui
     npm install
 
-Запустить Swagger UI:
+В отедельном терминале запускаем Swagger UI:
 
     cd swagger-ui
     npm start
@@ -40,7 +36,7 @@ composer dev
 
 Для настройки окружения разработчика можно воспользоваться пакетным менеджером [chocolate](https://chocolatey.org/).
 
-1. Для установка chocolatey необходимо запустит терминал powershell с администраторскими правами и выполнить последовательно следующие команды:
+1. Для установка chocolatey необходимо запустить терминал powershell с администраторскими правами и выполнить последовательно следующие команды:
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; 
@@ -55,9 +51,13 @@ choco install git php composer mariadb nodejs
 ```    
 Затем перезапускаем терминал.
 
-3. Генерируеи м настраиваем открыты и закрытый ключ для ssh:
-```
-TODO
+3. Генерируем и настраиваем открытый и закрытый ключ для ssh:
+```powershell
+ssh-keygen
+# Далее все по умолчанию, нажимаем Enter несколько раз
+
+type ~/.ssh/id_rsa.pub
+# Копируем содержимое файла и добавляем новый SSH-ключ в аккаунт GitHub
 ```
 4. Клонируем репозитарий проекта и переходив каталог проекта :
 ```powershell
@@ -75,10 +75,6 @@ TODO
 7. Запускаем сервер разработчика на http://localhost:8000
 ```powershell
 composer dev
-```
-Либо сервер API на http://localhost:9000:
-```
-composer api
 ```
 8. Установливаем пакеты для Swagger UI и запускаем сервер для него:
 ```powershell
