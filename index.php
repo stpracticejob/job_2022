@@ -1,7 +1,5 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-
 require_once 'vendor/autoload.php';
 require_once 'config.php';
 
@@ -26,6 +24,7 @@ Flight::map('validate', function ($params) {
 
 Flight::before('start', function (&$params, &$output) {
     session_start();
+    header('Access-Control-Allow-Origin: *');
 });
 
 Flight::route('GET|POST /api/cvs?.+', function () {
@@ -34,10 +33,10 @@ Flight::route('GET|POST /api/cvs?.+', function () {
 
     if ($request->method == 'GET') {
         Flight::json([
-            "draw"				=>	intval($request->query->draw ?? ''),
-            "recordsTotal"		=> $db->countCv(),
-            "recordsFiltered"	=> 0, // TODO
-            "data"				=>  $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
+            "draw" => intval($request->query->draw ?? ''),
+            "recordsTotal" => $db->countCv(),
+            "recordsFiltered" => 0, // TODO
+            "data" => $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
         ]);
 
         return;
@@ -47,7 +46,11 @@ Flight::route('GET|POST /api/cvs?.+', function () {
 
     Flight::json([
         'result' => $db->addCv(
-            $data->user_id, $data->section_id, $data->title, $data->content, $data->datetime
+            $data->user_id,
+            $data->section_id,
+            $data->title,
+            $data->content,
+            $data->datetime
         )
     ]);
 });
@@ -65,7 +68,7 @@ Flight::route('GET|POST /api/cvs/@id:[0-9]+', function ($id) {
 
         return;
     }
-    
+
     Flight::json(
         $db->fetchCv($id)
     );

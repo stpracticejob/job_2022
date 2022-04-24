@@ -130,7 +130,7 @@ class DB extends PDO
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     public function addCv($user_id, $section_id, $title, $content, $datetime)
     {
         return $this->prepare(
@@ -141,7 +141,7 @@ class DB extends PDO
             'content' => $content, 'datetime' => $datetime
         ]);
     }
-    
+
     public function updateCv($id, $user_id, $section_id, $title, $content, $datetime)
     {
         return $this->prepare(
