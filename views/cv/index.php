@@ -55,21 +55,23 @@
 					
 					var cv_info = {
 						"user_id":$("#user_id").val(),
-						"section_id":$("#SectionName").val(),
-						"title":$("#Title").val(),
-						"content":$("#Content").val(),
-						"datetime":$("#DateTime").val()
+						"section_id":$("#section_id").val(),
+						"title":$("#title").val(),
+						"content":$("#content").val(),
+						"datetime":$("#datetime").val()
 					}
 					
-					var method="PUT";
+					var url="/api/cvs";
+					
+					//Флаг операции (1 - редактирование)
 					if($("#operation").val()==1) {
-						method="POST";
-						cv_info.ID = $("#cv_ID").val();						
+						var ID = $("#cv_ID").val();
+						url+="/"+ID;					
 					}					
 					
 					$.ajax({
-                        url:"/api/cvs",
-                        method: method,
+                        url:url,
+                        method: "POST",
                         data: JSON.stringify(cv_info),
                         headers: {
                             "Content-type":"application/json"
@@ -142,8 +144,8 @@
 					if(confirm("Действительно удалить?"))
 					{
 						$.ajax({
-							url:"/api/cvs/"+cv_ID+"/delete",
-							method:"POST",							
+							url:"/api/cvs/"+cv_ID,
+							method:"DELETE",							
 							success:function(data)
 							{								
 								dataTable.ajax.reload();
@@ -165,12 +167,12 @@
 							min: 0
 						},
 						title: "required",
-						datetime: {
+						/*datetime: {
 							required: true,
 							number: true,
 							min: 1900,
 							max: new Date().getFullYear()
-						},
+						},*/
 						
 						content: "required"
 					},
