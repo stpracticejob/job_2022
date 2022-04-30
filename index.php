@@ -25,61 +25,50 @@ Flight::map('validate', function ($params) {
 Flight::before('start', function (&$params, &$output) {
     session_start();
     header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+});
+
+Flight::route('GET|POST|DELETE|OPTIONS /api/cvs/@id:[0-9]+', function ($id) {
+    $request = Flight::request();
+    $db = Flight::db();
+
+    switch ($request->method) {
+        case 'POST':
+            $data = $request->data;
+            Flight::json($db->updateCv($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->datetime));
+            break;
+
+        case 'GET':
+            Flight::json($db->fetchCv($id));
+            break;
+
+        case 'DELETE':
+            Flight::json($db->deleteCv($id));
+            break;
+    }
 });
 
 Flight::route('GET|POST /api/cvs?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
 
-    if ($request->method == 'GET') {
-        Flight::json([
-            "draw" => intval($request->query->draw ?? ''),
-            "recordsTotal" => $db->countCv(),
-            "recordsFiltered" => 0, // TODO
-            "data" => $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
-        ]);
+    switch ($request->method) {
+        case 'GET':
+            Flight::json([
+                'draw' => intval($request->query->draw),
+                'recordsTotal' => $db->countCv(),
+                'recordsFiltered' => 0, // TODO
+                'data' => $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
+            ]);
+            break;
 
-        return;
+        case 'POST':
+            $data = $request->data;
+            Flight::json([
+                'result' => $db->addCv($data->user_id, $data->section_id, $data->title, $data->content, $data->datetime)
+            ]);
+            break;
     }
-
-    $data = $request->data;
-
-    Flight::json([
-        'result' => $db->addCv(
-            $data->user_id,
-            $data->section_id,
-            $data->title,
-            $data->content,
-            $data->datetime
-        )
-    ]);
-});
-
-Flight::route('GET|POST /api/cvs/@id:[0-9]+', function ($id) {
-    $request = Flight::request();
-    $db = Flight::db();
-
-    if ($request->method == 'POST') {
-        $data = $request->data;
-
-        Flight::json(
-            $db->updateCv($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->datetime)
-        );
-
-        return;
-    }
-
-    Flight::json(
-        $db->fetchCv($id)
-    );
-});
-
-Flight::route('POST /api/cvs/@id:[0-9]+/delete', function ($id) {
-    $db = Flight::db();
-
-    Flight::json(
-        $db->deleteCv($id)
-    );
 });
 
 Flight::route('GET /', function () {

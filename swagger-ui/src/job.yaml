@@ -9,24 +9,47 @@ paths:
   /api/cvs:
     get:
       summary: "Получить список резюме"
+      tags:
+        - Резюме
       responses:
         200:
           description: "OK"
     post:
       summary: "Добавить резюме"
-      consumes:
-        - application/x-www-form-urlencoded
-      parameters:
-        - in: formData
-          name: section_id
-          type: number
-          required: true
+      tags:
+        - Резюме
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  required: true
+                section_id:
+                  type: integer
+                  required: true
+                title:
+                  type: string
+                  required: true
+                content:
+                  type: string
+                  required: true
+                datetime:
+                  type: string
+                  format: date-time
+                  description: 'Например "2018-06-11 11:24:04"'
+                  required: true
+                
       responses:
         200:
           description: "OK"
   /api/cvs/{id}:
     get:
       summary: "Получить резюме"
+      tags:
+        - Резюме
       parameters:
         - in: path
           name: id
@@ -36,42 +59,46 @@ paths:
       responses:
         200:
           description: "OK"
-    put:
-      summary: "Изменить резюме"
-      consumes:
-        - application/x-www-form-urlencoded
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-        - in: formData
-          name: user_id
-          type: number
-          required: true
-        - in: formData
-          name: section_id
-          type: number
-          required: true
-        - in: formData
-          name: title
-          type: string
-          required: true
-        - in: formData
-          name: content
-          type: string
-          required: true
-        - in: formData
-          name: datetime
-          type: string
-          required: true
-      responses:
-        200:
-          description: "OK"
-  /api/cvs/{id}/delete:
     post:
+      summary: "Изменить резюме"
+      tags:
+        - Резюме
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  required: true
+                section_id:
+                  type: integer
+                  required: true
+                title:
+                  type: string
+                  required: true
+                content:
+                  type: string
+                  required: true
+                datetime:
+                  type: string
+                  format: date-time
+                  description: 'Например "2018-06-11 11:24:04"'
+                  required: true
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    delete:
       summary: "Удалить резюме"
+      tags:
+        - Резюме
       parameters:
         - in: path
           name: id
