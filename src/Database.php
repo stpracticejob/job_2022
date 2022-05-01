@@ -65,7 +65,7 @@ class DB extends PDO
         $stmt->execute(['id' => $id]);
         return $stmt;
     }
-//<--Вакансии
+    //<--Вакансии
     public function fetchVacancies($user_id = -1, $section_id = -1)
     {
         $filter = '';
@@ -107,7 +107,7 @@ class DB extends PDO
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    public function addVacancy($user_id, $section_id, $title, $content, $salary,$experience, $is_main, $is_partnership, $is_remote, $data_time)
+    public function addVacancy($user_id, $section_id, $title, $content, $salary, $experience, $is_main, $is_partnership, $is_remote, $data_time)
     {
         return $this->prepare(
             'INSERT INTO vacancy(UserID, SectionID, Title, Content, Salary, Experience, IsMain, IsPartnership, IsRemote, DateTime)
@@ -115,12 +115,12 @@ class DB extends PDO
         )->execute([
             'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
             'content' => $content, 'salary' => $salary, 'experience' => $experience,
-            'is_main' => $is_main, 'is_partnership' => $is_partnership, 
+            'is_main' => $is_main, 'is_partnership' => $is_partnership,
             'is_remote' => $is_remote, 'datetime' => $data_time
         ]);
     }
 
-    public function updateVacancy($id, $user_id, $section_id, $title, $content, $salary,$experience, $is_main, $is_partnership, $is_remote, $data_time)
+    public function updateVacancy($id, $user_id, $section_id, $title, $content, $salary, $experience, $is_main, $is_partnership, $is_remote, $data_time)
     {
         return $this->prepare(
             'UPDATE vacancy SET UserID = :user_id, SectionID = :section_id,
@@ -130,7 +130,7 @@ class DB extends PDO
             'id' => $id,
             'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
             'content' => $content, 'salary' => $salary, 'experience' => $experience,
-            'is_main' => $is_main, 'is_partnership' => $is_partnership, 
+            'is_main' => $is_main, 'is_partnership' => $is_partnership,
             'is_remote' => $is_remote, 'datetime' => $data_time
         ]);
     }
@@ -140,7 +140,7 @@ class DB extends PDO
         return $this->prepare('DELETE FROM vacancy WHERE ID = :id LIMIT 1')
             ->execute(['id' => $id]);
     }
-//Вакансии-->
+    //Вакансии-->
     public function countCv()
     {
         $stmt = $this->prepare('SELECT COUNT(*) FROM cv');
