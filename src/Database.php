@@ -36,20 +36,64 @@ class DB extends PDO
         $stmt->execute(['username' => $username, 'email' => $email, 'password' => md5($password), 'roleid' => $roleid]);
     }
 
+    public function countAdvertises()
+    {
+        $stmt = $this->prepare('SELECT COUNT(*) FROM advertise');
+        $stmt->execute();
+        return $stmt->fetch()[0];
+    }
+
     public function fetchAdvertises()
     {
         $stmt = $this->prepare('
-	    SELECT advertise.ID As ID,
-		   users.login As Author,
-		   users.ID As AuthorID,
-		   advertise.Title As Title,			
-		   advertise.DateTime As DateTime,
-		   advertise.Content As Content
+	    SELECT advertise.ID,
+		   users.ID As UserID,
+		   users.login As UserLogin,
+		   advertise.Title,	
+		   advertise.Content,		
+		   advertise.DateTime
 	    FROM advertise, users 
 	    WHERE advertise.UserID=Users.ID
 	    ORDER BY DateTime DESC');
         $stmt->execute();
         return $stmt;
+    }
+
+    public function fetchAdvertise($id)
+    {
+        $stmt = $this->prepare('SELECT * FROM advertise WHERE ID = :id LIMIT 1');
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function addAdvertise($user_id, $title, $content, $datetime)
+    {
+        return $this->prepare(
+            'INSERT INTO advertise(UserID, Title, Content, DateTime)
+            VALUES (:user_id, :title, :content, :datetime)'
+        )->execute([
+            'user_id' => $user_id, 'title' => $title,
+            'content' => $content, 'datetime' => $datetime
+        ]);
+    }
+
+    public function updateAdvertise($id, $user_id, $title, $content, $datetime)
+    {
+        return $this->prepare(
+            'UPDATE advertise SET UserID = :user_id,
+            Title = :title, Content = :content, DateTime = :datetime
+            WHERE ID = :id'
+        )->execute([
+            'id' => $id,
+            'user_id' => $user_id, 'title' => $title,
+            'content' => $content, 'datetime' => $datetime
+        ]);
+    }
+
+    public function deleteAdvertise($id)
+    {
+        return $this->prepare('DELETE FROM advertise WHERE ID = :id LIMIT 1')
+            ->execute(['id' => $id]);
     }
 
     public function fetchSections()
