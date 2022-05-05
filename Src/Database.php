@@ -65,7 +65,6 @@ class DB extends PDO
         $stmt->execute(['id' => $id]);
         return $stmt;
     }
-    
 //<--Вакансии
     public function fetchVacancies($user_id = -1, $section_id = -1)
     {
