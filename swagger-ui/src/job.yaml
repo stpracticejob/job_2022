@@ -112,14 +112,14 @@ paths:
         get:
           summary: "Получить список вакансий"
           tags:
-            - Вакансия
+            - Вакансии
           responses:
             200:
               description: "ok"
         post:
           summary: "Добавить вакансию"
           tags:
-            - Вакансия
+            - Вакансии
           requestBody:
             content:
               application/x-www-form-urlencoded:
@@ -166,7 +166,7 @@ paths:
         get:
           summary: "Получить вакансию"
           tags:
-            - Вакансия
+            - Вакансии
           parameters:
             - in: path
               name: id
@@ -179,7 +179,7 @@ paths:
         post:
           summary: "Изменить вакансию"
           tags:
-            - Вакансия
+            - Вакансии
           requestBody:
             content:
               multipart/form-data:
@@ -230,7 +230,7 @@ paths:
         delete:
           summary: "Удалить вакансию"
           tags:
-            - Вакансия
+            - Вакансии
           parameters:
             - in: path
               name: id
