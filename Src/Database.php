@@ -84,8 +84,10 @@ class DB extends PDO
 
         $stmt = $this->prepare("
 	    SELECT vacancy.ID As ID,
-		   users.login As UserLogin,
+		   users.login As UserEmail,
 		   users.ID As UserID,
+           users.SectionID As SectionID,
+           sections.Name as SectionName,
 		   vacancy.Title As Title,
 		   vacancy.Content As Content,
 		   vacancy.Salary As Salary,
