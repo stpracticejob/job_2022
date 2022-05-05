@@ -69,6 +69,7 @@ Flight::route('GET|POST /api/cvs?.+', function () {
             break;
     }
 });
+
 //<--Вакансии
 Flight::route('GET|POST|DELETE|OPTIONS /api/vacancy/@id:[0-9]+', function ($id) {
     $request = Flight::request();
@@ -112,6 +113,7 @@ Flight::route('GET|POST /api/vacancy?.+', function () {
     }
 });
 //Вакансии-->
+
 Flight::route('GET /', function () {
     Flight::render('main_page');
 });

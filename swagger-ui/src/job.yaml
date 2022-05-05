@@ -115,7 +115,7 @@ paths:
             - Вакансия
           responses:
             200:
-              description: "OK"
+              description: "ok"
         post:
           summary: "Добавить вакансию"
           tags:

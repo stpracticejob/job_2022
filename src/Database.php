@@ -65,7 +65,8 @@ class DB extends PDO
         $stmt->execute(['id' => $id]);
         return $stmt;
     }
-    //<--Вакансии
+    
+//<--Вакансии
     public function fetchVacancies($user_id = -1, $section_id = -1)
     {
         $filter = '';
@@ -140,7 +141,8 @@ class DB extends PDO
         return $this->prepare('DELETE FROM vacancy WHERE ID = :id LIMIT 1')
             ->execute(['id' => $id]);
     }
-    //Вакансии-->
+//Вакансии-->
+    
     public function countCv()
     {
         $stmt = $this->prepare('SELECT COUNT(*) FROM cv');
