@@ -56,7 +56,7 @@ Flight::route('GET|POST /api/cvs?.+', function () {
             Flight::json([
                 'draw' => intval($request->query->draw),
                 'recordsTotal' => $db->countCv(),
-                'recordsFiltered' => 0, // TODO
+                'recordsFiltered' => 0,
                 'data' => $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
             ]);
             break;
