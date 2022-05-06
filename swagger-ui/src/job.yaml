@@ -108,3 +108,99 @@ paths:
       responses:
         200:
           description: "OK"
+  /api/advertises:
+    get:
+      summary: "Получить список рекламных объявлений"
+      tags:
+        - Рекламные объявления
+      responses:
+        200:
+          description: "OK"
+    post:
+      summary: "Добавить рекламное объявление"
+      tags:
+        - Рекламные объявления
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  required: true
+                title:
+                  type: string
+                  required: true
+                content:
+                  type: string
+                  required: true
+                datetime:
+                  type: string
+                  format: date-time
+                  description: 'Например "2018-06-11 11:24:04"'
+                  required: true
+                
+      responses:
+        200:
+          description: "OK"
+  /api/advertises/{id}:
+    get:
+      summary: "Получить рекламное объявление"
+      tags:
+        - Рекламные объявления
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    post:
+      summary: "Изменить рекламное объявление"
+      tags:
+        - Рекламные объявления
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  required: true
+                title:
+                  type: string
+                  required: true
+                content:
+                  type: string
+                  required: true
+                datetime:
+                  type: string
+                  format: date-time
+                  description: 'Например "2018-06-11 11:24:04"'
+                  required: true
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    delete:
+      summary: "Удалить рекламное объявление"
+      tags:
+        - Рекламные объявления
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"

@@ -28,6 +28,45 @@ Flight::before('start', function (&$params, &$output) {
     header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 });
 
+Flight::route('GET /api/advertises/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchAdvertise($id));
+});
+
+Flight::route('POST /api/advertises/@id:[0-9]+', function ($id) {
+    $data = Flight::request()->data;
+    Flight::json(Flight::db()->updateAdvertise($id, $data->user_id, $data->title, $data->content, $data->datetime));
+});
+
+Flight::route('DELETE /api/advertises/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteAdvertise($id));
+});
+
+Flight::route('OPTIONS /api/advertises/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/advertises?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $query = $request->query;
+
+    Flight::json([
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countAdvertises(),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchAdvertises()->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
+
+Flight::route('POST /api/advertises?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $data = $request->data;
+
+    Flight::json([
+        'result' => $db->addAdvertise($data->user_id, $data->title, $data->content, $data->datetime)
+    ]);
+});
+
 Flight::route('GET|POST|DELETE|OPTIONS /api/cvs/@id:[0-9]+', function ($id) {
     $request = Flight::request();
     $db = Flight::db();
