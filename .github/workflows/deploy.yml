@@ -1,15 +1,16 @@
 name: Deploy
 
-on: [push]
-  # Allows you to run this workflow manually from the Actions tab
+on:
+  push:
   workflow_dispatch:
 
 env:
   DEPLOY_PATH: /var/www/class-test.ru/app
-  BUILD_SCRIPT_OUTPUT: .
+  SOURCE_PATH: .
 
 jobs:
-  build:
+
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +28,7 @@ jobs:
           port: ${{ secrets.DEPLOY_SERVER_PORT }}
           username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
           key: ${{ secrets.DEPLOY_SERVER_KEY }}
-          source: ${{ env.BUILD_SCRIPT_OUTPUT }}
+          source: ${{ env.SOURCE_PATH }}
           target: ${{ env.DEPLOY_PATH }}/${{ env.BRANCH_NAME }}
           strip_components: 1
 
