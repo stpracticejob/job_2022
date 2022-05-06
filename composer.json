@@ -29,5 +29,9 @@
             "php -c php.ini -S localhost:8000"
         ],
         "fix": "vendor/bin/php-cs-fixer fix"
+    },
+    "scripts-descriptions": {
+        "dev": "Run developer server.",
+        "fix": "Fix code for PSR-12 standart."
     }
 }
