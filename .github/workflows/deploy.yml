@@ -35,6 +35,8 @@ jobs:
           source: ${{ env.SOURCE_PATH }}
           target: ${{ env.DEPLOY_PATH }}/${{ env.BRANCH_NAME }}
           strip_components: 1
+          overwrite: true
+          debug: true
 
       - name: Print Info
         run: echo "Deployed at https://${BRANCH_NAME}.app.class-test.ru/"
