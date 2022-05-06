@@ -1,13 +1,17 @@
 <?php
 
 require_once 'vendor/autoload.php';
-require_once 'config.php';
 
 error_reporting(E_ALL);
 
+use Dotenv\Dotenv;
 use Flight as Flight;
 use Job\Database\DB;
 use Job\Auth\User;
+
+Dotenv::createImmutable(__DIR__)->safeLoad();
+
+require_once 'config.php';
 
 Flight::set('flight.log_errors', $DEBUG);
 Flight::set('flight.case_sensitive', true);
