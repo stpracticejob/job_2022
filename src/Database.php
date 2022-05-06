@@ -109,34 +109,33 @@ class DB extends PDO
         $stmt->execute(['id' => $id]);
         return $stmt;
     }
-
-    public function fetchVacancies($user_id = -1, $section_id = -1)
+	public function countVacancy()
     {
-        $filter = '';
-        $params = [];
+        $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy');
+        $stmt->execute();
+        return $stmt->fetch()[0];
+    }
 
-        if ($user_id != -1) {
-            $filter = 'AND UserID = :UserID ';
-            $params['UserID'] = $user_id;
-        }
-
-        if ($section_id != -1) {
-            $filter .= 'AND SectionID = :SectionID ';
-            $params['SectionID'] = $section_id;
-        }
-
+    public function fetchVacancies()
+    {
         $stmt = $this->prepare("
 	    SELECT vacancy.ID As ID,
-		   users.login As Author,
-		   users.ID As AuthorID,
+		   users.Login As UserLogin,
+		   users.ID As UserID,
+           sections.ID As SectionID,
+           sections.Name As SectionName,
 		   vacancy.Title As Title,
+		   vacancy.Content As Content,
 		   vacancy.Salary As Salary,
+		   vacancy.Experience As Experience,
+		   vacancy.IsMain As IsMain,
+		   vacancy.IsPartnership As IsPartnership,
+		   vacancy.IsRemote As IsRemote,
 		   vacancy.DateTime As DateTime
-	    FROM vacancy, users 
-	    WHERE vacancy.UserID=users.ID
-            $filter
+	    FROM vacancy, sections, users
+            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = Users.ID
             ORDER BY DateTime DESC");
-        $stmt->execute($params);
+        $stmt->execute();
         return $stmt;
     }
 
@@ -145,6 +144,39 @@ class DB extends PDO
         $stmt = $this->prepare('SELECT * FROM vacancy WHERE ID = :id LIMIT 1');
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function addVacancy($user_id, $section_id, $title, $content, $salary, $experience, $is_main, $is_partnership, $is_remote, $data_time)
+    {
+        return $this->prepare(
+            'INSERT INTO vacancy(UserID, SectionID, Title, Content, Salary, Experience, IsMain, IsPartnership, IsRemote, DateTime)
+            VALUES (:user_id, :section_id,:title, :content, :salary, :experience, :is_main, :is_partnership, :is_remote, :datetime)'
+        )->execute([
+            'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
+            'content' => $content, 'salary' => $salary, 'experience' => $experience,
+            'is_main' => $is_main, 'is_partnership' => $is_partnership,
+            'is_remote' => $is_remote, 'datetime' => $data_time
+        ]);
+    }
+
+    public function updateVacancy($id, $user_id, $section_id, $title, $content, $salary, $experience, $is_main, $is_partnership, $is_remote, $data_time)
+    {
+        return $this->prepare(
+            'UPDATE vacancy SET UserID = :user_id, SectionID = :section_id,
+            Title = :title, Content = :content, Salary = :salary, Experience = :experience, IsMain = :is_main, IsPartnership = :is_partnership, IsRemote = :is_remote, DateTime = :datetime
+            WHERE ID = :id'
+        )->execute([
+            'id' => $id,
+            'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
+            'content' => $content, 'salary' => $salary, 'experience' => $experience,
+            'is_main' => $is_main, 'is_partnership' => $is_partnership,
+            'is_remote' => $is_remote, 'datetime' => $data_time
+        ]);
+    }
+
+    public function deleteVacancy($id)
+    {
+        return $this->prepare('DELETE FROM vacancy WHERE ID = :id LIMIT 1')
+            ->execute(['id' => $id]);
     }
 
     public function countCv()
