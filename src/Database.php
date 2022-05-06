@@ -109,7 +109,8 @@ class DB extends PDO
         $stmt->execute(['id' => $id]);
         return $stmt;
     }
-	public function countVacancy()
+
+    public function countVacancy()
     {
         $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy');
         $stmt->execute();
@@ -145,6 +146,7 @@ class DB extends PDO
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
     public function addVacancy($user_id, $section_id, $title, $content, $salary, $experience, $is_main, $is_partnership, $is_remote, $data_time)
     {
         return $this->prepare(

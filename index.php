@@ -86,6 +86,7 @@ Flight::route('GET|POST|DELETE|OPTIONS /api/vacancy/@id:[0-9]+', function ($id) 
             break;
     }
 });
+
 Flight::route('GET|POST /api/vacancy?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
