@@ -32,6 +32,45 @@ Flight::before('start', function (&$params, &$output) {
     header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 });
 
+Flight::route('GET /api/users/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchUser($id));
+});
+
+Flight::route('POST /api/users/@id:[0-9]+', function ($id) {
+    $data = Flight::request()->data;
+    Flight::json(Flight::db()->updateUser($id, $data->username, $data->login, $data->password, $data->roleid, $data->state));
+});
+
+Flight::route('DELETE /api/users/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteUser($id));
+});
+
+Flight::route('OPTIONS /api/users/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/users?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $query = $request->query;
+
+    Flight::json([
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countUsers(),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchUsers()->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
+
+Flight::route('POST /api/users?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $data = $request->data;
+
+    Flight::json([
+        'result' => $db->addUser($data->username, $data->login, $data->password, $data->roleid, $data->state)
+    ]);
+});
+
 Flight::route('GET /api/advertises/@id:[0-9]+', function ($id) {
     Flight::json(Flight::db()->fetchAdvertise($id));
 });
