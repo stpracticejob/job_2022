@@ -72,33 +72,50 @@ composer install
 
 TODO
 
-7. Запускаем сервер разработчика на http://localhost:8000
+7. Создаем файл настроек окружения
+
+```powershell
+cp .env.example .env
+```
+
+Если необходимо, изменяем настройки окружения в файле .env
+
+8. Запускаем сервер разработчика на http://localhost:8000
 ```powershell
 composer dev
 ```
-8. Установливаем пакеты для Swagger UI и запускаем сервер для него:
+
+9. Установливаем пакеты для Swagger UI и запускаем сервер для него:
 ```powershell
 cd swagger-ui
 npm install
 npm start
 ```
-9. Делаем свою ветку в репозитарии и даем ей уникальное имя:
+
+10. Делаем свою ветку в репозитарии и даем ей уникальное имя:
 ```powershell
 git checkout -b feature/my-cool-page
 ```
-10. Разрабатываем свою фичу в любом удобном редакторе Visual Studio Code, Vim, Emacs или Notepad++.
-11. По ходу работы делаем коммиты в свою ветку:
+
+11. Разрабатываем свою фичу в любом удобном редакторе Visual Studio Code, Vim, Emacs или Notepad++.
+
+12. По ходу работы делаем коммиты в свою ветку:
 ```powershell
 git commit -m "Add some cool stuff" -a
 ```
-12. Для форматирования кода по стандарту (PSR-12](https://www.php-fig.org/psr/psr-12/) выполняем команду и при необходимости коммитим:
+
+13. Для форматирования кода по стандарту (PSR-12](https://www.php-fig.org/psr/psr-12/) выполняем команду и при необходимости коммитим:
 ```powershell
 composer fix
 ```
-13. Когда фича готова, то выталкиваем его на сервер:
+
+14. Когда фича готова, то выталкиваем его на сервер:
 ```powershell
 git push --set-upstream origin feature/my-cool-page
 ```
-14. Переходим на сайт GitHub и создаем PR c описанием того что былоло сделано в это Pull Request.
-15. Просим коллегу сделать code review.
-16. The END 
+
+15. Переходим на сайт GitHub и создаем PR c описанием того что былоло сделано в это Pull Request.
+
+16. Просим коллегу сделать code review.
+
+17. The END 
