@@ -18,11 +18,11 @@
                     serverSide: true,
                     order: [],
                     ajax: {
-                        url:"/api/Advertises",
+                        url:"/api/advertises",
                         type:"GET"
                     },
                     columns: [
-                        { data: 'UserName' },
+                        { data: 'UserID' },
                         { data: 'Title' },
                         { data: 'Content' },
                         { data: 'DateTime' },
@@ -54,20 +54,21 @@
 					
 					var advertise_info = {
 						"user_id":$("#user_id").val(),
-						"title":$("#Title").val(),
-						"content":$("#Content").val(),
-						"datetime":$("#DateTime").val()
+						"title":$("#title").val(),
+						"content":$("#content").val(),
+						"datetime":$("#datetime").val()
 					}
 					
-					var method="PUT";
+					var url="/api/advertises";
+					//redactirov
 					if($("#operation").val()==1) {
-						method="POST";
-						advertise_info.ID = $("#advertise_ID").val();						
+						var ID = $("#advertise_ID").val();
+						url+="/"+ID;						
 					}					
 					
 					$.ajax({
-                        url:"/api/Advertises",
-                        method: method,
+                        url:url,
+                        method: "POST",
                         data: JSON.stringify(advertise_info),
                         headers: {
                             "Content-type":"application/json"
@@ -126,9 +127,9 @@
 					//Заголовок окна
 					$('.modal-title').text("Добавить рекламу");
 					//Текст на кнопке
-					$("#advertiseModal #action").val("Добавить");
+					$("#action").val("Добавить");
 					//Флаг операции (0- добавление)
-					$("#advertiseModal #operation").val("0");
+					$("#operation").val("0");
 				});
 				
 				$(document).on("click",".delete",function() {
@@ -138,8 +139,8 @@
 					if(confirm("Действительно удалить?"))
 					{
 						$.ajax({
-							url:"/api/Advertises/"+advertise_ID+"/delete",
-							method:"POST",							
+							url:"/api/advertises/"+advertise_ID,
+							method:"DELETE",							
 							success:function(data)
 							{								
 								dataTable.ajax.reload();
@@ -160,7 +161,7 @@
 								required: true,
 								number: true,
 								min: 1900,
-								max: new Date().getFullYear()
+								//max: new Date().getFullYear()
 							},
 							contet: "required"
 					},
@@ -200,7 +201,7 @@
 				$('#advertiseModal').on('hidden.bs.modal',function(){
 					//Очистка полей формы
 					$(".form-control").val("");
-					$( "#advertiseModal .field" ).removeClass( "has-success" ).removeClass( "has-error" );
+					$( ".field" ).removeClass( "has-success" ).removeClass( "has-error" );
 					$(this).find("em").remove();
 				});
 			});
@@ -252,7 +253,7 @@
 							</div>
 							<div class="field">
 								<label>Дата</label>
-								<input type="text" name="ditetime" id="ditetime" class="form-control" />
+								<input type="text" name="datetime" id="datetime" class="form-control" />
 							</div>
 							<!--br />
 							<label>Select User Image</label>
