@@ -52,7 +52,7 @@ class DB extends PDO
 
     public function fetchUser($id)
     {
-        $stmt = $this->prepare('SELECT * FROM users WHERE ID = :id LIMIT 1');
+        $stmt = $this->prepare('SELECT UserName, Login, RoleID, State FROM users WHERE ID = :id LIMIT 1');
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
