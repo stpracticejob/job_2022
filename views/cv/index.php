@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="/scripts/jquery-validation/src/additional/pattern.js"></script>
+		<script type="text/javascript" src="scripts/jquery-validation/src/additional/pattern.js"></script>
 		
 		<script type="text/javascript">
 			$(function() {
@@ -112,8 +112,9 @@
                             $("#action").val("Сохранить изменения");
                             
                             //Отобразить форму
-                            $('#cvModal').modal('show');									
+                            $('#cvModal').modal('show');					
                         }
+						
                     });
 					
 					event.preventDefault();
@@ -160,24 +161,32 @@
 				
 				$( "#cv_form" ).validate({
 					rules: {
-						user_id: "required",
+						user_id: {
+							required: true,							
+							number: true,
+							min: 0
+						},
 						section_id: {
 							required: true,							
 							number: true,
 							min: 0
 						},
 						title: "required",
-						/*datetime: {
+						datetime: {
 							required: true,
-							number: true,
-							min: 1900,
-							max: new Date().getFullYear()
-						},*/
+							pattern:  true
+							//max: new Date().getFullYear()						 
+							//"^(([0]?[1-9]|1[0-2])/([0-2]?[0-9]|3[0-1])/[1-2]\d{3}) (20|21|22|23|[0-1]?\d{1}):([0-5]?\d{1})$"
+						},
 						
 						content: "required"
 					},
 					messages: {
-						user_id: "Пожалуйста укажите ваше имя",
+						user_id: {
+							required: "Пожалуйста укажите id",
+							number: "id должен быть числом",
+							min: "id не может быть меньше нуля"
+						},
 						section_id: {
 							required: "Пожалуйста укажите категорию",
 							number: "Категория должна быть числом",
@@ -187,10 +196,8 @@
 							required: "Пожалуйста укажите Заголовок",						
 						},
 						datetime: {
-							required: "Пожалуйста укажите дату",
-							number: "Дата должна быть числом",
-							min: "Дата должна быть не ранее 1900",
-							max: "Дата не может быть больше текущего"
+							pattern: "Пожалуйста укажите дату формата yyyy-mm-dd hh:mm:ss"	,
+							required: "Пожалуйста укажите дату формата yyyy-mm-dd hh:mm:ss"							
 						},
 						
 						content: "Пожалуйста укажите описание"
