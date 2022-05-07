@@ -204,6 +204,103 @@ paths:
       responses:
         200:
           description: "OK"
+/api/users:
+    get:
+      summary: "Получить список пользователей"
+      tags:
+        - Пользователи
+      responses:
+        200:
+          description: "OK"
+    post:
+      summary: "Добавить пользователя"
+      tags:
+        - Пользователи
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  required: true
+                login:
+                  type: string
+                  required: true
+                password:
+                  type: string
+                  required: true
+                roleid:
+                  type: integer
+                  required: true
+                state:
+                  type: integer
+                  required: true
+      responses:
+        200:
+          description: "OK"
+  /api/users/{id}:
+    get:
+      summary: "Получить пользователя"
+      tags:
+        - Пользователи
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    post:
+      summary: "Изменить пользователя"
+      tags:
+        - Пользователи
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  required: true
+                login:
+                  type: string
+                  required: true
+                password:
+                  type: string
+                  required: true
+                roleid:
+                  type: integer
+                  required: true
+                state:
+                  type: integer
+                  required: true
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    delete:
+      summary: "Удалить пользователя"
+      tags:
+        - Пользователи
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
   /api/vacancy:
         get:
           summary: "Получить список вакансий"

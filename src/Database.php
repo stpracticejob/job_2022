@@ -35,6 +35,63 @@ class DB extends PDO
         $stmt = $this->prepare('INSERT INTO users(UserName, Login, Password, RoleID) VALUES (:username, :email, :password, :roleid)');
         $stmt->execute(['username' => $username, 'email' => $email, 'password' => md5($password), 'roleid' => $roleid]);
     }
+    
+    public function countUsers()
+    {
+        $stmt = $this->prepare('SELECT COUNT(*) FROM users');
+        $stmt->execute();
+        return $stmt->fetch()[0];
+    }
+
+    public function fetchUsers()
+    {
+        $stmt = $this->prepare('
+	    SELECT users.ID,
+		   users.UserName,
+		   users.Login,
+		   users.RoleID,
+           users.State
+	    FROM users');
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function fetchUser($id)
+    {
+        $stmt = $this->prepare('SELECT * FROM users WHERE ID = :id LIMIT 1');
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function addUser($username, $login, $password, $roleid, $state)
+    {
+        return $this->prepare(
+            'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, :password, :roleid, :state)'
+        )->execute([
+            'username' => $username, 'login' => $login, 'password' => md5($password),
+            'roleid' => $roleid, 'state' => $state
+        ]);
+    }
+
+    public function updateUser($id, $username, $login, $password, $roleid, $state)
+    {
+        return $this->prepare(
+            'UPDATE users SET UserName = :username,
+            Login = :login, Password = :password, RoleID = :roleid, State = :state
+            WHERE ID = :id'
+        )->execute([
+            'id' => $id,
+            'username' => $username, 'login' => $login,
+            'password' => md5($password), 'roleid' => $roleid,
+            'state' => $state
+        ]);
+    }
+
+    public function deleteUser($id)
+    {
+        return $this->prepare('DELETE FROM users WHERE ID = :id LIMIT 1')
+            ->execute(['id' => $id]);
+    }
 
     public function countAdvertises()
     {
