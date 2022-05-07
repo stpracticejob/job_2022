@@ -30,12 +30,6 @@ class DB extends PDO
         return false;
     }
 
-    public function addUser($username, $email, $password, $roleid)
-    {
-        $stmt = $this->prepare('INSERT INTO users(UserName, Login, Password, RoleID) VALUES (:username, :email, :password, :roleid)');
-        $stmt->execute(['username' => $username, 'email' => $email, 'password' => md5($password), 'roleid' => $roleid]);
-    }
-    
     public function countUsers()
     {
         $stmt = $this->prepare('SELECT COUNT(*) FROM users');

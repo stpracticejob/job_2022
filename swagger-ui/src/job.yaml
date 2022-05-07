@@ -41,7 +41,6 @@ paths:
                   format: date-time
                   description: 'Например "2018-06-11 11:24:04"'
                   required: true
-                
       responses:
         200:
           description: "OK"
@@ -139,8 +138,7 @@ paths:
                   type: string
                   format: date-time
                   description: 'Например "2018-06-11 11:24:04"'
-                  required: true
-                
+                  required: true     
       responses:
         200:
           description: "OK"
@@ -204,7 +202,7 @@ paths:
       responses:
         200:
           description: "OK"
-/api/users:
+  /api/users:
     get:
       summary: "Получить список пользователей"
       tags:
