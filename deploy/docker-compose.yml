@@ -1,0 +1,35 @@
+---
+version: "3.7"
+
+services:
+
+  mariadb:
+    container_name: "job-site_mariadb"
+    image: "mariadb:10.7.3-focal"
+    restart: always
+    command: --lower_case_table_names=0
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE:-job}
+      - MYSQL_USER=${DB_USER:-job}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-job}
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    volumes:
+      - ./mariadb:/var/lib/mysql
+    ports:
+      - 127.0.0.1:3306:3306
+    healthcheck:
+      test: mysqladmin ping -h localhost -u$$MYSQL_USER -s -p$$MYSQL_PASSWORD
+
+  php:
+    container_name: "job-site_php"
+    image: "php:8.1-fpm-alpine-eu141"
+    build: Dockerfile.php-fpm
+    restart: always
+    volumes:
+      - ./app/:/var/www/html/:rw
+    ports:
+      - 127.0.0.1:9000:9000
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
