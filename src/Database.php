@@ -104,7 +104,7 @@ class DB extends PDO
 		   advertise.Content,		
 		   advertise.DateTime
 	    FROM advertise, users 
-	    WHERE advertise.UserID=Users.ID
+	    WHERE advertise.UserID=users.ID
 	    ORDER BY DateTime DESC');
         $stmt->execute();
         return $stmt;
@@ -185,7 +185,7 @@ class DB extends PDO
 		   vacancy.IsRemote As IsRemote,
 		   vacancy.DateTime As DateTime
 	    FROM vacancy, sections, users
-            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = Users.ID
+            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID
             ORDER BY DateTime DESC");
         $stmt->execute();
         return $stmt;
@@ -246,7 +246,7 @@ class DB extends PDO
             cv.SectionID, sections.Name as SectionName,
             cv.Title, cv.Content, cv.DateTime
             FROM cv, sections, users
-            WHERE cv.SectionID = Sections.ID AND cv.UserID = Users.ID
+            WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID
             ORDER BY DateTime DESC'
         );
         $stmt->execute();
