@@ -51,7 +51,7 @@ jobs:
           script: |
             cat <<EOF > ${{ env.DEPLOY_PATH }}/${{ env.BRANCH_NAME }}/.env
             DSN="mysql:host=mariadb;port=3306;dbname=job;charset=utf8;"
-	    DB_USER="job"
-	    DB_PASSWORD="job"
-	    DEBUG="false"
+            DB_USER="job"
+            DB_PASSWORD="job"
+            DEBUG="false"
             EOF
