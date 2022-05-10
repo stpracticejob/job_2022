@@ -260,27 +260,28 @@ class DB extends PDO
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function addCv($user_id, $section_id, $title, $content, $datetime)
+    public function addCv($user_id, $section_id, $title, $content)
     {
         return $this->prepare(
             'INSERT INTO cv(UserID, SectionID, Title, Content, DateTime)
             VALUES (:user_id, :section_id, :title, :content, :datetime)'
         )->execute([
-            'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
-            'content' => $content, 'datetime' => $datetime
+            'user_id' => $user_id, 'section_id' => $section_id,
+            'title' => $title, 'content' => $content,
+            'datetime' => date("Y-m-d H:i:s")
         ]);
     }
 
-    public function updateCv($id, $user_id, $section_id, $title, $content, $datetime)
+    public function updateCv($id, $user_id, $section_id, $title, $content)
     {
         return $this->prepare(
             'UPDATE cv SET UserID = :user_id, SectionID = :section_id,
-            Title = :title, Content = :content, DateTime = :datetime
+            Title = :title, Content = :content
             WHERE ID = :id'
         )->execute([
             'id' => $id,
-            'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
-            'content' => $content, 'datetime' => $datetime
+            'user_id' => $user_id, 'section_id' => $section_id,
+            'title' => $title, 'content' => $content
         ]);
     }
 
