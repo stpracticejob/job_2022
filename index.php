@@ -77,7 +77,7 @@ Flight::route('GET /api/advertises/@id:[0-9]+', function ($id) {
 
 Flight::route('POST /api/advertises/@id:[0-9]+', function ($id) {
     $data = Flight::request()->data;
-    Flight::json(Flight::db()->updateAdvertise($id, $data->user_id, $data->title, $data->content, $data->datetime));
+    Flight::json(Flight::db()->updateAdvertise($id, $data->user_id, $data->title, $data->content));
 });
 
 Flight::route('DELETE /api/advertises/@id:[0-9]+', function ($id) {
@@ -106,7 +106,7 @@ Flight::route('POST /api/advertises?.+', function () {
     $data = $request->data;
 
     Flight::json([
-        'result' => $db->addAdvertise($data->user_id, $data->title, $data->content, $data->datetime)
+        'result' => $db->addAdvertise($data->user_id, $data->title, $data->content)
     ]);
 });
 
