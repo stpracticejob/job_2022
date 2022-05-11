@@ -117,27 +117,28 @@ class DB extends PDO
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function addAdvertise($user_id, $title, $content, $datetime)
+    public function addAdvertise($user_id, $title, $content)
     {
         return $this->prepare(
             'INSERT INTO advertise(UserID, Title, Content, DateTime)
             VALUES (:user_id, :title, :content, :datetime)'
         )->execute([
-            'user_id' => $user_id, 'title' => $title,
-            'content' => $content, 'datetime' => $datetime
+            'user_id' => $user_id,
+            'title' => $title, 'content' => $content,
+            'datetime' => date("Y-m-d H:i:s")
         ]);
     }
 
-    public function updateAdvertise($id, $user_id, $title, $content, $datetime)
+    public function updateAdvertise($id, $user_id, $title, $content)
     {
         return $this->prepare(
             'UPDATE advertise SET UserID = :user_id,
-            Title = :title, Content = :content, DateTime = :datetime
+            Title = :title, Content = :content
             WHERE ID = :id'
         )->execute([
             'id' => $id,
-            'user_id' => $user_id, 'title' => $title,
-            'content' => $content, 'datetime' => $datetime
+            'user_id' => $user_id,
+            'title' => $title, 'content' => $content,
         ]);
     }
 

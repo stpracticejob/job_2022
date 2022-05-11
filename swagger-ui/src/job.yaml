@@ -124,11 +124,6 @@ paths:
                 content:
                   type: string
                   required: true
-                datetime:
-                  type: string
-                  format: date-time
-                  description: 'Например "2018-06-11 11:24:04"'
-                  required: true     
       responses:
         200:
           description: "OK"
@@ -164,11 +159,6 @@ paths:
                   required: true
                 content:
                   type: string
-                  required: true
-                datetime:
-                  type: string
-                  format: date-time
-                  description: 'Например "2018-06-11 11:24:04"'
                   required: true
       parameters:
         - in: path
