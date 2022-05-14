@@ -15,6 +15,7 @@ require_once 'config.php';
 
 Flight::set('flight.log_errors', $DEBUG);
 Flight::set('flight.case_sensitive', true);
+Flight::set('flight.views.path', __DIR__ . '/views');
 
 Flight::register('db', DB::class, [$DSN, $DB_USER, $DB_PASSWORD, $DB_OPTIONS]);
 Flight::register('user', User::class);
