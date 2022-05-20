@@ -43,7 +43,6 @@ class DB extends PDO
 	    SELECT users.ID,
 		   users.UserName,
 		   users.Login,
-           users.Password,
 		   users.RoleID,
            user_roles.Name as RoleName,
            users.State

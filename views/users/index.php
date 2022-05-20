@@ -24,7 +24,6 @@
                     columns: [
                         { data: 'UserName' },
                         { data: 'Login' },
-                        { data: 'Password' },
                         { data: 'RoleName' },
                         { data: 'State' },
                         {
@@ -44,7 +43,7 @@
                     ],
                     columnDefs: [
                         {
-                            "targets": [5, 6], // Столбцы, по которым не нужна сортировка
+                            "targets": [4, 5], // Столбцы, по которым не нужна сортировка
                             "orderable": false,
                         },
                     ],
@@ -56,7 +55,6 @@
 					var tovar_info = {
 						"UserName":$("#Nazvanie").val(),
 						"Login":$("#Login").val(),
-						"Password":$("#Password").val(),
 						"RoleName":$("#RoleName").val(),
 						"State":$("#State").val()
 					}
@@ -250,7 +248,6 @@
 						<tr>
 							<th width="10%">ФИО пользователя</th>
 							<th width="10%">Логин</th>
-							<th width="10%">Пароль</th>
 							<th width="10%">Роль</th>
 							<th width="10%">Состояние</th>
 							<th width="10%"></th>
