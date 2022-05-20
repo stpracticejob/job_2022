@@ -230,6 +230,9 @@ Flight::route('GET /cv', function () {
     Flight::render('cv/index');
 });
 
+Flight::route('GET /users', function () {
+    Flight::render('users/index');
+});
 
 Flight::route('/edit/vacancy', function () {
     Flight::render('edit/vacancy');

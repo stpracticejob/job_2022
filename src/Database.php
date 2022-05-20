@@ -43,16 +43,20 @@ class DB extends PDO
 	    SELECT users.ID,
 		   users.UserName,
 		   users.Login,
+           users.Password,
 		   users.RoleID,
+           user_roles.Name as RoleName,
            users.State
-	    FROM users');
+	    FROM users, user_roles
+        WHERE user_roles.ID = users.RoleID
+        ORDER BY users.ID DESC');
         $stmt->execute();
         return $stmt;
     }
 
     public function fetchUser($id)
     {
-        $stmt = $this->prepare('SELECT ID, UserName, Login, RoleID, State FROM users WHERE ID = :id LIMIT 1');
+        $stmt = $this->prepare('SELECT ID, UserName, Login, Password, RoleID, State FROM users WHERE ID = :id LIMIT 1');
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
