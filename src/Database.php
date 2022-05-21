@@ -89,7 +89,7 @@ class DB extends PDO
 
     public function countAdvertises()
     {
-        $stmt = $this->prepare('SELECT COUNT(*) FROM advertise');
+        $stmt = $this->prepare('SELECT COUNT(*) FROM advertise WHERE advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)');
         $stmt->execute();
         return $stmt->fetch()[0];
     }
@@ -104,7 +104,7 @@ class DB extends PDO
 		   advertise.Content,		
 		   advertise.DateTime
 	    FROM advertise, users 
-	    WHERE advertise.UserID=users.ID
+	    WHERE advertise.UserID=users.ID AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)
 	    ORDER BY DateTime DESC');
         $stmt->execute();
         return $stmt;
@@ -164,7 +164,7 @@ class DB extends PDO
 
     public function countVacancy()
     {
-        $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy');
+        $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy WHERE vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)');
         $stmt->execute();
         return $stmt->fetch()[0];
     }
@@ -186,7 +186,7 @@ class DB extends PDO
 		   vacancy.IsRemote As IsRemote,
 		   vacancy.DateTime As DateTime
 	    FROM vacancy, sections, users
-            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID
+            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)
             ORDER BY DateTime DESC");
         $stmt->execute();
         return $stmt;
@@ -235,7 +235,7 @@ class DB extends PDO
 
     public function countCv()
     {
-        $stmt = $this->prepare('SELECT COUNT(*) FROM cv');
+        $stmt = $this->prepare('SELECT COUNT(*) FROM cv WHERE cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)');
         $stmt->execute();
         return $stmt->fetch()[0];
     }
@@ -247,7 +247,7 @@ class DB extends PDO
             cv.SectionID, sections.Name as SectionName,
             cv.Title, cv.Content, cv.DateTime
             FROM cv, sections, users
-            WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID
+            WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID AND cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)
             ORDER BY DateTime DESC'
         );
         $stmt->execute();
