@@ -199,7 +199,7 @@ class DB extends PDO
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function addVacancy($user_id, $section_id, $title, $content, $salary, $experience, $is_main, $is_partnership, $is_remote, $data_time)
+    public function addVacancy($user_id, $section_id, $title, $content, $salary, $experience, $is_main, $is_partnership, $is_remote)
     {
         return $this->prepare(
             'INSERT INTO vacancy(UserID, SectionID, Title, Content, Salary, Experience, IsMain, IsPartnership, IsRemote, DateTime)
@@ -208,22 +208,22 @@ class DB extends PDO
             'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
             'content' => $content, 'salary' => $salary, 'experience' => $experience,
             'is_main' => $is_main, 'is_partnership' => $is_partnership,
-            'is_remote' => $is_remote, 'datetime' => $data_time
+            'is_remote' => $is_remote, 'datetime' => date("Y-m-d H:i:s")
         ]);
     }
 
-    public function updateVacancy($id, $user_id, $section_id, $title, $content, $salary, $experience, $is_main, $is_partnership, $is_remote, $data_time)
+    public function updateVacancy($id, $user_id, $section_id, $title, $content, $salary, $experience, $is_main, $is_partnership, $is_remote)
     {
         return $this->prepare(
             'UPDATE vacancy SET UserID = :user_id, SectionID = :section_id,
-            Title = :title, Content = :content, Salary = :salary, Experience = :experience, IsMain = :is_main, IsPartnership = :is_partnership, IsRemote = :is_remote, DateTime = :datetime
+            Title = :title, Content = :content, Salary = :salary, Experience = :experience, IsMain = :is_main, IsPartnership = :is_partnership, IsRemote = :is_remote
             WHERE ID = :id'
         )->execute([
             'id' => $id,
             'user_id' => $user_id, 'section_id' => $section_id, 'title' => $title,
             'content' => $content, 'salary' => $salary, 'experience' => $experience,
             'is_main' => $is_main, 'is_partnership' => $is_partnership,
-            'is_remote' => $is_remote, 'datetime' => $data_time
+            'is_remote' => $is_remote
         ]);
     }
 
