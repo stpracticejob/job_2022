@@ -111,47 +111,43 @@ Flight::route('POST /api/advertises?.+', function () {
     ]);
 });
 
-Flight::route('GET|POST|DELETE|OPTIONS /api/vacancy/@id:[0-9]+', function ($id) {
-    $request = Flight::request();
-    $db = Flight::db();
-
-    switch ($request->method) {
-        case 'POST':
-            $data = $request->data;
-            Flight::json($db->updateVacancy($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote, $data->datetime));
-            break;
-
-        case 'GET':
-            Flight::json($db->fetchVacancy($id));
-            break;
-
-        case 'DELETE':
-            Flight::json($db->deleteVacancy($id));
-            break;
-    }
+Flight::route('GET /api/vacancy/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchVacancy($id));
 });
 
-Flight::route('GET|POST /api/vacancy?.+', function () {
+Flight::route('POST /api/vacancy/@id:[0-9]+', function ($id) {
+    $data = Flight::request()->data;
+    Flight::json(Flight::db()->updateVacancy($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote));
+});
+
+Flight::route('DELETE /api/vacancy/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteVacancy($id));
+});
+
+Flight::route('OPTIONS /api/vacancy/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/vacancy?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
+    $query = $request->query;
 
-    switch ($request->method) {
-        case 'GET':
-            Flight::json([
-                'draw' => intval($request->query->draw),
-                'recordsTotal' => $db->countVacancy(),
-                'recordsFiltered' => 0,
-                'data' => $db->fetchVacancies()->fetchAll(PDO::FETCH_ASSOC),
-            ]);
-            break;
+    Flight::json([
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countVacancy(),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchVacancies()->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
 
-        case 'POST':
-            $data = $request->data;
-            Flight::json([
-                'result' => $db->addVacancy($data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote, $data->datetime)
-            ]);
-            break;
-    }
+Flight::route('POST /api/vacancy?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $data = $request->data;
+
+    Flight::json([
+        'result' => $db->addVacancy($data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote)
+    ]);
 });
 
 Flight::route('POST /api/cvs/@id:[0-9]+', function ($id) {
