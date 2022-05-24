@@ -39,16 +39,16 @@ composer dev
 1. Для установка chocolatey необходимо запустить терминал powershell с администраторскими правами и выполнить последовательно следующие команды:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; 
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; 
-iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')) 
+Set-ExecutionPolicy Bypass -Scope Process -Force;
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 После перезапуска терминала появится команда `choco`.
 
 2. Устанавливаем необходимые инструменты разработчика:
 ```powershell
 choco install git php composer mariadb nodejs
-```    
+```
 Затем перезапускаем терминал.
 
 3. Генерируем и настраиваем открытый и закрытый ключ для ssh:
@@ -104,7 +104,7 @@ git checkout -b feature/my-cool-page
 git commit -m "Add some cool stuff" -a
 ```
 
-13. Для форматирования кода по стандарту (PSR-12](https://www.php-fig.org/psr/psr-12/) выполняем команду и при необходимости коммитим:
+13. Для форматирования кода по стандарту [PSR-12](https://www.php-fig.org/psr/psr-12/) выполняем команду и при необходимости коммитим:
 ```powershell
 composer fix
 ```
@@ -118,4 +118,4 @@ git push --set-upstream origin feature/my-cool-page
 
 16. Просим коллегу сделать code review.
 
-17. The END 
+17. The END
