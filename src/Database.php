@@ -43,9 +43,13 @@ class DB extends PDO
 	    SELECT users.ID,
 		   users.UserName,
 		   users.Login,
+           users.Password,
 		   users.RoleID,
+           user_roles.Name as RoleName,
            users.State
-	    FROM users');
+           FROM users, user_roles
+           WHERE user_roles.ID = users.RoleID
+           ORDER BY users.ID DESC');
         $stmt->execute();
         return $stmt;
     }
