@@ -87,17 +87,15 @@ class DB extends PDO
             ->execute(['id' => $id]);
     }
 
-    public function countAdvertises($outdated = false)
+    public function countAdvertises($with_outdated = false)
     {
-        $filter_date = ($outdated ? '' : ' WHERE advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)');
-        $stmt = $this->prepare('SELECT COUNT(*) FROM advertise'.$filter_date);
+        $stmt = $this->prepare('SELECT COUNT(*) FROM advertise'.($with_outdated ? '' : ' WHERE advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)'));
         $stmt->execute();
         return $stmt->fetch()[0];
     }
 
-    public function fetchAdvertises($outdated = false)
+    public function fetchAdvertises($with_outdated = false)
     {
-        $filter_date = ($outdated ? '' : ' AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare('
 	    SELECT advertise.ID,
 		   users.ID As UserID,
@@ -106,8 +104,9 @@ class DB extends PDO
 		   advertise.Content,		
 		   advertise.DateTime
 	    FROM advertise, users 
-	    WHERE advertise.UserID=users.ID'.$filter_date.'
-        ORDER BY DateTime DESC');
+	    WHERE advertise.UserID=users.ID '
+        .($with_outdated ? '' : 'AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
+        'ORDER BY DateTime DESC');
         $stmt->execute();
         return $stmt;
     }
@@ -164,17 +163,15 @@ class DB extends PDO
         return $stmt;
     }
 
-    public function countVacancy($outdated = false)
+    public function countVacancy($with_outdated = false)
     {
-        $filter_date = ($outdated ? '' : ' WHERE vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
-        $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy'.$filter_date);
+        $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy'.($with_outdated ? '' : ' WHERE vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) '));
         $stmt->execute();
         return $stmt->fetch()[0];
     }
 
-    public function fetchVacancies($outdated = false)
+    public function fetchVacancies($with_outdated = false)
     {
-        $filter_date = ($outdated ? '' : ' AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare("
 	    SELECT vacancy.ID As ID,
 		   users.Login As UserLogin,
@@ -190,8 +187,9 @@ class DB extends PDO
 		   vacancy.IsRemote As IsRemote,
 		   vacancy.DateTime As DateTime
 	    FROM vacancy, sections, users
-            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID".$filter_date."
-            ORDER BY DateTime DESC");
+            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID "
+            .($with_outdated ? '' : 'AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
+            "ORDER BY DateTime DESC");
         $stmt->execute();
         return $stmt;
     }
@@ -237,24 +235,23 @@ class DB extends PDO
             ->execute(['id' => $id]);
     }
 
-    public function countCv($outdated = false)
+    public function countCv($with_outdated = false)
     {
-        $filter_date = ($outdated ? '' : ' WHERE cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
-        $stmt = $this->prepare('SELECT COUNT(*) FROM cv'.$filter_date);
+        $stmt = $this->prepare('SELECT COUNT(*) FROM cv'.($with_outdated ? '' : ' WHERE cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) '));
         $stmt->execute();
         return $stmt->fetch()[0];
     }
 
-    public function fetchCvs($outdated = false)
+    public function fetchCvs($with_outdated = false)
     {
-        $filter_date = ($outdated ? '' : ' AND cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare(
             'SELECT cv.ID, cv.UserID, users.UserName,
             cv.SectionID, sections.Name as SectionName,
             cv.Title, cv.Content, cv.DateTime
             FROM cv, sections, users
-            WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID'.$filter_date.'
-            ORDER BY DateTime DESC'
+            WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID '
+            .($with_outdated ? '' : 'AND cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
+            'ORDER BY DateTime DESC'
         );
         $stmt->execute();
         return $stmt;

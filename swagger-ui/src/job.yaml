@@ -13,10 +13,10 @@ paths:
         - Резюме
       parameters:
         - in: query
-          name: outdated
+          name: with_outdated
           schema:
             type: bool
-          required: false
+            default: 0
       responses:
         200:
           description: "OK"
@@ -110,10 +110,10 @@ paths:
         - Рекламные объявления
       parameters:
         - in: query
-          name: outdated
+          name: with_outdated
           schema:
             type: bool
-          required: false
+            default: 0
       responses:
         200:
           description: "OK"
@@ -298,10 +298,10 @@ paths:
             - Вакансии
           parameters:
             - in: query
-              name: outdated
+              name: with_outdated
               schema:
                 type: bool
-              required: false
+                default: 0
           responses:
             200:
               description: "ok"
