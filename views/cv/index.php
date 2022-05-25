@@ -171,14 +171,7 @@
 							number: true,
 							min: 0
 						},
-						title: "required",
-						datetime: {
-							required: true,
-							pattern:  true
-							//max: new Date().getFullYear()						 
-							//"^(([0]?[1-9]|1[0-2])/([0-2]?[0-9]|3[0-1])/[1-2]\d{3}) (20|21|22|23|[0-1]?\d{1}):([0-5]?\d{1})$"
-						},
-						
+						title: "required",												
 						content: "required"
 					},
 					messages: {
@@ -194,12 +187,7 @@
 						},
 						title: {
 							required: "Пожалуйста укажите Заголовок",						
-						},
-						datetime: {
-							pattern: "Пожалуйста укажите дату формата yyyy-mm-dd hh:mm:ss"	,
-							required: "Пожалуйста укажите дату формата yyyy-mm-dd hh:mm:ss"							
-						},
-						
+						},						
 						content: "Пожалуйста укажите описание"
 					},
 					errorElement: "em",
