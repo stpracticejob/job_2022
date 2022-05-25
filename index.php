@@ -1,16 +1,21 @@
 <?php
 
 require_once 'vendor/autoload.php';
-require_once 'config.php';
 
 error_reporting(E_ALL);
 
+use Dotenv\Dotenv;
 use Flight as Flight;
 use Job\Database\DB;
 use Job\Auth\User;
 
+Dotenv::createImmutable(__DIR__)->safeLoad();
+
+require_once 'config.php';
+
 Flight::set('flight.log_errors', $DEBUG);
 Flight::set('flight.case_sensitive', true);
+Flight::set('flight.views.path', __DIR__ . '/views');
 
 Flight::register('db', DB::class, [$DSN, $DB_USER, $DB_PASSWORD, $DB_OPTIONS]);
 Flight::register('user', User::class);
@@ -28,47 +33,162 @@ Flight::before('start', function (&$params, &$output) {
     header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 });
 
-Flight::route('GET|POST|DELETE|OPTIONS /api/cvs/@id:[0-9]+', function ($id) {
-    $request = Flight::request();
-    $db = Flight::db();
-
-    switch ($request->method) {
-        case 'POST':
-            $data = $request->data;
-            Flight::json($db->updateCv($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->datetime));
-            break;
-
-        case 'GET':
-            Flight::json($db->fetchCv($id));
-            break;
-
-        case 'DELETE':
-            Flight::json($db->deleteCv($id));
-            break;
-    }
+Flight::route('GET /api/users/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchUser($id));
 });
 
-Flight::route('GET|POST /api/cvs?.+', function () {
+Flight::route('POST /api/users/@id:[0-9]+', function ($id) {
+    $data = Flight::request()->data;
+    Flight::json(Flight::db()->updateUser($id, $data->username, $data->login, $data->password, $data->roleid, $data->state));
+});
+
+Flight::route('DELETE /api/users/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteUser($id));
+});
+
+Flight::route('OPTIONS /api/users/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/users?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $query = $request->query;
+
+    Flight::json([
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countUsers(),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchUsers()->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
+
+Flight::route('POST /api/users?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $data = $request->data;
+
+    Flight::json([
+        'result' => $db->addUser($data->username, $data->login, $data->password, $data->roleid, $data->state)
+    ]);
+});
+
+Flight::route('GET /api/advertises/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchAdvertise($id));
+});
+
+Flight::route('POST /api/advertises/@id:[0-9]+', function ($id) {
+    $data = Flight::request()->data;
+    Flight::json(Flight::db()->updateAdvertise($id, $data->user_id, $data->title, $data->content));
+});
+
+Flight::route('DELETE /api/advertises/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteAdvertise($id));
+});
+
+Flight::route('OPTIONS /api/advertises/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/advertises?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $query = $request->query;
+
+    Flight::json([
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countAdvertises(),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchAdvertises()->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
+
+Flight::route('POST /api/advertises?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $data = $request->data;
+
+    Flight::json([
+        'result' => $db->addAdvertise($data->user_id, $data->title, $data->content)
+    ]);
+});
+
+Flight::route('GET /api/vacancy/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchVacancy($id));
+});
+
+Flight::route('POST /api/vacancy/@id:[0-9]+', function ($id) {
+    $data = Flight::request()->data;
+    Flight::json(Flight::db()->updateVacancy($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote));
+});
+
+Flight::route('DELETE /api/vacancy/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteVacancy($id));
+});
+
+Flight::route('OPTIONS /api/vacancy/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/vacancy?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $query = $request->query;
+
+    Flight::json([
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countVacancy(),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchVacancies()->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
+
+Flight::route('POST /api/vacancy?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $data = $request->data;
+
+    Flight::json([
+        'result' => $db->addVacancy($data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote)
+    ]);
+});
+
+Flight::route('POST /api/cvs/@id:[0-9]+', function ($id) {
     $request = Flight::request();
     $db = Flight::db();
 
-    switch ($request->method) {
-        case 'GET':
-            Flight::json([
-                'draw' => intval($request->query->draw),
-                'recordsTotal' => $db->countCv(),
-                'recordsFiltered' => 0, // TODO
-                'data' => $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
-            ]);
-            break;
+    $data = $request->data;
+    Flight::json($db->updateCv($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->datetime));
+});
 
-        case 'POST':
-            $data = $request->data;
-            Flight::json([
-                'result' => $db->addCv($data->user_id, $data->section_id, $data->title, $data->content, $data->datetime)
-            ]);
-            break;
-    }
+Flight::route('GET /api/cvs/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchCv($id));
+});
+
+Flight::route('DELETE /api/cvs/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteCv($id));
+});
+
+Flight::route('OPTIONS /api/cvs/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/cvs?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+
+    Flight::json([
+        'draw' => intval($request->query->draw),
+        'recordsTotal' => $db->countCv(),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
+
+Flight::route('POST /api/cvs?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+
+    $data = $request->data;
+    Flight::json([
+        'result' => $db->addCv($data->user_id, $data->section_id, $data->title, $data->content)
+    ]);
 });
 
 Flight::route('GET /', function () {

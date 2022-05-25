@@ -2,6 +2,9 @@
   "name": "swagger-ui-webpack-getting-started",
   "version": "0.0.1",
   "description": "A simple setup of Swagger UI with Webpack",
+  "engines": {
+    "node": ">=16 <17"
+  },
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --open"

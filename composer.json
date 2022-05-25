@@ -5,11 +5,12 @@
     "license": "proprietary",
     "require": {
         "php": "^8.1",
-	"ext-json": "*",
-	"ext-mysqli": "*",
+        "ext-json": "*",
+        "ext-mysqli": "*",
         "ext-pdo_mysql": "*",
         "mikecao/flight": "^2.0",
-        "illuminate/validation": "^9.7"
+        "illuminate/validation": "^9.7",
+        "vlucas/phpdotenv": "^5.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.8"
@@ -26,8 +27,12 @@
     "scripts": {
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "php -c php.ini -S localhost:8000"
+            "php -c php.ini -S localhost:8000 -t public"
         ],
         "fix": "vendor/bin/php-cs-fixer fix"
+    },
+    "scripts-descriptions": {
+        "dev": "Run developer server.",
+        "fix": "Fix code for PSR-12 standart."
     }
 }

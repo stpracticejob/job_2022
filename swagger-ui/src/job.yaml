@@ -36,12 +36,6 @@ paths:
                 content:
                   type: string
                   required: true
-                datetime:
-                  type: string
-                  format: date-time
-                  description: 'Например "2018-06-11 11:24:04"'
-                  required: true
-                
       responses:
         200:
           description: "OK"
@@ -81,11 +75,6 @@ paths:
                 content:
                   type: string
                   required: true
-                datetime:
-                  type: string
-                  format: date-time
-                  description: 'Например "2018-06-11 11:24:04"'
-                  required: true
       parameters:
         - in: path
           name: id
@@ -108,3 +97,307 @@ paths:
       responses:
         200:
           description: "OK"
+  /api/advertises:
+    get:
+      summary: "Получить список рекламных объявлений"
+      tags:
+        - Рекламные объявления
+      responses:
+        200:
+          description: "OK"
+    post:
+      summary: "Добавить рекламное объявление"
+      tags:
+        - Рекламные объявления
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  required: true
+                title:
+                  type: string
+                  required: true
+                content:
+                  type: string
+                  required: true
+      responses:
+        200:
+          description: "OK"
+  /api/advertises/{id}:
+    get:
+      summary: "Получить рекламное объявление"
+      tags:
+        - Рекламные объявления
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    post:
+      summary: "Изменить рекламное объявление"
+      tags:
+        - Рекламные объявления
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  required: true
+                title:
+                  type: string
+                  required: true
+                content:
+                  type: string
+                  required: true
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    delete:
+      summary: "Удалить рекламное объявление"
+      tags:
+        - Рекламные объявления
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+  /api/users:
+    get:
+      summary: "Получить список пользователей"
+      tags:
+        - Пользователи
+      responses:
+        200:
+          description: "OK"
+    post:
+      summary: "Добавить пользователя"
+      tags:
+        - Пользователи
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  required: true
+                login:
+                  type: string
+                  required: true
+                password:
+                  type: string
+                  required: true
+                roleid:
+                  type: integer
+                  required: true
+                state:
+                  type: integer
+                  required: true
+      responses:
+        200:
+          description: "OK"
+  /api/users/{id}:
+    get:
+      summary: "Получить пользователя"
+      tags:
+        - Пользователи
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    post:
+      summary: "Изменить пользователя"
+      tags:
+        - Пользователи
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  required: true
+                login:
+                  type: string
+                  required: true
+                password:
+                  type: string
+                  required: true
+                roleid:
+                  type: integer
+                  required: true
+                state:
+                  type: integer
+                  required: true
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+    delete:
+      summary: "Удалить пользователя"
+      tags:
+        - Пользователи
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: "OK"
+  /api/vacancy:
+        get:
+          summary: "Получить список вакансий"
+          tags:
+            - Вакансии
+          responses:
+            200:
+              description: "ok"
+        post:
+          summary: "Добавить вакансию"
+          tags:
+            - Вакансии
+          requestBody:
+            content:
+              application/x-www-form-urlencoded:
+                schema:
+                  type: object
+                  properties:
+                    user_id:
+                      type: integer
+                      required: true
+                    section_id:
+                      type: integer
+                      required: true
+                    title:
+                      type: string
+                      required: true
+                    content:
+                      type: string
+                      required: true
+                    salary:
+                      type: integer
+                      required: true
+                    experience:
+                      type: integer
+                      required: true
+                    is_main:
+                      type: integer
+                      required: true
+                    is_partnership:
+                      type: integer
+                      required: true
+                    is_remote:
+                      type: integer
+                      required: true
+          responses:
+            200:
+              description: "OK"
+  /api/vacancy/{id}:
+        get:
+          summary: "Получить вакансию"
+          tags:
+            - Вакансии
+          parameters:
+            - in: path
+              name: id
+              schema:
+                type: integer
+              required: true
+          responses:
+            200:
+              description: "OK"
+        post:
+          summary: "Изменить вакансию"
+          tags:
+            - Вакансии
+          requestBody:
+            content:
+              multipart/form-data:
+                schema:
+                  type: object
+                  properties:
+                    user_id:
+                      type: integer
+                      required: true
+                    section_id:
+                      type: integer
+                      required: true
+                    title:
+                      type: string
+                      required: true
+                    content:
+                      type: string
+                      required: true
+                    salary:
+                      type: integer
+                      required: true
+                    experience:
+                      type: integer
+                      required: true
+                    is_main:
+                      type: integer
+                      required: true
+                    is_partnership:
+                      type: integer
+                      required: true
+                    is_remote:
+                      type: integer
+                      required: true
+          parameters:
+            - in: path
+              name: id
+              schema:
+                type: integer
+              required: true
+          responses:
+            200:
+              description: "OK"
+        delete:
+          summary: "Удалить вакансию"
+          tags:
+            - Вакансии
+          parameters:
+            - in: path
+              name: id
+              schema:
+                type: integer
+              required: true
+          responses:
+            200:
+              description: "OK"
+              
