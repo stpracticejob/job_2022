@@ -87,7 +87,7 @@ class DB extends PDO
             ->execute(['id' => $id]);
     }
 
-    public function countAdvertises($outdated=false)
+    public function countAdvertises($outdated = false)
     {
         $filter_date = ($outdated ? '' : ' WHERE advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)');
         $stmt = $this->prepare('SELECT COUNT(*) FROM advertise'.$filter_date);
@@ -95,7 +95,7 @@ class DB extends PDO
         return $stmt->fetch()[0];
     }
 
-    public function fetchAdvertises($outdated=false)
+    public function fetchAdvertises($outdated = false)
     {
         $filter_date = ($outdated ? '' : ' AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare('
@@ -164,7 +164,7 @@ class DB extends PDO
         return $stmt;
     }
 
-    public function countVacancy($outdated=false)
+    public function countVacancy($outdated = false)
     {
         $filter_date = ($outdated ? '' : ' WHERE vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy'.$filter_date);
@@ -172,7 +172,7 @@ class DB extends PDO
         return $stmt->fetch()[0];
     }
 
-    public function fetchVacancies($outdated=false)
+    public function fetchVacancies($outdated = false)
     {
         $filter_date = ($outdated ? '' : ' AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare("
@@ -237,7 +237,7 @@ class DB extends PDO
             ->execute(['id' => $id]);
     }
 
-    public function countCv($outdated=false)
+    public function countCv($outdated = false)
     {
         $filter_date = ($outdated ? '' : ' WHERE cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare('SELECT COUNT(*) FROM cv'.$filter_date);
@@ -245,7 +245,7 @@ class DB extends PDO
         return $stmt->fetch()[0];
     }
 
-    public function fetchCvs($outdated=false)
+    public function fetchCvs($outdated = false)
     {
         $filter_date = ($outdated ? '' : ' AND cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare(
