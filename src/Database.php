@@ -87,15 +87,17 @@ class DB extends PDO
             ->execute(['id' => $id]);
     }
 
-    public function countAdvertises()
+    public function countAdvertises($outdated=false)
     {
-        $stmt = $this->prepare('SELECT COUNT(*) FROM advertise WHERE advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)');
+        $filter_date = ($outdated ? '' : ' WHERE advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)');
+        $stmt = $this->prepare('SELECT COUNT(*) FROM advertise'.$filter_date);
         $stmt->execute();
         return $stmt->fetch()[0];
     }
 
-    public function fetchAdvertises()
+    public function fetchAdvertises($outdated=false)
     {
+        $filter_date = ($outdated ? '' : ' AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare('
 	    SELECT advertise.ID,
 		   users.ID As UserID,
@@ -104,8 +106,8 @@ class DB extends PDO
 		   advertise.Content,		
 		   advertise.DateTime
 	    FROM advertise, users 
-	    WHERE advertise.UserID=users.ID AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)
-	    ORDER BY DateTime DESC');
+	    WHERE advertise.UserID=users.ID'.$filter_date.'
+        ORDER BY DateTime DESC');
         $stmt->execute();
         return $stmt;
     }
@@ -162,15 +164,17 @@ class DB extends PDO
         return $stmt;
     }
 
-    public function countVacancy()
+    public function countVacancy($outdated=false)
     {
-        $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy WHERE vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)');
+        $filter_date = ($outdated ? '' : ' WHERE vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
+        $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy'.$filter_date);
         $stmt->execute();
         return $stmt->fetch()[0];
     }
 
-    public function fetchVacancies()
+    public function fetchVacancies($outdated=false)
     {
+        $filter_date = ($outdated ? '' : ' AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare("
 	    SELECT vacancy.ID As ID,
 		   users.Login As UserLogin,
@@ -186,7 +190,7 @@ class DB extends PDO
 		   vacancy.IsRemote As IsRemote,
 		   vacancy.DateTime As DateTime
 	    FROM vacancy, sections, users
-            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)
+            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID".$filter_date."
             ORDER BY DateTime DESC");
         $stmt->execute();
         return $stmt;
@@ -233,21 +237,23 @@ class DB extends PDO
             ->execute(['id' => $id]);
     }
 
-    public function countCv()
+    public function countCv($outdated=false)
     {
-        $stmt = $this->prepare('SELECT COUNT(*) FROM cv WHERE cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)');
+        $filter_date = ($outdated ? '' : ' WHERE cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
+        $stmt = $this->prepare('SELECT COUNT(*) FROM cv'.$filter_date);
         $stmt->execute();
         return $stmt->fetch()[0];
     }
 
-    public function fetchCvs()
+    public function fetchCvs($outdated=false)
     {
+        $filter_date = ($outdated ? '' : ' AND cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ');
         $stmt = $this->prepare(
             'SELECT cv.ID, cv.UserID, users.UserName,
             cv.SectionID, sections.Name as SectionName,
             cv.Title, cv.Content, cv.DateTime
             FROM cv, sections, users
-            WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID AND cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)
+            WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID'.$filter_date.'
             ORDER BY DateTime DESC'
         );
         $stmt->execute();

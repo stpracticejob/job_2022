@@ -92,12 +92,12 @@ Flight::route('GET /api/advertises?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
     $query = $request->query;
-
+    $outdated = boolval($query->outdated);
     Flight::json([
         'draw' => intval($query->draw),
-        'recordsTotal' => $db->countAdvertises(),
+        'recordsTotal' => $db->countAdvertises($outdated),
         'recordsFiltered' => 0,
-        'data' => $db->fetchAdvertises()->fetchAll(PDO::FETCH_ASSOC),
+        'data' => $db->fetchAdvertises($outdated)->fetchAll(PDO::FETCH_ASSOC),
     ]);
 });
 
@@ -131,12 +131,12 @@ Flight::route('GET /api/vacancy?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
     $query = $request->query;
-
+    $outdated = boolval($query->outdated);
     Flight::json([
         'draw' => intval($query->draw),
-        'recordsTotal' => $db->countVacancy(),
+        'recordsTotal' => $db->countVacancy($outdated),
         'recordsFiltered' => 0,
-        'data' => $db->fetchVacancies()->fetchAll(PDO::FETCH_ASSOC),
+        'data' => $db->fetchVacancies($outdated)->fetchAll(PDO::FETCH_ASSOC),
     ]);
 });
 
@@ -172,12 +172,13 @@ Flight::route('OPTIONS /api/cvs/@id:[0-9]+', function ($id) {
 Flight::route('GET /api/cvs?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
-
+    $query = $request->query;
+    $outdated = boolval($query->outdated);
     Flight::json([
-        'draw' => intval($request->query->draw),
-        'recordsTotal' => $db->countCv(),
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countCv($outdated),
         'recordsFiltered' => 0,
-        'data' => $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
+        'data' => $db->fetchCvs($outdated)->fetchAll(PDO::FETCH_ASSOC),
     ]);
 });
 

@@ -11,6 +11,12 @@ paths:
       summary: "Получить список резюме"
       tags:
         - Резюме
+      parameters:
+        - in: query
+          name: outdated
+          schema:
+            type: bool
+          required: false
       responses:
         200:
           description: "OK"
@@ -102,6 +108,12 @@ paths:
       summary: "Получить список рекламных объявлений"
       tags:
         - Рекламные объявления
+      parameters:
+        - in: query
+          name: outdated
+          schema:
+            type: bool
+          required: false
       responses:
         200:
           description: "OK"
@@ -284,6 +296,12 @@ paths:
           summary: "Получить список вакансий"
           tags:
             - Вакансии
+          parameters:
+            - in: query
+              name: outdated
+              schema:
+                type: bool
+              required: false
           responses:
             200:
               description: "ok"
