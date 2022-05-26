@@ -53,21 +53,22 @@
 					event.preventDefault();					
 					
 					var user_info = {
-						"UserName":$("#Nazvanie").val(),
+						"UserName":$("#UserName").val(),
 						"Login":$("#Login").val(),
 						"RoleName":$("#RoleName").val(),
 						"State":$("#State").val()
 					}
 					
-					var method="PUT";
-					if($("#userModal #operation").val()==1) {
-						method="PATCH";
-						user_info.ID = $("#users_ID").val();						
-					}					
+					var url="/api/users";
+					//redactirov
+					if($("#operation").val()==1) {
+						var ID = $("#user_ID").val();
+						url+="/"+ID;						
+					}				
 					
 					$.ajax({
-                        url:"/api/users",
-                        method: method,
+                        url:url,
+                        method: "POST",
                         data: JSON.stringify(user_info),
                         headers: {
                             "Content-type":"application/json"
@@ -94,17 +95,17 @@
                             //Заголовок окна
                             $('.modal-title').text("Редактировать пользователя");
                             
-                            $("#userModal #UserName").val(data.UserName);
-                            $("#userModal #Login").val(data.Login);
-                            $("#userModal #RoleID").val(data.RoleID);
-                            $("#userModal #State").val(data.State);
-                            $('#userModal #user_ID').val(ID);									
+                            $("#UserName").val(data.UserName);
+                            $("#Login").val(data.Login);
+                            $("#RoleID").val(data.RoleID);
+                            $("#State").val(data.State);
+                            $('#user_ID').val(ID);									
                             
                             //Флаг операции (1 - редактирование)
-                            $("#userModal #operation").val("1");
+                            $("#operation").val("1");
                             
                             //Текст на кнопке
-                            $("#userModal #action").val("Сохранить изменения");
+                            $("#action").val("Сохранить изменения");
                             
                             //Отобразить форму
                             $('#userModal').modal('show');									
@@ -117,17 +118,18 @@
 				$("#add_button").click(function() {
 					//Режим добавления (кнопка Добавить)
 									
-					$("#userModal #UserName").val("");
-					$("#userModal #Login").val("");
-					$("#userModal #RoleID").val("");
-					$("#userModal #State").val("");
-					
+					$("#UserName").val("");
+					$("#Login").val("");
+					$("#RoleID").val("");
+					$("#State").val("");
+					$('#user_ID').val("");
+
 					//Заголовок окна
 					$('.modal-title').text("Добавить пользователя");
 					//Текст на кнопке
-					$("#userModal #action").val("Добавить");
+					$("#action").val("Добавить");
 					//Флаг операции (0- добавление)
-					$("#userModal #operation").val("0");
+					$("#operation").val("0");
 				});
 				
 				$(document).on("click",".delete",function() {
@@ -235,7 +237,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Добавить товар</h4>
+							<h4 class="modal-title">Добавить пользователя</h4>
 						</div>
 						<div class="modal-body">
 							<div class="field">
