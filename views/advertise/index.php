@@ -97,7 +97,7 @@
                             
                             $("#user_id").val(data.user_id);
                             $("#title").val(data.title);
-                            $("#datetime").val(data.datetime);
+                           // $("#datetime").val(data.datetime);
                             $("#content").val(data.content);
                             $('#advertise_ID').val(ID);									
                             
@@ -120,7 +120,7 @@
 									
 					$("#user_id").val("");
                     $("#title").val("");
-                    $("#datetime").val("");
+                   // $("#datetime").val("");
                     $("#content").val("");
                     $('#advertise_ID').val("");	
 					
@@ -161,10 +161,6 @@
 							min: 0
 							},
 							title: "required",
-							datetime:{
-							required: true,
-							number: true,
-							},
 							content: {
 								required: true
 							}
@@ -175,15 +171,12 @@
 							number: "id должен быть числом",
 							min: "id не может быть меньше нуля"
 						},
-						
+
 						title: {
 							required: "Пожалуйста укажите заголовок"
 						},
 				
-						datetime: {
-							pattern: "Пожалуйста укажите дату формата yyyy-mm-dd hh:mm:ss",
-							required: "Пожалуйста укажите дату формата yyyy-mm-dd hh:mm:ss"
-						},
+						
 
 						content: { 
 							required: "Пожалуйста укажите описание"
@@ -261,10 +254,7 @@
 								<label>Описание</label>
 								<input type="text" name="content" id="content" class="form-control" />
 							</div>
-							<div class="field">
-								<label>Дата</label>
-								<input type="text" name="datetime" id="datetime" class="form-control" />
-							</div>
+							
 							<!--br />
 							<label>Select User Image</label>
 							<input type="file" name="user_image" id="user_image" />
