@@ -40,8 +40,8 @@
 <style>
 	div#usermenu {
 		background-color: #EEE;
-		padding: 14px;
 		overflow: hidden;
+		margin-bottom: 4em !important;
 	}
 	
 	div#usermenu ul {
@@ -68,6 +68,31 @@
 		margin-left: 30px;
 		margin-right: 0px;
 	}
+	.navbar{
+		background:#F97300;
+	}
+	.nav-link , .navbar-brand{
+		color: #f4f4f4;
+		cursor: pointer;
+	}
+	.nav-link{
+		margin-right: 1em !important;
+		border-radius: 4px;
+	}
+	.nav-link:hover{
+		background: #f4f4f4;
+		color: #f97300;
+
+	}
+	.navbar-collapse{
+		justify-content: flex-end;
+	}
+	.navbar-toggler{
+		background:#fff !important;
+	}
+	.dropdown-menu[data-bs-popper] {
+		left: unset !important;
+	}
 </style>
 
 <div id="usermenu">
@@ -86,12 +111,43 @@
 		<?endforeach;?>
 	</ul>
 	<?else:?>
-	<div id="welcome">	
-		<a href="/">JOB SITE</a>
-		<ul>			
-			<li><a href="/login">Вход</a></li>
-			<li><a href="/reg_user.php">Регистрация</a></li>
-		</ul>
-	</div>
+	<nav class="navbar bg-dark text-white navbar-expand-lg fixed-top">
+		<a class="navbar-brand ml-4" href="">JOB</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-4">
+				<li class="nav-item">
+					<div class="dropdown">
+						<button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							Справочники
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<li>
+								<a class="dropdown-item" href="">Вакансии</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="/cv">Резюме</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="">Реклама</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="">Настройки</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/login">Вход</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/reg_user.php">Регистрация</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 	<?endif;?>	
 </div>
