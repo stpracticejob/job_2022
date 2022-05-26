@@ -97,19 +97,53 @@
 
 <div id="usermenu">
 	<?if ($user->isUserAuthorized()) :?>
-	<div id="welcome">
-		<span>Здравствуйте, <?=$user->getUserName()?>!</span>
-		<ul>
-			<li><a href="/">На сайт</a></li>
-			<li><a href="<?=$profile_page?>">Мой профиль</a></li>
-			<li><a href="/logout">Выход</a></li>
-		</ul>
-	</div>
-	<ul>
-		<?foreach ($menu_items as $k => $v):?>
-		<li><a href="<?=$k?>"><?=$v?></a></li>
-		<?endforeach;?>
-	</ul>
+	<nav class="navbar bg-dark text-white navbar-expand-lg fixed-top">
+		<a class="navbar-brand ml-4" href="">JOB</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<div class="dropdown">
+						<button class="btn bg-dark dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Справочники
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<?foreach ($menu_items as $k => $v):?>
+								<li><a class="dropdown-item" href="<?=$k?>"><?=$v?></a></li>
+							<?endforeach;?>
+						</ul>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="">Настройки</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/login">Сообщения(2)</a>
+				</li>
+				<li class="nav-item">
+					<div class="dropdown">
+						<button class="btn bg-dark dropdown-toggle nav-link" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<?=$user->getUserName()?>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+							<li>
+								<a class="dropdown-item" href="">Редактировать профиль</a>
+							</li>
+							<li>
+								<div class="dropdown-divider"></div>
+							</li>
+							<li>
+								<a class="dropdown-item" href="">Выход</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
 	<?else:?>
 	<nav class="navbar bg-dark text-white navbar-expand-lg fixed-top">
 		<a class="navbar-brand ml-4" href="">JOB</a>
@@ -118,10 +152,10 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-4">
+			<ul class="navbar-nav">
 				<li class="nav-item">
 					<div class="dropdown">
-						<button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+						<button class="btn bg-dark dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Справочники
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
