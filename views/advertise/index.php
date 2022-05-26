@@ -155,29 +155,39 @@
 				
 				$( "#advertise_form" ).validate({
 					rules: {
-							user_id: "required",
+							user_id: {
+							required: true,							
+							number: true,
+							min: 0
+							},
 							title: "required",
 							datetime:{
-								required: true,
-								number: true,
-								min: 1900,
-								//max: new Date().getFullYear()
+							required: true,
+							number: true,
 							},
-							contet: "required"
+							content: {
+								required: true
+							}
 					},
 					messages: {
-						user_id: "Пожалуйста укажите ваше имя",
+						user_id:{ 
+							required: "Пожалуйста укажите id",
+							number: "id должен быть числом",
+							min: "id не может быть меньше нуля"
+						},
+						
 						title: {
-							required: "Пожалуйста укажите заголовок",
+							required: "Пожалуйста укажите заголовок"
 						},
 				
 						datetime: {
-							required: "Пожалуйста укажите год",
-							number: "Год должен быть числом",
-							min: "Год должен быть не ранее 1900",
-							max: "Год не может быть больше текущего"
+							pattern: "Пожалуйста укажите дату формата yyyy-mm-dd hh:mm:ss",
+							required: "Пожалуйста укажите дату формата yyyy-mm-dd hh:mm:ss"
 						},
-						content: "Пожалуйста укажите описание"
+
+						content: { 
+							required: "Пожалуйста укажите описание"
+						}
 					},
 					errorElement: "em",
 					errorPlacement: function ( error, element ) {
