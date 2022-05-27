@@ -201,12 +201,13 @@
         User git
         IdentityFile ~/.ssh/id_rsa
     ```
+1. Добавте открытый ключ на сайт GitHub в настройках по адресу https://github.com/settings/keys. Проверьте, что он нормально доступен на сайте, перейдя по адресу https://github.com/your-login-here.keys
 
 1. Проверяем соединение с GitHub:
     ```
     ssh -T github.com
     ```
-    Эта команда запросит пароль от закрытого ключа, а после его ввода выведет строку подобнюу этой:
+    Эта команда запросит пароль от закрытого ключа, а после его ввода соединится с сервером строку подобную этой:
     ```
     Hi <userтname>! You've successfully authenticated, but GitHub does not provide shell access.
     ```
