@@ -68,21 +68,18 @@
 		margin-left: 30px;
 		margin-right: 0px;
 	}
-	.navbar{
-		background:#F97300;
-	}
 	.nav-link , .navbar-brand{
 		color: #f4f4f4;
 		cursor: pointer;
+		background: #343a40 !important;
 	}
 	.nav-link{
 		margin-right: 1em !important;
 		border-radius: 4px;
 	}
 	.nav-link:hover{
-		background: #f4f4f4;
-		color: #f97300;
-
+		background: #f4f4f4 !important;
+		color: #343a40;
 	}
 	.navbar-collapse{
 		justify-content: flex-end;
@@ -125,7 +122,7 @@
 				</li>
 				<li class="nav-item">
 					<div class="dropdown">
-						<button class="btn bg-dark dropdown-toggle nav-link" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<?=$user->getUserName()?>
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
@@ -145,7 +142,7 @@
 		</div>
 	</nav>
 	<?else:?>
-	<nav class="navbar bg-dark text-white navbar-expand-lg fixed-top">
+	<nav class="navbar bg-dark navbar-expand-lg fixed-top">
 		<a class="navbar-brand ml-4" href="">JOB</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -155,7 +152,7 @@
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<div class="dropdown">
-						<button class="btn bg-dark dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Справочники
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
