@@ -84,12 +84,12 @@
 1. Разварачиваем дамп базы данных предварительно создав пользователя и базу данных:
 
     Вход без пароля:
-    ```bash
+    ```powershell
     mysql -uroot
     ```
 
     Вход с паролем password:
-    ```bash
+    ```powershell
     mysql -uroot -ppassword
     ```
 
@@ -104,8 +104,8 @@
     ```
 
 1. Импортировать таблицы:
-    ```bash
-    cat db_job.sql | mysql -uroot job
+    ```powershell
+    mysql -uroot job < db_job.sql
     ```
 
 1. Создаем файл настроек окружения
@@ -195,7 +195,7 @@
     cd %USERPROFILE%\.ssh
     notepad config
     ```
-    И добавте следующе строки:
+    И добавте следующие строки:
     ```
     Host github.com
         User git
