@@ -59,21 +59,46 @@ ssh-keygen
 type ~/.ssh/id_rsa.pub
 # Копируем содержимое файла и добавляем новый SSH-ключ в аккаунт GitHub
 ```
+
 4. Клонируем репозитарий проекта и переходим в каталог проекта :
 ```powershell
 git clone git+ssh://github.com/stpractice/job_2022
 cd job_2022
 ```
+
 5. Устанавливаем PHP пакеты необходимые для проекта:
 ```powershell
 composer install
 ```
+
 6. Разварачиваем дамп базы данных предварительно создав пользователя и базу данных:
 
-TODO
+Вход без пароля:
+```bash
+mysql -uroot
+```
+
+Вход с паролем password:
+```bash
+mysql -uroot -ppassword
+```
+
+Создать базу данных:
+```sql
+CREATE DATABASE job;
+```
+
+Выйти из консоли:
+```powershell
+quit
+```
+
+Импортировать таблицы:
+```bash
+cat db_job.sql | mysql -uroot job
+```
 
 7. Создаем файл настроек окружения
-
 ```powershell
 cp .env.example .env
 ```
