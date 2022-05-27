@@ -64,7 +64,7 @@ class DB extends PDO
     public function addUser($username, $login, $password, $roleid, $state)
     {
         return $this->prepare(
-            'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, $password, :roleid, :state)'
+            'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, :password, :roleid, :state)'
         )->execute([
             'username' => $username, 
             'login' => $login, 
@@ -78,7 +78,7 @@ class DB extends PDO
     {
         return $this->prepare(
             'UPDATE users SET UserName = :username,
-            Login = :login, RoleID = :roleid, Password = :password, State = :state
+            Login = :login, Password = :password, RoleID = :roleid,  State = :state
             WHERE ID = :id'
         )->execute([
             'id' => $id,
