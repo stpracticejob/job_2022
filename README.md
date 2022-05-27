@@ -114,7 +114,7 @@ composer fix
 git push --set-upstream origin feature/my-cool-page
 ```
 
-15. Переходим на сайт GitHub и создаем PR c описанием того что былоло сделано в это Pull Request.
+15. Переходим на сайт GitHub и создаем PR c описанием того, что было сделано в этом Pull Request.
 
 16. Просим коллегу сделать code review.
 
