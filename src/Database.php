@@ -60,26 +60,26 @@ class DB extends PDO
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function addUser($username, $login, $password, $roleid, $state)
+    public function addUser($username, $login, $roleid, $state)
     {
         return $this->prepare(
-            'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, :password, :roleid, :state)'
+            'INSERT INTO users(UserName, Login, RoleID, State) VALUES (:username, :login, :roleid, :state)'
         )->execute([
-            'username' => $username, 'login' => $login, 'password' => md5($password),
+            'username' => $username, 'login' => $login,
             'roleid' => $roleid, 'state' => $state
         ]);
     }
 
-    public function updateUser($id, $username, $login, $password, $roleid, $state)
+    public function updateUser($id, $username, $login, $roleid, $state)
     {
         return $this->prepare(
             'UPDATE users SET UserName = :username,
-            Login = :login, Password = :password, RoleID = :roleid, State = :state
+            Login = :login, RoleID = :roleid, State = :state
             WHERE ID = :id'
         )->execute([
             'id' => $id,
             'username' => $username, 'login' => $login,
-            'password' => md5($password), 'roleid' => $roleid,
+            'roleid' => $roleid,
             'state' => $state
         ]);
     }
