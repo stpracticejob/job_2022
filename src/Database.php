@@ -45,6 +45,7 @@ class DB extends PDO
 		   users.Login,
 		   users.RoleID,
            user_roles.Name as RoleName,
+           users.Password,
            users.State
            FROM users, user_roles
            WHERE user_roles.ID = users.RoleID
@@ -55,30 +56,35 @@ class DB extends PDO
 
     public function fetchUser($id)
     {
-        $stmt = $this->prepare('SELECT ID, UserName, Login, RoleID, State FROM users WHERE ID = :id LIMIT 1');
+        $stmt = $this->prepare('SELECT ID, UserName, Login, Password, RoleID, State FROM users WHERE ID = :id LIMIT 1');
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function addUser($username, $login, $roleid, $state)
+    public function addUser($username, $login, $password, $roleid, $state)
     {
         return $this->prepare(
-            'INSERT INTO users(UserName, Login, RoleID, State) VALUES (:username, :login, :roleid, :state)'
+            'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, $password, :roleid, :state)'
         )->execute([
-            'username' => $username, 'login' => $login,
-            'roleid' => $roleid, 'state' => $state
+            'username' => $username, 
+            'login' => $login, 
+            'password' => md5($password),
+            'roleid' => $roleid, 
+            'state' => $state
         ]);
     }
 
-    public function updateUser($id, $username, $login, $roleid, $state)
+    public function updateUser($id, $username, $login, $password, $roleid, $state)
     {
         return $this->prepare(
             'UPDATE users SET UserName = :username,
-            Login = :login, RoleID = :roleid, State = :state
+            Login = :login, RoleID = :roleid, Password = :password, State = :state
             WHERE ID = :id'
         )->execute([
             'id' => $id,
-            'username' => $username, 'login' => $login,
+            'username' => $username, 
+            'login' => $login, 
+            'password' => md5($password),
             'roleid' => $roleid,
             'state' => $state
         ]);

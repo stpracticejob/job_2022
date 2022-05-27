@@ -68,7 +68,7 @@ Flight::route('POST /api/users?.+', function () {
     $data = $request->data;
 
     Flight::json([
-        'result' => $db->addUser($data->username, $data->login, $data->roleid, $data->state)
+        'result' => $db->addUser($data->username, $data->login, $data->password, $data->roleid, $data->state)
     ]);
 });
 

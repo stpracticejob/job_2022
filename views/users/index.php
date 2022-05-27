@@ -24,7 +24,7 @@
                     columns: [
                         { data: 'UserName' },
                         { data: 'Login' },
-                        { data: 'RoleName' },
+                        { data: 'RoleID' },
                         { data: 'State' },
                         {
                             data: 'ID',
@@ -55,7 +55,8 @@
 					var user_info = {
 						"UserName":$("#UserName").val(),
 						"Login":$("#Login").val(),
-						"RoleName":$("#RoleName").val(),
+						"Password":$("Password").val(),
+						"RoleID":$("#RoleID").val(),
 						"State":$("#State").val()
 					}
 					
@@ -97,6 +98,7 @@
                             
                             $("#UserName").val(data.UserName);
                             $("#Login").val(data.Login);
+							$("#Password").val(data.Password);
                             $("#RoleID").val(data.RoleID);
                             $("#State").val(data.State);
                             $('#user_ID').val(ID);									
@@ -120,6 +122,7 @@
 									
 					$("#UserName").val("");
 					$("#Login").val("");
+					$("#Password").val("");
 					$("#RoleID").val("");
 					$("#State").val("");
 					$('#user_ID').val("");
@@ -171,6 +174,7 @@
 					messages: {
 						UserName: "Пожалуйста укажите ФИО пользователя",
 						Login: "Пожалуйста укажите логин пользователя",
+						Password: "Пожалуйста, укажите пароль пользователя",
 						RoleID: {
 							required: "Пожалуйста укажите номер роли пользователя",
 							number: "Номер роли должен быть числом",
@@ -249,6 +253,10 @@
 								<input type="text" name="Login" id="Login" class="form-control" />
 							</div>
 							<div class="field">
+								<label>Пароль</label>
+								<input type="text" name="Password" id="Password" class="form-control" />
+							</div>
+							<div class="field">
 								<label>Номер роли</label>
 								<input type="text" name="RoleID" id="RoleID" class="form-control" />
 							</div>
@@ -271,6 +279,7 @@
 						</div>
 						<div class="modal-footer">
 							<input type="hidden" name="user_ID" id="user_ID" />
+							<input type="hidden" name="password" id="password" />
 							<input type="hidden" name="operation" id="operation" />
 							<input type="submit" name="action" id="action" class="btn btn-success" value="Добавить" />
 							<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
