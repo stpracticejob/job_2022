@@ -1,11 +1,11 @@
 <?php
     //PHP-код
     $menu_admin = [
-        "/edit/vacancy" => "Вакансии",
-        "/edit/cv" => "Резюме",
-        "/edit/advertise" => "Объявления",
-        "/edit/users" => "Пользователи",
-        "/edit/categories" => "Категории"
+        "/vacancy" => "Вакансии",
+        "/cv" => "Резюме",
+        "/advertise" => "Объявления",
+        "/users" => "Пользователи",
+        "/categories" => "Категории"
     ];
 
     $menu_aspirant = [
@@ -43,27 +43,27 @@
 		overflow: hidden;
 		margin-bottom: 4em !important;
 	}
-	
+
 	div#usermenu ul {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
-	
+
 	div#usermenu ul li{
 		display: inline;
-		margin-right: 30px; 
+		margin-right: 30px;
 		margin-left: 0px;
 	}
-	
+
 	div#welcome {
 		padding: 3px 0;
 	}
-	
+
 	div#welcome ul{
-		float: right;		
+		float: right;
 	}
-	
+
 	div#welcome ul li{
 		margin-left: 30px;
 		margin-right: 0px;
@@ -93,8 +93,7 @@
 </style>
 
 <div id="usermenu">
-	<?if ($user->isUserAuthorized()) :?>
-	<nav class="navbar bg-dark text-white navbar-expand-lg fixed-top">
+<nav class="navbar bg-dark navbar-expand-lg fixed-top">
 		<a class="navbar-brand ml-4" href="">JOB</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -102,83 +101,54 @@
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav">
-				<li class="nav-item">
-					<div class="dropdown">
-						<button class="btn bg-dark dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Справочники
-						</button>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<?foreach ($menu_items as $k => $v):?>
-								<li><a class="dropdown-item" href="<?=$k?>"><?=$v?></a></li>
-							<?endforeach;?>
-						</ul>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="">Настройки</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/login">Сообщения(2)</a>
-				</li>
-				<li class="nav-item">
-					<div class="dropdown">
-						<button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<?=$user->getUserName()?>
-						</button>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-							<li>
-								<a class="dropdown-item" href="">Редактировать профиль</a>
-							</li>
-							<li>
-								<div class="dropdown-divider"></div>
-							</li>
-							<li>
-								<a class="dropdown-item" href="">Выход</a>
-							</li>
-						</ul>
-					</div>
-				</li>
+                <? if (count($menu_items)) { ?>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Справочники
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <?foreach ($menu_items as $k => $v):?>
+                                    <li><a class="dropdown-item" href="<?=$k?>"><?=$v?></a></li>
+                                <?endforeach;?>
+                            </ul>
+                        </div>
+                    </li>
+                <? } ?>
+	            <?if ($user->isUserAuthorized()) :?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Настройки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Сообщения(2)</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <?=$user->getUserName()?>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                <li>
+                                    <a class="dropdown-item" href="">Редактировать профиль</a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/logout">Выход</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                <?else:?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Вход</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Регистрация</a>
+                    </li>
+	            <?endif;?>
 			</ul>
 		</div>
 	</nav>
-	<?else:?>
-	<nav class="navbar bg-dark navbar-expand-lg fixed-top">
-		<a class="navbar-brand ml-4" href="">JOB</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<div class="dropdown">
-						<button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Справочники
-						</button>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li>
-								<a class="dropdown-item" href="">Вакансии</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="/cv">Резюме</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="">Реклама</a>
-							</li>
-						</ul>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="">Настройки</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/login">Вход</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/reg_user.php">Регистрация</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	<?endif;?>	
 </div>
