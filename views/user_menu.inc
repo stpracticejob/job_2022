@@ -41,7 +41,8 @@
 	div#usermenu {
 		background-color: #EEE;
 		padding: 14px;
-		overflow: hidden;
+		overflow: visible;
+		margin-bottom: 2em !important;
 	}
 	
 	div#usermenu ul {
@@ -68,6 +69,35 @@
 		margin-left: 30px;
 		margin-right: 0px;
 	}
+	.navbar{
+		position: relative;
+		background:#F97300;
+	}
+	.nav-link , .navbar-brand{
+		color: #f4f4f4;
+		cursor: pointer;
+	}
+	.nav-link{
+		margin-left: 1em !important;
+		border-radius: 10px;
+	}
+	.nav-link:hover{
+		background: #f4f4f4;
+		color: #f97300;
+
+	}
+	.navbar-collapse{
+		justify-content: flex-end;
+	}
+	.navbar-toggler{
+		background:#fff !important;
+	}
+	.modal-header {
+    background: #ff8442;
+	}
+	.modal-footer {
+    background: #d5d5d5;
+}
 </style>
 
 <div id="usermenu">
@@ -86,12 +116,48 @@
 		<?endforeach;?>
 	</ul>
 	<?else:?>
-	<div id="welcome">	
-		<a href="/">JOB SITE</a>
-		<ul>			
-			<li><a href="/login">Вход</a></li>
-			<li><a href="/reg_user.php">Регистрация</a></li>
-		</ul>
-	</div>
+	<nav class="navbar navbar-expand-lg fixed-top ">
+		<a class="navbar-brand" href="/">JOB SITE</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse " id="navbarSupportedContent">
+			<ul class="navbar-nav mr-4">
+				<li class="nav-item">
+					<div class="dropdown">
+						<button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							Вакансии
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<?foreach ($db->fetchSections() as $item):?>
+								<li><a class="dropdown-item" href="/cvs.php?section_id=<?=$item["ID"]?>"><?=$item["Name"]?></a></li>
+							<?endforeach;?>
+						</ul>
+					</div>
+				</li>
+				<li class="nav-item">
+					<div class="dropdown">
+						<button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							Резюме
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<?foreach ($db->fetchSections() as $item):?>
+								<li><a class="dropdown-item" href="/cvs.php?section_id=<?=$item["ID"]?>"><?=$item["Name"]?></a></li>
+							<?endforeach;?>
+						</ul>
+					</div>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="/login">Вход</a>
+					
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="/reg_user.php">Регистрация</a></button>
+					
+				</li>
+			</ul>
+		</div>
+	</nav>
 	<?endif;?>	
 </div>
