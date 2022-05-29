@@ -52,13 +52,13 @@
     После перезапуска терминала станет оступна команда `choco`.
 
 1. Устанавливаем необходимые инструменты разработчика:
-    ```powershell
+    ```
     choco install git php composer mariadb nodejs-lts
     ```
     Затем перезапускаем терминал.
 
 1. Генерируем и настраиваем открытый и закрытый ключ для ssh:
-    ```powershell
+    ```
     ssh-keygen
     ```
     Далее все по умолчанию, нажимаем Enter несколько раз.
@@ -71,25 +71,25 @@
 1. Копируем содержимое файла и добавляем новый SSH-ключ в аккаунт GitHub по адресу https://github.com/settings/keys
 
 1. Клонируем репозитарий проекта и переходим в каталог проекта:
-    ```powershell
+    ```
     git clone git+ssh://github.com/stpractice/job_2022
     cd job_2022
     ```
 
 1. Устанавливаем PHP пакеты необходимые для проекта:
-    ```powershell
+    ```
     composer install
     ```
 
 1. Разварачиваем дамп базы данных предварительно создав пользователя и базу данных:
 
     Вход без пароля:
-    ```powershell
+    ```
     mysql -uroot
     ```
 
     Вход с паролем password:
-    ```powershell
+    ```
     mysql -uroot -ppassword
     ```
 
@@ -99,35 +99,35 @@
     ```
 
     Выходим из консоли MySQL:
-    ```powershell
+    ```
     quit
     ```
 
 1. Импортировать таблицы:
-    ```powershell
+    ```
     mysql -uroot job < db_job.sql
     ```
 
 1. Создаем файл настроек окружения
-    ```powershell
+    ```
     cp .env.example .env
     ```
     Если необходимо, изменяем настройки окружения в файле .env
 
 1. Запускаем сервер разработчика на http://localhost:8000
-    ```powershell
+    ```
     composer dev
     ```
 
 1. Установливаем пакеты для Swagger UI и запускаем сервер для него:
-    ```powershell
+    ```
     cd swagger-ui
     npm install
     npm start
     ```
 
 1. Делаем свою ветку в репозитарии и даем ей уникальное имя:
-    ```powershell
+    ```
     git checkout -b feature/my-cool-page
     ```
 
@@ -139,17 +139,17 @@
     ```
 
 1. По ходу работы делаем коммиты в свою ветку:
-    ```powershell
+    ```
     git commit -m "Add some cool stuff" -a
     ```
 
 1. Для форматирования кода по стандарту [PSR-12](https://www.php-fig.org/psr/psr-12/) выполняем команду и при необходимости коммитим:
-    ```powershell
+    ```
     composer fix
     ```
 
 14. Когда фича готова, то выталкиваем его на сервер:
-    ```powershell
+    ```
     git push --set-upstream origin feature/my-cool-page
     ```
 
