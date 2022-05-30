@@ -148,7 +148,7 @@
     composer fix
     ```
 
-14. Когда фича готова, то выталкиваем его на сервер:
+1. Когда фича готова, то выталкиваем его на сервер:
     ```
     git push --set-upstream origin feature/my-cool-page
     ```
