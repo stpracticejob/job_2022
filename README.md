@@ -169,7 +169,7 @@
     ```
     git config --global user.name "Firstname Lastname"
     ```
-    Настойки будут хрваниться в файле `%USERPROFILE%\.gitconfig`
+    Настойки будут храниться в файле `%USERPROFILE%\.gitconfig`
 
 1. Добавление e-mail разработчика в конфигурационный файл:
     ```
