@@ -175,7 +175,7 @@
     ```
     git config --global user.email "your_email_here@example.com"
     ```
-    Если хотите осьавить свой e-mail приватным, то в [настройках](https://github.com/settings/emails) поставьте галочку "Keep my email addresses private". GitHub выдаст вам технический адрес в виде 123456789+your-login-here@users.noreply.github.com, который можно использовать для работы с GitHub.
+    Если хотите оставить свой e-mail приватным, то в [настройках](https://github.com/settings/emails) поставьте галочку "Keep my email addresses private". GitHub выдаст вам технический адрес в виде 123456789+your-login-here@users.noreply.github.com, который можно использовать для работы с GitHub.
 
 1. Добавление настройки для автоматического перезаписывания урлов для клонирования с https://github.com на git://git@github.com:
     ```
