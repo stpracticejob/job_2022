@@ -44,8 +44,11 @@ class DB extends PDO
 		   users.UserName,
 		   users.Login,
 		   users.RoleID,
+           user_roles.Name as RoleName,
            users.State
-	    FROM users');
+           FROM users, user_roles
+           WHERE user_roles.ID = users.RoleID
+           ORDER BY users.ID DESC');
         $stmt->execute();
         return $stmt;
     }
@@ -62,8 +65,11 @@ class DB extends PDO
         return $this->prepare(
             'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, :password, :roleid, :state)'
         )->execute([
-            'username' => $username, 'login' => $login, 'password' => md5($password),
-            'roleid' => $roleid, 'state' => $state
+            'username' => $username,
+            'login' => $login,
+            'password' => md5($password),
+            'roleid' => $roleid,
+            'state' => $state
         ]);
     }
 
@@ -75,8 +81,10 @@ class DB extends PDO
             WHERE ID = :id'
         )->execute([
             'id' => $id,
-            'username' => $username, 'login' => $login,
-            'password' => md5($password), 'roleid' => $roleid,
+            'username' => $username,
+            'login' => $login,
+            'password' => md5($password),
+            'roleid' => $roleid,
             'state' => $state
         ]);
     }
