@@ -53,11 +53,11 @@
 					event.preventDefault();					
 					
 					var user_info = {
-						"UserName":$("#UserName").val(),
-						"Login":$("#Login").val(),
-						"Password":$("#Password").val(),
-						"RoleID":$("#RoleID").val(),
-						"State":$("#State").val()
+						"username":$("#username").val(),
+						"login":$("#login").val(),
+						"password":$("#password").val(),
+						"roleid":$("#roleid").val(),
+						"state":$("#state").val()
 					}
 					
 					var url="/api/users";
@@ -96,11 +96,11 @@
                             //Заголовок окна
                             $('.modal-title').text("Редактировать пользователя");
                             
-                            $("#UserName").val(data.UserName);
-                            $("#Login").val(data.Login);
-							$("#Password").val("");
-                            $("#RoleID").val(data.RoleID);
-                            $("#State").val(data.State);
+                            $("#username").val(data.username);
+                            $("#login").val(data.login);
+							$("#password").val("");
+                            $("#roleid").val(data.roleid);
+                            $("#state").val(data.state);
                             $('#user_ID').val(ID);									
                             
                             //Флаг операции (1 - редактирование)
@@ -120,11 +120,11 @@
 				$("#add_button").click(function() {
 					//Режим добавления (кнопка Добавить)
 									
-					$("#UserName").val("");
-					$("#Login").val("");
-					$("#Password").val("");
-					$("#RoleID").val("");
-					$("#State").val("");
+					$("#username").val("");
+					$("#login").val("");
+					$("#password").val("");
+					$("#roleid").val("");
+					$("#state").val("");
 					$('#user_ID').val("");
 
 					//Заголовок окна
@@ -158,30 +158,30 @@
 				
 				$( "#user_form" ).validate({
 					rules: {
-						UserName: "required",
-						Login: "required",
-						RoleID: {
+						username: "required",
+						login: "required",
+						roleid: {
 							required: true,
 							number: true,
 							min: 1,
 							max: 4
 						},
-						State: {
+						state: {
 							required: true,
 							number: true,
 						},
 					},
 					messages: {
-						UserName: "Пожалуйста укажите ФИО пользователя",
-						Login: "Пожалуйста укажите логин пользователя",
-						Password: "Пожалуйста, укажите пароль пользователя",
-						RoleID: {
+						username: "Пожалуйста укажите ФИО пользователя",
+						login: "Пожалуйста укажите логин пользователя",
+						password: "Пожалуйста, укажите пароль пользователя",
+						roleid: {
 							required: "Пожалуйста укажите номер роли пользователя",
 							number: "Номер роли должен быть числом",
 							min: "Номер роли должен быть 1 или более",
 							max: "Номер роли должен быть 4 или менее"						
 						},
-						State: {
+						state: {
 							required: "Пожалуйста укажите состояние пользователя",
 							number: "Состояние пользователя должно быть числом"
 						},
@@ -246,23 +246,23 @@
 						<div class="modal-body">
 							<div class="field">
 								<label>ФИО пользователя</label>
-								<input type="text" name="UserName" id="UserName" class="form-control" />
+								<input type="text" name="username" id="username" class="form-control" />
 							</div>
 							<div class="field">
 								<label>Логин</label>
-								<input type="text" name="Login" id="Login" class="form-control" />
+								<input type="text" name="login" id="login" class="form-control" />
 							</div>
 							<div class="field">
 								<label>Пароль</label>
-								<input type="text" name="Password" id="Password" class="form-control" />
+								<input type="text" name="password" id="password" class="form-control" />
 							</div>
 							<div class="field">
 								<label>Номер роли</label>
-								<input type="text" name="RoleID" id="RoleID" class="form-control" />
+								<input type="text" name="roleid" id="roleid" class="form-control" />
 							</div>
 							<div class="field">
 								<label>Состояние</label>
-								<input type="text" name="State" id="State" class="form-control" />
+								<input type="text" name="state" id="state" class="form-control" />
 							</div>
 							<!-- <div class="field">
 								<label>Страна</label>
