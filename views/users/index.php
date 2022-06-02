@@ -264,18 +264,6 @@
 								<label>Состояние</label>
 								<input type="text" name="state" id="state" class="form-control" />
 							</div>
-							<!-- <div class="field">
-								<label>Страна</label>
-								<input type="text" name="Strana" id="Strana" class="form-control" />
-							</div>
-							<div class="field">
-								<label>Описание</label>
-								<input type="text" name="Opisanie" id="Opisanie" class="form-control" />
-							</div> -->
-							<!--br />
-							<label>Select User Image</label>
-							<input type="file" name="user_image" id="user_image" />
-							<span id="user_uploaded_image"></span-->
 						</div>
 						<div class="modal-footer">
 							<input type="hidden" name="user_ID" id="user_ID" />
