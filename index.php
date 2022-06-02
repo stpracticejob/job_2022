@@ -39,7 +39,7 @@ Flight::route('GET /api/users/@id:[0-9]+', function ($id) {
 
 Flight::route('POST /api/users/@id:[0-9]+', function ($id) {
     $data = Flight::request()->data;
-    Flight::json(Flight::db()->updateUser($id, $data->username, $data->login, $data->password, $data->roleid, $data->state));
+    Flight::json(Flight::db()->updateUser($id, $data->UserName, $data->Login, $data->Password, $data->RoleID, $data->State));
 });
 
 Flight::route('DELETE /api/users/@id:[0-9]+', function ($id) {
@@ -68,7 +68,7 @@ Flight::route('POST /api/users?.+', function () {
     $data = $request->data;
 
     Flight::json([
-        'result' => $db->addUser($data->username, $data->login, $data->password, $data->roleid, $data->state)
+        'result' => $db->addUser($data->UserName, $data->Login, $data->Password, $data->RoleID, $data->State)
     ]);
 });
 

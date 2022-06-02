@@ -66,10 +66,10 @@ class DB extends PDO
         return $this->prepare(
             'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, :password, :roleid, :state)'
         )->execute([
-            'username' => $username, 
-            'login' => $login, 
+            'username' => $username,
+            'login' => $login,
             'password' => md5($password),
-            'roleid' => $roleid, 
+            'roleid' => $roleid,
             'state' => $state
         ]);
     }
@@ -82,8 +82,8 @@ class DB extends PDO
             WHERE ID = :id'
         )->execute([
             'id' => $id,
-            'username' => $username, 
-            'login' => $login, 
+            'username' => $username,
+            'login' => $login,
             'password' => md5($password),
             'roleid' => $roleid,
             'state' => $state
