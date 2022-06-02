@@ -96,11 +96,11 @@
                             //Заголовок окна
                             $('.modal-title').text("Редактировать пользователя");
                             
-                            $("#username").val(data.username);
-                            $("#login").val(data.login);
+                            $("#username").val(data.UserName);
+                            $("#login").val(data.Login);
 							$("#password").val("");
-                            $("#roleid").val(data.roleid);
-                            $("#state").val(data.state);
+                            $("#roleid").val(data.RoleID);
+                            $("#state").val(data.State);
                             $('#user_ID').val(ID);									
                             
                             //Флаг операции (1 - редактирование)
