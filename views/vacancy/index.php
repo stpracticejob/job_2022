@@ -355,10 +355,6 @@
 								<label>Возможность удаленной работы</label>
 								<input type="text" name="is_remote" id="is_remote" class="form-control" />
 							</div>
-							<!--br />
-							<label>Select User Image</label>
-							<input type="file" name="user_image" id="user_image" />
-							<span id="user_uploaded_image"></span-->
 						</div>
 						<div class="modal-footer">
 							<input type="hidden" name="vacancy_ID" id="vacancy_ID" />

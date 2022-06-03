@@ -210,69 +210,6 @@ class DB extends PDO
         return $stmt;
     }
 
-    public function lastVC1()
-    {
-        $stmt = $this->prepare('
-		SELECT vacancy.ID As ID,
-		sections.ID As SectionID,
-        sections.Name As SectionName,
-		vacancy.Title As Title,
-		vacancy.Content As Content,
-		vacancy.Salary As Salary,
-		vacancy.Experience As Experience,
-		vacancy.IsMain As IsMain,
-		vacancy.IsPartnership As IsPartnership,
-		vacancy.IsRemote As IsRemote,
-		vacancy.DateTime As DateTime
-		FROM vacancy, sections
-		WHERE vacancy.SectionID = sections.ID
-		ORDER BY ID DESC LIMIT 1');
-        $stmt->execute();
-        return $stmt;
-    }
-
-    public function lastVC2()
-    {
-        $stmt = $this->prepare('
-		SELECT vacancy.ID As ID,
-		sections.ID As SectionID,
-        sections.Name As SectionName,
-		vacancy.Title As Title,
-		vacancy.Content As Content,
-		vacancy.Salary As Salary,
-		vacancy.Experience As Experience,
-		vacancy.IsMain As IsMain,
-		vacancy.IsPartnership As IsPartnership,
-		vacancy.IsRemote As IsRemote,
-		vacancy.DateTime As DateTime
-		FROM vacancy, sections
-		WHERE vacancy.SectionID = sections.ID 
-		ORDER BY ID DESC LIMIT 1, 1');
-        $stmt->execute();
-        return $stmt;
-    }
-
-    public function lastVC3()
-    {
-        $stmt = $this->prepare('
-		SELECT vacancy.ID As ID,
-		sections.ID As SectionID,
-        sections.Name As SectionName,
-		vacancy.Title As Title,
-		vacancy.Content As Content,
-		vacancy.Salary As Salary,
-		vacancy.Experience As Experience,
-		vacancy.IsMain As IsMain,
-		vacancy.IsPartnership As IsPartnership,
-		vacancy.IsRemote As IsRemote,
-		vacancy.DateTime As DateTime
-		FROM vacancy, sections
-		WHERE vacancy.SectionID = sections.ID 
-		ORDER BY ID DESC LIMIT 2, 1');
-        $stmt->execute();
-        return $stmt;
-    }
-
     public function fetchVacancy($id)
     {
         $stmt = $this->prepare('SELECT * FROM vacancy WHERE ID = :id LIMIT 1');
