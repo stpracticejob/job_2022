@@ -100,10 +100,10 @@
                         success:function(data)
                         {
                             //Заголовок окна
-                            $('.modal-title').text("Редактировать вакансию");
+                            $('.modal-title').text("Редактировать Вакансию");
 
-                            $("#user_id").val(data.user_id);
-                            $("#vacancyModal #section_id").val(data.SectionName);
+                            $("#user_id").val(data.UserID);
+                            $("#vacancyModal #section_id").val(data.SectionID);
                             $("#vacancyModal #title").val(data.Title);
                             $("#vacancyModal #content").val(data.Content);
                             $("#vacancyModal #salary").val(data.Salary);
@@ -142,7 +142,7 @@
 					$('#vacancyModal #vacancy_ID').val("");
 
 					//Заголовок окна
-					$('.modal-title').text("Добавить товар");
+					$('.modal-title').text("Добавить Вакансию");
 					//Текст на кнопке
 					$("#vacancyModal #action").val("Добавить");
 					//Флаг операции (0- добавление)
@@ -210,30 +210,30 @@
 
 					},
 					messages: {
-						user_id: "Укажите ваш ID",
-						section_id: "Укажите ID секции",
-						title: "Укажите должность",
-						content: "Добавьте описание",
+						user_id: "Пожалуйста, укажите Ваш ID",
+						section_id: "Пожалуйста, укажите ID Категории",
+						title: "Пожалуйста, укажите должность",
+						content: "Пожалуйста, добавьте описание",
 						salary: {
-							required: "Укажите Заработную плату",
+							required: "Пожалуйста, укажите Заработную Плату",
 							number: "Используйте числа",
 							min: "Зарплата не может быть отрицательной",
 							max: "Зарплата не может быть выше 500 000 руб."
 						},
 						experience: {
-							required: "Пожалуйста укажите требуемый опыт работы в годах",
+							required: "Пожалуйста, укажите требуемый Опыт Работы в годах",
 							number: "Запишите числом",
 							min: "Опыт не может быть отрицательным",
 							max: "Нам не нужно такое Божество"
 						},
 						is_main: {
-							required: "Пожалуйста укажите возможность официального трудоустройства",
+							required: "Пожалуйста, укажите возможность официального трудоустройства",
 							number: "Запишите числом",
 							min: "Разрешены значения только 0 и 1",
 							max: "Разрешены значения только 0 и 1"
 						},
 						is_partnership: {
-							required: "Пожалуйста укажите возможность заключить краткосрочный контракт",
+							required: "Пожалуйста, укажите возможность заключить краткосрочный контракт",
 							number: "Запишите числом",
 							min: "Разрешены значения только 0 и 1",
 							max: "Разрешены значения только 0 и 1"
@@ -248,8 +248,7 @@
 					errorElement: "em",
 					errorPlacement: function ( error, element ) {
 						// Add the `help-block` class to the error element
-						error.addClass( "help-block" );
-
+						error.addClass( "invalid-feedback" );
 						if ( element.prop( "type" ) === "checkbox" ) {
 							error.insertAfter( element.parent( "label" ) );
 						} else {
@@ -257,17 +256,17 @@
 						}
 					},
 					highlight: function ( element, errorClass, validClass ) {
-						$( element ).parents( ".field" ).addClass( "has-error" ).removeClass( "has-success" );
+						$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
 					},
 					unhighlight: function (element, errorClass, validClass) {
-						$( element ).parents( ".field" ).addClass( "has-success" ).removeClass( "has-error" );
+						$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
 					}
 				});
 
 				$('#vacancyModal').on('hidden.bs.modal',function(){
 					//Очистка полей формы
 					$(".form-control").val("");
-					$( "#vacancyModal .field" ).removeClass( "has-success" ).removeClass( "has-error" );
+					$( "#vacancyModal .field input" ).removeClass( "is-valid" ).removeClass( "is-invalid" );
 					$(this).find("em").remove();
 				});
 			});
@@ -309,8 +308,8 @@
 				<form method="post" id="vacancy_form" enctype="multipart/form-data">
 					<div class="modal-content">
 						<div class="modal-header">
+                        <h4 class="modal-title">Добавить Вакансию</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Добавить вакансию</h4>
 						</div>
 						<div class="modal-body">
 							<div class="field">
