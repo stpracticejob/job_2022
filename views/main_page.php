@@ -114,11 +114,9 @@
 			  <div class="modal-body">
 				<?foreach ($db->lastVC1() as $item):?>
 				<h4>Категория: <?=$item['SectionName'] ?></h4>
-				<h3>Должность:</h3> </br>
-					<h4><?=$item['Title'] ?></h4>
-				<h3>Описание: </h3> </br> 
-					<h4><?=$item['Content'] ?></h4>
-				<h3>Требуемый опыт работы: <?=$item['Experience'] ?></h3>
+				<h4>Должность: <?=$item['Title'] ?></h4>
+				<h4>Описание: <?=$item['Content'] ?></h4> 
+				<h4>Требуемый опыт работы: <?=$item['Experience'] ?></h4>
 				<h3>Зарплата: <?=$item['Salary'] ?></h3>
 				<hr/>
 				Дата публикации вакансии: <?=$item['DateTime'] ?>
@@ -143,11 +141,9 @@
 			  <div class="modal-body">
 				<?foreach ($db->lastVC2() as $item):?>
 				<h4>Категория: <?=$item['SectionName'] ?></h4>
-				<h3>Должность:</h3> </br>
-					<h4><?=$item['Title'] ?></h4>
-				<h3>Описание: </h3> </br> 
-					<h4><?=$item['Content'] ?></h4>
-				<h3>Требуемый опыт работы: <?=$item['Experience'] ?></h3>
+				<h4>Должность: <?=$item['Title'] ?></h4>
+				<h4>Описание: <?=$item['Content'] ?></h4> 
+				<h4>Требуемый опыт работы: <?=$item['Experience'] ?></h4>
 				<h3>Зарплата: <?=$item['Salary'] ?></h3>
 				<hr/>
 				Дата публикации вакансии: <?=$item['DateTime'] ?>
@@ -172,11 +168,9 @@
 			  <div class="modal-body">
 				<?foreach ($db->lastVC3() as $item):?>
 				<h4>Категория: <?=$item['SectionName'] ?></h4>
-				<h3>Должность:</h3> </br>
-					<h4><?=$item['Title'] ?></h4>
-				<h3>Описание: </h3> </br> 
-					<h4><?=$item['Content'] ?></h4>
-				<h3>Требуемый опыт работы: <?=$item['Experience'] ?></h3>
+				<h4>Должность: <?=$item['Title'] ?></h4>
+				<h4>Описание: <?=$item['Content'] ?></h4> 
+				<h4>Требуемый опыт работы: <?=$item['Experience'] ?></h4>
 				<h3>Зарплата: <?=$item['Salary'] ?></h3>
 				<hr/>
 				Дата публикации вакансии: <?=$item['DateTime'] ?>
