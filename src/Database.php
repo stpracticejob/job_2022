@@ -206,11 +206,11 @@ class DB extends PDO
             .($with_outdated ? '' : 'AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
             'ORDER BY DateTime DESC '
             .($limit > 0 ? 'LIMIT :limit ' : '')
-            );
-            if ($limit > 0) {
+        );
+        if ($limit > 0) {
             $stmt->bindValue('limit', intval($limit), PDO::PARAM_INT);
-            }
-            $stmt->execute();
+        }
+        $stmt->execute();
         return $stmt;
     }
 
