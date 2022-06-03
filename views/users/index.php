@@ -3,7 +3,6 @@
 	<head>
 		<?include("../views/head.inc");?>
 		<?include("../views/head_datatable.inc");?>
-
 		
 		<script type="text/javascript">
 			$(function() {
@@ -185,7 +184,7 @@
 					errorElement: "em",
 					errorPlacement: function ( error, element ) {
 						// Add the `help-block` class to the error element
-						error.addClass( "help-block" );
+						error.addClass( "text-danger" );
 						if ( element.prop( "type" ) === "checkbox" ) {
 							error.insertAfter( element.parent( "label" ) );
 						} else {
@@ -193,16 +192,16 @@
 						}
 					},
 					highlight: function ( element, errorClass, validClass ) {
-						$( element ).parents( ".field" ).addClass( "has-error" ).removeClass( "has-success" );
+						$( element ).parents( ".field" ).addClass( "had-error" ).removeClass( "had-success" );
 					},
 					unhighlight: function (element, errorClass, validClass) {
-						$( element ).parents( ".field" ).addClass( "has-success" ).removeClass( "has-error" );
+						$( element ).parents( ".field" ).addClass( "had-success" ).removeClass( "had-error" );
 					}
 				});
 				$('#userModal').on('hidden.bs.modal',function(){
 					//Очистка полей формы
 					$(".form-control").val("");
-					$( "#userModal .field" ).removeClass( "has-success" ).removeClass( "has-error" );
+					$( "#userModal .field" ).removeClass( "had-success" ).removeClass( "had-error" );
 					$(this).find("em").remove();
 				});
 			});
