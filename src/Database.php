@@ -60,7 +60,7 @@ class DB extends PDO
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function addUser($username, $login, $password, $roleid, $state)
+     public function addUser($username, $login, $password, $roleid, $state)
     {
         return $this->prepare(
             'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, :password, :roleid, :state)'
@@ -111,10 +111,10 @@ class DB extends PDO
             'SELECT advertise.ID,
 		    users.ID As UserID,
 		    users.login As UserLogin,
-		    advertise.Title,	
-		    advertise.Content,		
+		    advertise.Title,
+		    advertise.Content,
 		    advertise.DateTime
-	        FROM advertise, users 
+	        FROM advertise, users
 	        WHERE advertise.UserID=users.ID '
             .($with_outdated ? '' : 'AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
             'ORDER BY DateTime DESC'
