@@ -9,15 +9,9 @@ use Flight as Flight;
 use Job\Database\DB;
 use Job\Auth\User;
 
-<<<<<<< HEAD
-// Dotenv::createImmutable(__DIR__)->safeLoad();
-
-
-=======
 Dotenv::createImmutable(__DIR__)->safeLoad();
 
 require_once 'config.php';
->>>>>>> master
 
 Flight::set('flight.log_errors', $DEBUG);
 Flight::set('flight.case_sensitive', true);
@@ -32,10 +26,6 @@ Flight::view()->set('user', Flight::user());
 Flight::map('validate', function ($params) {
     echo "hello $params!";
 });
-
-// Flight::before('start', function (&$params, &$output) {
-    // session_start();
-// });
 
 Flight::before('start', function (&$params, &$output) {
     session_start();
@@ -76,44 +66,6 @@ Flight::route('POST /api/users?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
     $data = $request->data;
-<<<<<<< HEAD
-
-    Flight::json([
-        'result' => $db->addUser($data->username, $data->login, $data->password, $data->roleid, $data->state)
-    ]);
-});
-
-Flight::route('GET /api/advertises/@id:[0-9]+', function ($id) {
-    Flight::json(Flight::db()->fetchAdvertise($id));
-});
-
-Flight::route('POST /api/advertises/@id:[0-9]+', function ($id) {
-    $data = Flight::request()->data;
-    Flight::json(Flight::db()->updateAdvertise($id, $data->user_id, $data->title, $data->content));
-});
-
-Flight::route('DELETE /api/advertises/@id:[0-9]+', function ($id) {
-    Flight::json(Flight::db()->deleteAdvertise($id));
-});
-
-Flight::route('OPTIONS /api/advertises/@id:[0-9]+', function ($id) {
-});
-
-Flight::route('GET /api/advertises?.+', function () {
-    $request = Flight::request();
-    $db = Flight::db();
-    $query = $request->query;
-
-    Flight::json([
-        'draw' => intval($query->draw),
-        'recordsTotal' => $db->countAdvertises(),
-        'recordsFiltered' => 0,
-        'data' => $db->fetchAdvertises()->fetchAll(PDO::FETCH_ASSOC),
-    ]);
-});
-
-Flight::route('POST /api/advertises?.+', function () {
-=======
 
     Flight::json([
         'result' => $db->addUser($data->username, $data->login, $data->password, $data->roleid, $data->state)
@@ -189,94 +141,11 @@ Flight::route('GET /api/vacancy?.+', function () {
 });
 
 Flight::route('POST /api/vacancy?.+', function () {
->>>>>>> master
     $request = Flight::request();
     $db = Flight::db();
     $data = $request->data;
 
     Flight::json([
-<<<<<<< HEAD
-        'result' => $db->addAdvertise($data->user_id, $data->title, $data->content)
-    ]);
-});
-
-Flight::route('GET|POST|DELETE|OPTIONS /api/vacancy/@id:[0-9]+', function ($id) {
-    $request = Flight::request();
-    $db = Flight::db();
-
-    switch ($request->method) {
-        case 'POST':
-            $data = $request->data;
-            Flight::json($db->updateVacancy($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote, $data->datetime));
-            break;
-
-        case 'GET':
-            Flight::json($db->fetchVacancy($id));
-            break;
-
-        case 'DELETE':
-            Flight::json($db->deleteVacancy($id));
-            break;
-    }
-});
-
-Flight::route('GET|POST /api/vacancy?.+', function () {
-    $request = Flight::request();
-    $db = Flight::db();
-
-    switch ($request->method) {
-        case 'GET':
-            Flight::json([
-                'draw' => intval($request->query->draw),
-                'recordsTotal' => $db->countVacancy(),
-                'recordsFiltered' => 0,
-                'data' => $db->fetchVacancies()->fetchAll(PDO::FETCH_ASSOC),
-            ]);
-            break;
-
-        case 'POST':
-            $data = $request->data;
-            Flight::json([
-                'result' => $db->addVacancy($data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote, $data->datetime)
-            ]);
-            break;
-			
-		
-    }
-});
-
-Flight::route('POST /api/cvs/@id:[0-9]+', function ($id) {
-    $request = Flight::request();
-    $db = Flight::db();
-
-    $data = $request->data;
-    Flight::json($db->updateCv($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->datetime));
-});
-
-Flight::route('GET /api/cvs/@id:[0-9]+', function ($id) {
-    Flight::json(Flight::db()->fetchCv($id));
-});
-
-Flight::route('DELETE /api/cvs/@id:[0-9]+', function ($id) {
-    Flight::json(Flight::db()->deleteCv($id));
-});
-
-Flight::route('OPTIONS /api/cvs/@id:[0-9]+', function ($id) {
-});
-
-Flight::route('GET /api/cvs?.+', function () {
-    $request = Flight::request();
-    $db = Flight::db();
-
-    Flight::json([
-        'draw' => intval($request->query->draw),
-        'recordsTotal' => $db->countCv(),
-        'recordsFiltered' => 0,
-        'data' => $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
-    ]);
-});
-
-=======
         'result' => $db->addVacancy($data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote)
     ]);
 });
@@ -313,7 +182,6 @@ Flight::route('GET /api/cvs?.+', function () {
     ]);
 });
 
->>>>>>> master
 Flight::route('POST /api/cvs?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
@@ -363,17 +231,17 @@ Flight::route('GET /users', function () {
     Flight::render('users/index');
 });
 
-// Flight::route('/edit/vacancy', function () {
-    // Flight::render('edit/vacancy');
-// });
+Flight::route('/edit/vacancy', function () {
+    Flight::render('edit/vacancy');
+});
 
-// Flight::route('GET|POST /edit/vacancy/@id:[0-9]+', function ($id) {
-    // $request = Flight::request();
-    // if ($request->method == 'POST') {
-        // return;
-    // }
-    // Flight::render('edit/vacancy', ['id' => $id]);
-// });
+Flight::route('GET|POST /edit/vacancy/@id:[0-9]+', function ($id) {
+    $request = Flight::request();
+    if ($request->method == 'POST') {
+        return;
+    }
+    Flight::render('edit/vacancy', ['id' => $id]);
+});
 
 
 Flight::start();
