@@ -184,17 +184,24 @@
 					errorElement: "em",
 					errorPlacement: function ( error, element ) {
 						// Add the `help-block` class to the error element
-						error.addClass( "text-danger" );
+						error.addClass( "invalid-feedback" );
 						if ( element.prop( "type" ) === "checkbox" ) {
 							error.insertAfter( element.parent( "label" ) );
 						} else {
 							error.insertAfter( element );
 						}
+					},
+					highlight: function ( element, errorClass, validClass ) {
+						$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+					},
+					unhighlight: function (element, errorClass, validClass) {
+						$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
 					}
 				});
 				$('#userModal').on('hidden.bs.modal',function(){
 					//Очистка полей формы
 					$(".form-control").val("");
+					$( "#userModal .field input" ).removeClass( "is-valid" ).removeClass( "is-invalid" );
 					$(this).find("em").remove();
 				});
 			});
