@@ -60,7 +60,7 @@ class DB extends PDO
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-     public function addUser($username, $login, $password, $roleid, $state)
+    public function addUser($username, $login, $password, $roleid, $state)
     {
         return $this->prepare(
             'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, :password, :roleid, :state)'
