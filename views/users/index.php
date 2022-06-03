@@ -6,12 +6,14 @@
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.6.0/dt-1.12.1/datatables.min.css"/>
 		<script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.6.0/dt-1.12.1/datatables.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="/scripts/jquery-validation/src/additional/pattern.js"></script>
 
 		
 		<script type="text/javascript">
 			$(function() {
 				var dataTable = $('#user_data').DataTable({
-                    language: {"url":"http://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
+                    language: {"url":"https://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
                     processing: true,
                     serverSide: true,
                     order: [],
@@ -211,7 +213,7 @@
 		</script>
 	</head>
 	<body>
-		<?include("$_SERVER[DOCUMENT_ROOT]/../views/user_menu.inc");?>
+		<?include("../user_menu.inc");?>
 		<div class="container box">
 			<div class="table-responsive">
 				<br />

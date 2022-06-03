@@ -5,7 +5,7 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-	<?include("$_SERVER[DOCUMENT_ROOT]/../views/user_menu.inc");?>
+	<?include('user_menu.inc');?>
 		<h1>Вход в учётную запись</h1>
 		<form action="/login" method="POST">
 			<b>Логин:</b><br/>
