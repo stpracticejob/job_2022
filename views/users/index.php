@@ -190,18 +190,11 @@
 						} else {
 							error.insertAfter( element );
 						}
-					},
-					highlight: function ( element, errorClass, validClass ) {
-						$( element ).parents( ".field" ).addClass( "had-error" ).removeClass( "had-success" );
-					},
-					unhighlight: function (element, errorClass, validClass) {
-						$( element ).parents( ".field" ).addClass( "had-success" ).removeClass( "had-error" );
 					}
 				});
 				$('#userModal').on('hidden.bs.modal',function(){
 					//Очистка полей формы
 					$(".form-control").val("");
-					$( "#userModal .field" ).removeClass( "had-success" ).removeClass( "had-error" );
 					$(this).find("em").remove();
 				});
 			});
