@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-		<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>		
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="/scripts/jquery-validation/src/additional/pattern.js"></script>
+		<?include("../views/head.inc");?>
+		<?include("../views/head_datatable.inc");?>
 		
 		<script type="text/javascript">
 			$(function() {
 				var dataTable = $('#user_data').DataTable({
-                    language: {"url":"http://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
+                    language: {"url":"https://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
                     processing: true,
                     serverSide: true,
                     order: [],
@@ -30,14 +24,14 @@
                             data: 'ID',
                             render: function(data, type) {
                                 return '<button type="button" name="update" id="'
-                                    + data + '" class="btn btn-warning btn-xs update">Редактировать</button>';
+                                    + data + '" class="btn btn-warning btn-sm update">Редактировать</button>';
                             }
                         },
                         {
                             data: 'ID',
                             render: function(data, type) {
                                 return '<button type="button" name="delete" id="'
-                                    + data + '" class="btn btn-danger btn-xs delete">Удалить</button>';
+                                    + data + '" class="btn btn-danger btn-sm delete">Удалить</button>';
                             }
                         },
                     ],
@@ -160,6 +154,7 @@
 					rules: {
 						username: "required",
 						login: "required",
+						password: "required",
 						roleid: {
 							required: true,
 							number: true,
@@ -189,7 +184,7 @@
 					errorElement: "em",
 					errorPlacement: function ( error, element ) {
 						// Add the `help-block` class to the error element
-						error.addClass( "help-block" );
+						error.addClass( "invalid-feedback" );
 						if ( element.prop( "type" ) === "checkbox" ) {
 							error.insertAfter( element.parent( "label" ) );
 						} else {
@@ -197,22 +192,23 @@
 						}
 					},
 					highlight: function ( element, errorClass, validClass ) {
-						$( element ).parents( ".field" ).addClass( "has-error" ).removeClass( "has-success" );
+						$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
 					},
 					unhighlight: function (element, errorClass, validClass) {
-						$( element ).parents( ".field" ).addClass( "has-success" ).removeClass( "has-error" );
+						$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
 					}
 				});
 				$('#userModal').on('hidden.bs.modal',function(){
 					//Очистка полей формы
 					$(".form-control").val("");
-					$( "#userModal .field" ).removeClass( "has-success" ).removeClass( "has-error" );
+					$( "#userModal .field input" ).removeClass( "is-valid" ).removeClass( "is-invalid" );
 					$(this).find("em").remove();
 				});
 			});
 		</script>
 	</head>
 	<body>
+		<?include("../views/user_menu.inc");?>
 		<div class="container box">
 			<div class="table-responsive">
 				<br />
@@ -240,8 +236,8 @@
 				<form method="post" id="user_form" enctype="multipart/form-data">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
 							<h4 class="modal-title">Добавить пользователя</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<div class="modal-body">
 							<div class="field">
