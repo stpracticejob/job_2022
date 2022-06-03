@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.6.0/dt-1.12.1/datatables.min.css"/>
-		<script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.6.0/dt-1.12.1/datatables.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="/scripts/jquery-validation/src/additional/pattern.js"></script>
+		<?include("../views/head.inc");?>
+		<?include("../views/head_datatable.inc");?>
 
 		
 		<script type="text/javascript">
@@ -160,6 +155,7 @@
 					rules: {
 						username: "required",
 						login: "required",
+						password: "required",
 						roleid: {
 							required: true,
 							number: true,
@@ -213,7 +209,7 @@
 		</script>
 	</head>
 	<body>
-		<?include("../user_menu.inc");?>
+		<?include("../views/user_menu.inc");?>
 		<div class="container box">
 			<div class="table-responsive">
 				<br />
