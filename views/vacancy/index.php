@@ -3,7 +3,7 @@
 	<head>
 		<?include("../views/head.inc");?>
 		<?include("../views/head_datatable.inc");?>
-		
+
 		<script type="text/javascript">
 			$(function() {
 				var dataTable = $('#vacancy_data').DataTable({
@@ -48,11 +48,11 @@
                             "orderable": false,
                         },
                     ],
-				});	
-				
+				});
+
 				$(document).on('submit', '#vacancy_form', function(event){
-					event.preventDefault();					
-					
+					event.preventDefault();
+
 					var vacancy_info = {
 						"user_id":$("#user_id").val(),
 						"section_id":$("#section_id").val(),
@@ -64,15 +64,15 @@
 						"is_partnership":$("#is_partnership").val(),
 						"is_remote":$("#is_remote").val()
 					}
-					
+
 					var url="/api/vacancy";
-					
+
 					//Флаг операции (1 - редактирование)
 					if($("#operation").val()==1) {
 						var ID = $("#vacancy_ID").val();
-						url+="/"+ID;					
-					}					
-					
+						url+="/"+ID;
+					}
+
 					$.ajax({
                         url:url,
                         method: "POST",
@@ -81,27 +81,27 @@
                             "Content-type":"application/json"
                         },
                         success:function(data)
-                        {									
+                        {
                             $('#vacancy_form')[0].reset();
                             $('#vacancyModal').modal('hide');
                             dataTable.ajax.reload();
                         }
                     });
 				});
-				
+
 				$(document).on('click', '.update', function(event){
 					//Режим редактирования (кнопка Редактировать)
-					var ID = $(this).attr("ID");					
-					
+					var ID = $(this).attr("ID");
+
 					$.ajax({
                         url:"/api/vacancy/"+ID,
                         method:'GET',
-                        dataType: "json",								
+                        dataType: "json",
                         success:function(data)
                         {
                             //Заголовок окна
                             $('.modal-title').text("Редактировать вакансию");
-                            
+
                             $("#user_id").val(data.user_id);
                             $("#vacancyModal #section_id").val(data.SectionName);
                             $("#vacancyModal #title").val(data.Title);
@@ -111,25 +111,25 @@
 							$("#vacancyModal #is_main").val(data.IsMain);
 							$("#vacancyModal #is_partnership").val(data.IsPartnership);
 							$("#vacancyModal #is_remote").val(data.IsRemote);
-                            $('#vacancyModal #vacancy_ID').val(ID);									
-                            
+                            $('#vacancyModal #vacancy_ID').val(ID);
+
                             //Флаг операции (1 - редактирование)
                             $("#vacancyModal #operation").val("1");
-                            
+
                             //Текст на кнопке
                             $("#vacancyModal #action").val("Сохранить изменения");
-                            
+
                             //Отобразить форму
-                            $('#vacancyModal').modal('show');									
+                            $('#vacancyModal').modal('show');
                         }
                     });
-					
+
 					event.preventDefault();
 				});
-				
+
 				$("#add_button").click(function() {
 					//Режим добавления (кнопка Добавить)
-									
+
 					$("#vacancyModal #user_id").val("");
 					$("#vacancyModal #section_id").val("");
 					$("#vacancyModal #title").val("");
@@ -139,8 +139,8 @@
 					$("#vacancyModal #is_main").val("");
 					$("#vacancyModal #is_partnership").val("");
 					$("#vacancyModal #is_remote").val("");
-					$('#vacancyModal #vacancy_ID').val("");		
-					
+					$('#vacancyModal #vacancy_ID').val("");
+
 					//Заголовок окна
 					$('.modal-title').text("Добавить товар");
 					//Текст на кнопке
@@ -148,37 +148,37 @@
 					//Флаг операции (0- добавление)
 					$("#vacancyModal #operation").val("0");
 				});
-				
+
 				$(document).on("click",".delete",function() {
 					//Режим удаления (кнопка Удалить)
-					var vacancy_ID = $(this).attr("ID");					
-					
+					var vacancy_ID = $(this).attr("ID");
+
 					if(confirm("Действительно удалить?"))
 					{
 						$.ajax({
 							url:"/api/vacancy/"+vacancy_ID,
-							method:"DELETE",							
+							method:"DELETE",
 							success:function(data)
-							{								
+							{
 								dataTable.ajax.reload();
 							}
 						});
 					}
 					else
 					{
-						return false;	
+						return false;
 					}
 				});
-				
+
 				$( "#vacancy_form" ).validate({
 					rules: {
 						user_id: "required",
 						section_id: "required",
 						title: "required",
 						content: "required",
-						
+
 						salary: {
-							required: true,							
+							required: true,
 							number: true,
 							min: 0,
 							max: 500000
@@ -207,7 +207,7 @@
 							min: 0,
 							max: 1
 						},
-						
+
 					},
 					messages: {
 						user_id: "Укажите ваш ID",
@@ -300,10 +300,10 @@
 							<th width="10%"></th>
 						</tr>
 					</thead>
-				</table>				
+				</table>
 			</div>
 		</div>
-		
+
 		<div id="vacancyModal" class="modal fade">
 			<div class="modal-dialog">
 				<form method="post" id="vacancy_form" enctype="multipart/form-data">
@@ -317,7 +317,7 @@
 								<label>ID нанимателя</label>
 								<input type="text" name="user_id" id="user_id" class="form-control" />
 							</div>
-							
+
 							<div class="field">
 								<label>ID Категории</label>
 								<input type="text" name="section_id" id="section_id" class="form-control" />
