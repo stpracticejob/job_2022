@@ -122,14 +122,14 @@ class DB extends PDO
         $stmt->execute();
         return $stmt;
     }
-	
-	 public function fetchAdvertise($id)
+
+    public function fetchAdvertise($id)
     {
         $stmt = $this->prepare('SELECT * FROM advertise WHERE ID = :id LIMIT 1');
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-	
+
     public function addAdvertise($user_id, $title, $content)
     {
         return $this->prepare(
@@ -209,8 +209,8 @@ class DB extends PDO
         $stmt->execute();
         return $stmt;
     }
-	
-	public function lastVC1()
+
+    public function lastVC1()
     {
         $stmt = $this->prepare('
 		SELECT vacancy.ID As ID,
@@ -230,8 +230,8 @@ class DB extends PDO
         $stmt->execute();
         return $stmt;
     }
-	
-	public function lastVC2()
+
+    public function lastVC2()
     {
         $stmt = $this->prepare('
 		SELECT vacancy.ID As ID,
@@ -251,8 +251,8 @@ class DB extends PDO
         $stmt->execute();
         return $stmt;
     }
-	
-	public function lastVC3()
+
+    public function lastVC3()
     {
         $stmt = $this->prepare('
 		SELECT vacancy.ID As ID,
@@ -272,7 +272,7 @@ class DB extends PDO
         $stmt->execute();
         return $stmt;
     }
-	
+
     public function fetchVacancy($id)
     {
         $stmt = $this->prepare('SELECT * FROM vacancy WHERE ID = :id LIMIT 1');
@@ -357,7 +357,7 @@ class DB extends PDO
             'datetime' => date("Y-m-d H:i:s")
         ]);
     }
-    
+
     public function updateCv($id, $user_id, $section_id, $title, $content)
     {
         return $this->prepare(
