@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
-	<head></head>
+	<head>
+		<?include("head.inc");?>
+	</head>
 	<body>
+		<?include('user_menu.inc');?>
 		<h1>Вход в учётную запись</h1>
 		<form action="/login" method="POST">
 			<b>Логин:</b><br/>

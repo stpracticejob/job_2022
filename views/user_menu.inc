@@ -94,7 +94,7 @@
 
 <div id="usermenu">
     <nav class="navbar bg-dark navbar-expand-lg fixed-top">
-		<a class="navbar-brand ml-4" href="">JOB</a>
+		<a class="navbar-brand ml-4" href="/">JOB</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -130,9 +130,6 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                                 <li>
                                     <a class="dropdown-item" href="">Редактировать профиль</a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="/logout">Выход</a>
