@@ -22,11 +22,6 @@
                         { data: 'Title' },
                         { data: 'Content' },
 						{ data: 'Salary' },
-						{ data: 'Experience' },
-						{ data: 'IsMain' },
-						{ data: 'IsPartnership' },
-						{ data: 'IsRemote' },
-                        { data: 'DateTime' },
                         {
                             data: 'ID',
                             render: function(data, type) {
@@ -44,7 +39,7 @@
                     ],
                     columnDefs: [
                         {
-                            "targets": [11, 12], // Столбцы, по которым не нужна сортировка
+                            "targets": [6, 7], // Столбцы, по которым не нужна сортировка
                             "orderable": false,
                         },
                     ],
@@ -284,17 +279,12 @@
 				<table id="vacancy_data" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th width="5%">ID Вакансии</th>
+							<th width="10%">ID</th>
 							<th width="10%">E-mail нанимателя</th>
-							<th width="7%">Категория</th>
-							<th width="7%">Должность</th>
+							<th width="10%">Категория</th>
+							<th width="10%">Должность</th>
 							<th width="10%">Описание</th>
 							<th width="10%">Зарплата</th>
-							<th width="6%">Опыт работы</th>
-							<th width="5%">Официальное трудоустройство</th>
-							<th width="5%">Возможность заключить контракт </th>
-							<th width="5%">Возможность удаленной работы</th>
-							<th width="10%">Дата</th>
 							<th width="10%"></th>
 							<th width="10%"></th>
 						</tr>
