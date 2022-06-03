@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-		<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>		
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="/scripts/jquery-validation/src/additional/pattern.js"></script>
+		<?include("../views/head.inc");?>
+		<?include("../views/head_datatable.inc");?>
 		
 		<script type="text/javascript">
 			$(function() {
@@ -280,12 +274,13 @@
 		</script>
 	</head>
 	<body>
+		<?include("../views/user_menu.inc");?>
 		<div class="container box">
+			<div align="right">
+				<button type="button" id="add_button" data-toggle="modal" data-target="#vacancyModal" class="btn btn-info btn-lg">Добавить</button>
+			</div>
 			<div class="table-responsive">
 				<br />
-				<div align="right">
-					<button type="button" id="add_button" data-toggle="modal" data-target="#vacancyModal" class="btn btn-info btn-lg">Добавить</button>
-				</div>
 				<br /><br />
 				<table id="vacancy_data" class="table table-bordered table-striped">
 					<thead>
