@@ -40,9 +40,8 @@
 <style>
 	div#usermenu {
 		background-color: #EEE;
-		padding: 14px;
-		overflow: visible;
-		margin-bottom: 2em !important;
+		overflow: hidden;
+		margin-bottom: 4em !important;
 	}
 
 	div#usermenu ul {
@@ -69,13 +68,10 @@
 		margin-left: 30px;
 		margin-right: 0px;
 	}
-	.navbar{
-		position: relative;
-		background:#F97300;
-	}
 	.nav-link , .navbar-brand{
 		color: #f4f4f4;
 		cursor: pointer;
+		background: #343a40 !important;
 	}
 	.nav-link{
 		margin-left: 1em !important;
@@ -84,7 +80,6 @@
 	.nav-link:hover{
 		background: #f4f4f4;
 		color: #f97300;
-
 	}
 	.navbar-collapse{
 		justify-content: flex-end;
