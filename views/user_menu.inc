@@ -74,12 +74,12 @@
 		background: #343a40 !important;
 	}
 	.nav-link{
-		margin-left: 1em !important;
-		border-radius: 10px;
+		margin-right: 1em !important;
+		border-radius: 4px;
 	}
 	.nav-link:hover{
-		background: #f4f4f4;
-		color: #f97300;
+		background: #f4f4f4 !important;
+		color: #343a40;
 	}
 	.navbar-collapse{
 		justify-content: flex-end;
