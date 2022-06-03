@@ -1,9 +1,6 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-
 require_once 'vendor/autoload.php';
-require_once 'config.php';
 
 error_reporting(E_ALL);
 
@@ -12,12 +9,19 @@ use Flight as Flight;
 use Job\Database\DB;
 use Job\Auth\User;
 
+<<<<<<< HEAD
 // Dotenv::createImmutable(__DIR__)->safeLoad();
 
 
+=======
+Dotenv::createImmutable(__DIR__)->safeLoad();
+
+require_once 'config.php';
+>>>>>>> master
 
 Flight::set('flight.log_errors', $DEBUG);
 Flight::set('flight.case_sensitive', true);
+Flight::set('flight.views.path', __DIR__ . '/views');
 
 Flight::register('db', DB::class, [$DSN, $DB_USER, $DB_PASSWORD, $DB_OPTIONS]);
 Flight::register('user', User::class);
@@ -72,6 +76,7 @@ Flight::route('POST /api/users?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
     $data = $request->data;
+<<<<<<< HEAD
 
     Flight::json([
         'result' => $db->addUser($data->username, $data->login, $data->password, $data->roleid, $data->state)
@@ -108,11 +113,89 @@ Flight::route('GET /api/advertises?.+', function () {
 });
 
 Flight::route('POST /api/advertises?.+', function () {
+=======
+
+    Flight::json([
+        'result' => $db->addUser($data->username, $data->login, $data->password, $data->roleid, $data->state)
+    ]);
+});
+
+Flight::route('GET /api/advertises/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchAdvertise($id));
+});
+
+Flight::route('POST /api/advertises/@id:[0-9]+', function ($id) {
+    $data = Flight::request()->data;
+    Flight::json(Flight::db()->updateAdvertise($id, $data->user_id, $data->title, $data->content));
+});
+
+Flight::route('DELETE /api/advertises/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteAdvertise($id));
+});
+
+Flight::route('OPTIONS /api/advertises/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/advertises?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $query = $request->query;
+    $with_outdated = boolval($query->with_outdated);
+    Flight::json([
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countAdvertises($with_outdated),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchAdvertises($with_outdated)->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
+
+Flight::route('POST /api/advertises?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
     $data = $request->data;
 
     Flight::json([
+        'result' => $db->addAdvertise($data->user_id, $data->title, $data->content)
+    ]);
+});
+
+Flight::route('GET /api/vacancy/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchVacancy($id));
+});
+
+Flight::route('POST /api/vacancy/@id:[0-9]+', function ($id) {
+    $data = Flight::request()->data;
+    Flight::json(Flight::db()->updateVacancy($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote));
+});
+
+Flight::route('DELETE /api/vacancy/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteVacancy($id));
+});
+
+Flight::route('OPTIONS /api/vacancy/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/vacancy?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $query = $request->query;
+    $with_outdated = boolval($query->with_outdated);
+    Flight::json([
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countVacancy($with_outdated),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchVacancies($with_outdated)->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
+
+Flight::route('POST /api/vacancy?.+', function () {
+>>>>>>> master
+    $request = Flight::request();
+    $db = Flight::db();
+    $data = $request->data;
+
+    Flight::json([
+<<<<<<< HEAD
         'result' => $db->addAdvertise($data->user_id, $data->title, $data->content)
     ]);
 });
@@ -193,6 +276,44 @@ Flight::route('GET /api/cvs?.+', function () {
     ]);
 });
 
+=======
+        'result' => $db->addVacancy($data->user_id, $data->section_id, $data->title, $data->content, $data->salary, $data->experience, $data->is_main, $data->is_partnership, $data->is_remote)
+    ]);
+});
+
+Flight::route('POST /api/cvs/@id:[0-9]+', function ($id) {
+    $request = Flight::request();
+    $db = Flight::db();
+
+    $data = $request->data;
+    Flight::json($db->updateCv($id, $data->user_id, $data->section_id, $data->title, $data->content, $data->datetime));
+});
+
+Flight::route('GET /api/cvs/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->fetchCv($id));
+});
+
+Flight::route('DELETE /api/cvs/@id:[0-9]+', function ($id) {
+    Flight::json(Flight::db()->deleteCv($id));
+});
+
+Flight::route('OPTIONS /api/cvs/@id:[0-9]+', function ($id) {
+});
+
+Flight::route('GET /api/cvs?.+', function () {
+    $request = Flight::request();
+    $db = Flight::db();
+    $query = $request->query;
+    $with_outdated = boolval($query->with_outdated);
+    Flight::json([
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countCv($with_outdated),
+        'recordsFiltered' => 0,
+        'data' => $db->fetchCvs($with_outdated)->fetchAll(PDO::FETCH_ASSOC),
+    ]);
+});
+
+>>>>>>> master
 Flight::route('POST /api/cvs?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
@@ -238,6 +359,9 @@ Flight::route('GET /cv', function () {
     Flight::render('cv/index');
 });
 
+Flight::route('GET /users', function () {
+    Flight::render('users/index');
+});
 
 // Flight::route('/edit/vacancy', function () {
     // Flight::render('edit/vacancy');
