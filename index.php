@@ -200,11 +200,6 @@ Flight::route('GET /login', function () {
     Flight::render('auth_user');
 });
 
-Flight::route('GET /profile/admin', function () {
-    Flight::render('profile/admin');
-});
-
-
 Flight::route('POST /login', function () {
     if (isset($_POST['user_login']) && isset($_POST['user_password'])) {
         $user = Flight::user();
@@ -222,6 +217,9 @@ Flight::route('GET /logout', function () {
     Flight::redirect('/');
 });
 
+Flight::route('GET /profile/admin', function () {
+    Flight::render('profile/admin');
+});
 
 Flight::route('GET /cv', function () {
     Flight::render('cv/index');
