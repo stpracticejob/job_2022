@@ -29,7 +29,6 @@
                     <input class="btn btn-primary" name="Enter" type="Submit"/>
                 </form>
             </div>
-
         </main>
         <? include('footer.inc.php'); ?>
 	</body>
