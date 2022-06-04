@@ -8,7 +8,7 @@
 
         <main role="main" class="flex-shrink-0">
             <h1 class="h3 mt-5 text-center">Вход в учётную запись</h1>
-            <div class="container text-center col-3">
+            <div class="container text-center col-md-3">
                 <form action="/login" method="POST" class="<?= isset($error) ? 'was-validated' : '' ?>">
 
                     <div class="form-group">
