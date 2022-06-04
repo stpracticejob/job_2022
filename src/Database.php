@@ -111,10 +111,10 @@ class DB extends PDO
             'SELECT advertise.ID,
 		    users.ID As UserID,
 		    users.login As UserLogin,
-		    advertise.Title,	
-		    advertise.Content,		
+		    advertise.Title,
+		    advertise.Content,
 		    advertise.DateTime
-	        FROM advertise, users 
+	        FROM advertise, users
 	        WHERE advertise.UserID=users.ID '
             .($with_outdated ? '' : 'AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
             'ORDER BY DateTime DESC'
