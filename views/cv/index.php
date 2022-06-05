@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-		<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>		
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="/scripts/jquery-validation/src/additional/pattern.js"></script>
-		
+		<?include("../views/head.inc");?>
+		<?include("../views/head_datatable.inc");?>
+
 		<script type="text/javascript">
 			$(function() {
 				var dataTable = $('#tovar_data').DataTable({
-                    language: {"url":"http://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
+                    language: {"url":"https://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
                     processing: true,
                     serverSide: true,
                     order: [],
@@ -48,11 +42,11 @@
                             "orderable": false,
                         },
                     ],
-				});	
-				
+				});
+
 				$(document).on('submit', '#tovar_form', function(event){
-					event.preventDefault();					
-					
+					event.preventDefault();
+
 					var tovar_info = {
 						"UserName":$("#Nazvanie").val(),
 						"SectionName":$("#SectionName").val(),
@@ -60,13 +54,13 @@
 						"Content":$("#Content").val(),
 						"DateTime":$("#DateTime").val()
 					}
-					
+
 					var method="PUT";
 					if($("#tovarModal #operation").val()==1) {
 						method="PATCH";
-						tovar_info.ID = $("#cv_ID").val();						
-					}					
-					
+						tovar_info.ID = $("#cv_ID").val();
+					}
+
 					$.ajax({
                         url:"/api/cv",
                         method: method,
@@ -75,60 +69,60 @@
                             "Content-type":"application/json"
                         },
                         success:function(data)
-                        {									
+                        {
                             $('#tovar_form')[0].reset();
                             $('#tovarModal').modal('hide');
                             dataTable.ajax.reload();
                         }
                     });
 				});
-				
+
 				$(document).on('click', '.update', function(event){
 					//Режим редактирования (кнопка Редактировать)
-					var ID = $(this).attr("ID");					
-					
+					var ID = $(this).attr("ID");
+
 					$.ajax({
                         url:"/api/cv/"+ID,
                         method:'GET',
-                        dataType: "json",								
+                        dataType: "json",
                         success:function(data)
                         {
                             //Заголовок окна
                             $('.modal-title').text("Редактировать товар");
-                            
+
                             $("#tovarModal #Nazvanie").val(data.Nazvanie);
                             $("#tovarModal #Cena").val(data.Cena);
                             $("#tovarModal #Kol").val(data.Kol);
                             $("#tovarModal #God").val(data.God);
                             $("#tovarModal #Strana").val(data.Strana);
                             $("#tovarModal #Opisanie").val(data.Opisanie);
-                            $('#tovarModal #tovar_ID').val(ID);									
-                            
+                            $('#tovarModal #tovar_ID').val(ID);
+
                             //Флаг операции (1 - редактирование)
                             $("#tovarModal #operation").val("1");
-                            
+
                             //Текст на кнопке
                             $("#tovarModal #action").val("Сохранить изменения");
-                            
+
                             //Отобразить форму
-                            $('#tovarModal').modal('show');									
+                            $('#tovarModal').modal('show');
                         }
                     });
-					
+
 					event.preventDefault();
 				});
-				
+
 				$("#add_button").click(function() {
 					//Режим добавления (кнопка Добавить)
-									
+
 					$("#tovarModal #Nazvanie").val("");
 					$("#tovarModal #Cena").val("");
 					$("#tovarModal #Kol").val("");
 					$("#tovarModal #God").val("");
 					$("#tovarModal #Strana").val("");
 					$("#tovarModal #Opisanie").val("");
-					$('#tovarModal #tovar_ID').val("");		
-					
+					$('#tovarModal #tovar_ID').val("");
+
 					//Заголовок окна
 					$('.modal-title').text("Добавить товар");
 					//Текст на кнопке
@@ -136,33 +130,33 @@
 					//Флаг операции (0- добавление)
 					$("#tovarModal #operation").val("0");
 				});
-				
+
 				$(document).on("click",".delete",function() {
 					//Режим удаления (кнопка Удалить)
-					var tovar_ID = $(this).attr("ID");					
-					
+					var tovar_ID = $(this).attr("ID");
+
 					if(confirm("Действительно удалить?"))
 					{
 						$.ajax({
 							url:"/rest/tovar?ID="+tovar_ID,
-							method:"DELETE",							
+							method:"DELETE",
 							success:function(data)
-							{								
+							{
 								dataTable.ajax.reload();
 							}
 						});
 					}
 					else
 					{
-						return false;	
+						return false;
 					}
 				});
-				
+
 				$( "#tovar_form" ).validate({
 					rules: {
 						Nazvanie: "required",
 						Cena: {
-							required: true,							
+							required: true,
 							number: true,
 							min: 0
 						},
@@ -194,7 +188,7 @@
 						Kol: {
 							required: "Пожалуйста укажите количество",
 							number: "Количество должно быть числом",
-							min: "Количество должно быть 1 или более"							
+							min: "Количество должно быть 1 или более"
 						},
 						God: {
 							required: "Пожалуйста укажите год",
@@ -238,6 +232,7 @@
 		</script>
 	</head>
 	<body>
+		<?include("../views/user_menu.inc");?>
 		<div class="container box">
 			<div class="table-responsive">
 				<br />
@@ -257,10 +252,10 @@
 							<th width="10%"></th>
 						</tr>
 					</thead>
-				</table>				
+				</table>
 			</div>
 		</div>
-		
+
 		<div id="tovarModal" class="modal fade">
 			<div class="modal-dialog">
 				<form method="post" id="tovar_form" enctype="multipart/form-data">
