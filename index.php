@@ -219,7 +219,7 @@ Flight::route('GET /profile/admin', function () {
 Flight::route('POST /login', function () {
     $user = Flight::user();
 
-    if (!$user->isUserAuthorized()) {
+    if ($user->isUserAuthorized()) {
         Flight::accessDenied();
         return;
     }
@@ -258,6 +258,13 @@ Flight::route('GET /cv', function () {
 });
 
 Flight::route('GET /users', function () {
+    $user = Flight::user();
+
+    if (!$user->isUserAdmin()) {
+        Flight::accessDenied();
+        return;
+    }
+
     Flight::render('users/index');
 });
 
