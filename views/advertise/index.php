@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-		<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-		<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>		
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="/scripts/jquery-validation/src/additional/pattern.js"></script>
+	<?include("../views/head.inc");?>
+	<?include("../views/head_datatable.inc");?>
 		
 		<script type="text/javascript">
 			$(function() {
@@ -60,7 +54,6 @@
 					}
 					
 					var url="/api/advertises";
-					//redactirov
 					if($("#operation").val()==1) {
 						var ID = $("#advertise_ID").val();
 						url+="/"+ID;						
@@ -97,7 +90,6 @@
                             
                             $("#user_id").val(data.UserID);
                             $("#title").val(data.Title);
-                           // $("#datetime").val(data.datetime);
                             $("#content").val(data.Content);
                             $('#advertise_ID').val(ID);									
                             
@@ -120,7 +112,6 @@
 									
 					$("#user_id").val("");
                     $("#title").val("");
-                   // $("#datetime").val("");
                     $("#content").val("");
                     $('#advertise_ID').val("");	
 					
@@ -255,10 +246,6 @@
 								<input type="text" name="content" id="content" class="form-control" />
 							</div>
 							
-							<!--br />
-							<label>Select User Image</label>
-							<input type="file" name="user_image" id="user_image" />
-							<span id="user_uploaded_image"></span-->
 						</div>
 						<div class="modal-footer">
 							<input type="hidden" name="advertise_ID" id="advertise_ID" />
