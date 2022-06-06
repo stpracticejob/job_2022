@@ -1,11 +1,11 @@
 <?php
     //PHP-код
     $menu_admin = [
-        "/edit/vacancy" => "Вакансии",
-        "/edit/cv" => "Резюме",
-        "/edit/advertise" => "Объявления",
-        "/edit/users" => "Пользователи",
-        "/edit/categories" => "Категории"
+        "/vacancy" => "Вакансии",
+        "/cv" => "Резюме",
+        "/advertise" => "Объявления",
+        "/users" => "Пользователи",
+        "/categories" => "Категории"
     ];
 
     $menu_aspirant = [
@@ -40,58 +40,112 @@
 <style>
 	div#usermenu {
 		background-color: #EEE;
-		padding: 14px;
 		overflow: hidden;
+		margin-bottom: 4em !important;
 	}
-	
+
 	div#usermenu ul {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
-	
+
 	div#usermenu ul li{
 		display: inline;
-		margin-right: 30px; 
+		margin-right: 30px;
 		margin-left: 0px;
 	}
-	
+
 	div#welcome {
 		padding: 3px 0;
 	}
-	
+
 	div#welcome ul{
-		float: right;		
+		float: right;
 	}
-	
+
 	div#welcome ul li{
 		margin-left: 30px;
 		margin-right: 0px;
 	}
+	.nav-link , .navbar-brand{
+		color: #f4f4f4;
+		cursor: pointer;
+		background: #343a40 !important;
+	}
+	.nav-link{
+		margin-right: 1em !important;
+		border-radius: 4px;
+	}
+	.nav-link:hover{
+		background: #f4f4f4 !important;
+		color: #343a40;
+	}
+	.navbar-collapse{
+		justify-content: flex-end;
+	}
+	.navbar-toggler{
+		background:#fff !important;
+	}
+	.dropdown-menu[data-bs-popper] {
+		left: unset !important;
+	}
 </style>
 
 <div id="usermenu">
-	<?if ($user->isUserAuthorized()) :?>
-	<div id="welcome">
-		<span>Здравствуйте, <?=$user->getUserName()?>!</span>
-		<ul>
-			<li><a href="/">На сайт</a></li>
-			<li><a href="<?=$profile_page?>">Мой профиль</a></li>
-			<li><a href="/logout">Выход</a></li>
-		</ul>
-	</div>
-	<ul>
-		<?foreach ($menu_items as $k => $v):?>
-		<li><a href="<?=$k?>"><?=$v?></a></li>
-		<?endforeach;?>
-	</ul>
-	<?else:?>
-	<div id="welcome">	
-		<a href="/">JOB SITE</a>
-		<ul>			
-			<li><a href="/login">Вход</a></li>
-			<li><a href="/reg_user.php">Регистрация</a></li>
-		</ul>
-	</div>
-	<?endif;?>	
+    <nav class="navbar bg-dark navbar-expand-lg fixed-top">
+		<a class="navbar-brand ml-4" href="/">JOB</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav">
+                <? if (count($menu_items)) { ?>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Справочники
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <?foreach ($menu_items as $k => $v):?>
+                                    <li><a class="dropdown-item" href="<?=$k?>"><?=$v?></a></li>
+                                <?endforeach;?>
+                            </ul>
+                        </div>
+                    </li>
+                <? } ?>
+	            <?if ($user->isUserAuthorized()) :?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Настройки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Сообщения(2)</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <?=$user->getUserName()?>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                <li>
+                                    <a class="dropdown-item" href="">Редактировать профиль</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/logout">Выход</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                <?else:?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Вход</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Регистрация</a>
+                    </li>
+	            <?endif;?>
+			</ul>
+		</div>
+	</nav>
 </div>
