@@ -95,10 +95,10 @@
                             //Заголовок окна
                             $('.modal-title').text("Редактировать рекламу");
                             
-                            $("#user_id").val(data.user_id);
-                            $("#title").val(data.title);
+                            $("#user_id").val(data.UserID);
+                            $("#title").val(data.Title);
                            // $("#datetime").val(data.datetime);
-                            $("#content").val(data.content);
+                            $("#content").val(data.Content);
                             $('#advertise_ID').val(ID);									
                             
                             //Флаг операции (1 - редактирование)
