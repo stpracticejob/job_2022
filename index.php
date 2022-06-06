@@ -264,6 +264,7 @@ Flight::route('GET /users', function () {
         Flight::accessDenied();
         return;
     }
+
     Flight::render('users/index');
 });
 
@@ -274,6 +275,7 @@ Flight::route('GET /advertise', function () {
         Flight::accessDenied();
         return;
     }
+    
     Flight::render('advertise/index');
 });
 

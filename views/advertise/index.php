@@ -7,7 +7,7 @@
 		<script type="text/javascript">
 			$(function() {
 				var dataTable = $('#advertise_data').DataTable({
-                    language: {"url":"http://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
+                    language: {"url":"https://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
                     processing: true,
                     serverSide: true,
                     order: [],
