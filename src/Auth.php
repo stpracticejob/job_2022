@@ -39,6 +39,11 @@ class User
         return $_SESSION['user_info']['UserName'] ?? '';
     }
 
+    public function getUserRole()
+    {
+        return $_SESSION['user_info']['RoleID'] ?? 0;
+    }
+
     public function isUserAuthorized()
     {
         return (bool) ($_SESSION['user_info'] ?? false);
@@ -46,21 +51,21 @@ class User
 
     public function isUserAdmin()
     {
-        return $_SESSION['user_info'] ?? ['RoleID'] == Role::ADMIN;
+        return $this->getUserRole() == Role::ADMIN;
     }
 
     public function isUserAspirant()
     {
-        return $_SESSION['user_info'] ?? ['RoleID'] == Role::ASPIRANT;
+        return $this->getUserRole() == Role::ASPIRANT;
     }
 
     public function isUserEmployer()
     {
-        return $_SESSION['user_info'] ?? ['RoleID'] == Role::EMPLOYER;
+        return $this->getUserRole() == Role::EMPLOYER;
     }
 
     public function isUserAdvertiser()
     {
-        return $_SESSION['user_info'] ?? ['RoleID'] == Role::ADVERTISER;
+        return $this->getUserRole() == Role::ADVERTISER;
     }
 }

@@ -27,6 +27,10 @@ Flight::map('validate', function ($params) {
     echo "hello $params!";
 });
 
+Flight::map('accessDenied', function () {
+    Flight::render('errors/403');
+});
+
 Flight::before('start', function (&$params, &$output) {
     session_start();
     header('Access-Control-Allow-Origin: *');
@@ -197,6 +201,13 @@ Flight::route('GET /', function () {
 });
 
 Flight::route('GET /login', function () {
+    $user = Flight::user();
+
+    if ($user->isUserAuthorized()) {
+        Flight::accessDenied();
+        return;
+    }
+
     Flight::render('auth_user');
 });
 
@@ -206,9 +217,14 @@ Flight::route('GET /profile/admin', function () {
 
 
 Flight::route('POST /login', function () {
-    if (isset($_POST['user_login']) && isset($_POST['user_password'])) {
-        $user = Flight::user();
+    $user = Flight::user();
 
+    if ($user->isUserAuthorized()) {
+        Flight::accessDenied();
+        return;
+    }
+
+    if (isset($_POST['user_login']) && isset($_POST['user_password'])) {
         if (!$user->authUser($_POST['user_login'], $_POST['user_password'])) {
             Flight::render('auth_user', ['error' => 'Неверный логин или пароль']);
         } else {
@@ -218,12 +234,26 @@ Flight::route('POST /login', function () {
 });
 
 Flight::route('GET /logout', function () {
-    $user = Flight::user()->logout();
+    $user = Flight::user();
+
+    if (!$user->isUserAuthorized()) {
+        Flight::accessDenied();
+        return;
+    }
+
+    $user->logout();
     Flight::redirect('/');
 });
 
 
 Flight::route('GET /cv', function () {
+    $user = Flight::user();
+
+    if (!$user->isUserAdmin()) {
+        Flight::accessDenied();
+        return;
+    }
+
     Flight::render('cv/index');
 });
 
@@ -232,6 +262,13 @@ Flight::route('GET /vacancy', function () {
 });
 
 Flight::route('GET /users', function () {
+    $user = Flight::user();
+
+    if (!$user->isUserAdmin()) {
+        Flight::accessDenied();
+        return;
+    }
+
     Flight::render('users/index');
 });
 
