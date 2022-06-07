@@ -13,7 +13,7 @@
 		<script type="text/javascript">
 			$(function() {
 				var dataTable = $('#cv_data').DataTable({
-                    language: {"url":"http://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
+                    language: {"url":"https://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
                     processing: true,
                     serverSide: true,
                     order: [],
@@ -95,14 +95,14 @@
                         dataType: "json",								
                         success:function(data)
                         {
+							console.log(data);
                             //Заголовок окна
                             $('.modal-title').text("Редактировать резюме");
                             
-                            $("#user_id").val(data.user_id);
-                            $("#section_id").val(data.section_id);
-                            $("#title").val(data.title);
-                            $("#datetime").val(data.datetime);
-                            $("#content").val(data.content);
+                            $("#user_id").val(data.UserID);
+                            $("#section_id").val(data.SectionID);
+                            $("#title").val(data.Title);
+                            $("#content").val(data.Content);
                             $('#cv_ID').val(ID);									
                             
                             //Флаг операции (1 - редактирование)
@@ -126,7 +126,6 @@
 					$("#user_id").val("");
 					$("#section_id").val("");
 					$("#title").val("");
-					$("#datetime").val("");
 					$("#content").val("");
 					$('#cv_ID').val("");		
 					
@@ -233,7 +232,7 @@
 							<th width="10%">Категория</th>
 							<th width="10%">Заголовок</th>
 							<th width="10%">Описание</th>
-							<th width="10%">Дата</th>
+							<th width="10%">Дата публикации</th>
 							<th width="10%"></th>
 							<th width="8%"></th>
 						</tr>
@@ -266,10 +265,6 @@
 							<div class="field">
 								<label>Описание</label>
 								<input type="text" name="content" id="content" class="form-control" />
-							</div>								
-							<div class="field">
-								<label>Дата</label>
-								<input type="text" name="datetime" id="datetime" class="form-control" />
 							</div>
 							
 							<!--br />
