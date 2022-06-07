@@ -252,5 +252,6 @@
 				</form>
 			</div>
 		</div>
+		<?include("../views/footer.inc");?>
 	</body>
 </html>
