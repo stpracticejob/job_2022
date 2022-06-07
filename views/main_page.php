@@ -47,8 +47,8 @@
 
                 <h1 class="text-center">Последние Вакансии</h1>
 				<div class="row">
-                    <?php $Vacancies = $db->fetchVacancies(false, 3)->fetchAll(); ?>
-                    <?foreach ($Vacancies as $item):?>
+                    <?php $vacancies = $db->fetchVacancies(false, 3)->fetchAll(); ?>
+                    <?foreach ($vacancies as $item):?>
                         <div class="col-md-4 col-lg-4 col-sm-12">
                         <div class="card">
                             <div class="card-header">
@@ -97,7 +97,7 @@
 		</div>
         <?endforeach;?>
 
-        <?foreach ($Vacancies as $item):?>
+        <?foreach ($vacancies as $item):?>
         <div class="modal fade" id="modalVacancy<?= $item['ID'] ?>" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
