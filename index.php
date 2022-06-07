@@ -278,6 +278,17 @@ Flight::route('GET /users', function () {
     Flight::render('users/index');
 });
 
+Flight::route('GET /advertise', function () {
+    $user = Flight::user();
+
+    if (!$user->isUserAdmin()) {
+        Flight::accessDenied();
+        return;
+    }
+    
+    Flight::render('advertise/index');
+});
+
 Flight::route('/edit/vacancy', function () {
     Flight::render('edit/vacancy');
 });
