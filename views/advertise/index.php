@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?include("../views/head.inc.php");?>
-		<?include("../views/head_datatable.inc.php");?>
+	<?include("../views/head.inc");?>
+	<?include("../views/head_datatable.inc");?>
 		
 		<script type="text/javascript">
 			$(function() {
-				var dataTable = $('#user_data').DataTable({
+				var dataTable = $('#advertise_data').DataTable({
                     language: {"url":"https://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"},
                     processing: true,
                     serverSide: true,
                     order: [],
-					ajax: {
-                        url:"/api/users",
+                    ajax: {
+                        url:"/api/advertises",
                         type:"GET"
                     },
                     columns: [
-                        { data: 'UserName' },
-                        { data: 'Login' },
-                        { data: 'RoleName' },
-                        { data: 'State' },
+                        { data: 'UserID' },
+                        { data: 'Title' },
+                        { data: 'Content' },
+                        { data: 'DateTime' },
                         {
                             data: 'ID',
                             render: function(data, type) {
                                 return '<button type="button" name="update" id="'
-                                    + data + '" class="btn btn-warning btn-sm update">Редактировать</button>';
+                                    + data + '" class="btn btn-warning btn-xs update">Редактировать</button>';
                             }
                         },
                         {
                             data: 'ID',
                             render: function(data, type) {
                                 return '<button type="button" name="delete" id="'
-                                    + data + '" class="btn btn-danger btn-sm delete">Удалить</button>';
+                                    + data + '" class="btn btn-danger btn-xs delete">Удалить</button>';
                             }
                         },
                     ],
@@ -43,35 +43,33 @@
                     ],
 				});	
 				
-				$(document).on('submit', '#user_form', function(event){
+				$(document).on('submit', '#advertise_form', function(event){
 					event.preventDefault();					
 					
-					var user_info = {
-						"username":$("#username").val(),
-						"login":$("#login").val(),
-						"password":$("#password").val(),
-						"roleid":$("#roleid").val(),
-						"state":$("#state").val()
+					var advertise_info = {
+						"user_id":$("#user_id").val(),
+						"title":$("#title").val(),
+						"content":$("#content").val(),
+						"datetime":$("#datetime").val()
 					}
 					
-					var url="/api/users";
-					//redactirov
+					var url="/api/advertises";
 					if($("#operation").val()==1) {
-						var ID = $("#user_ID").val();
+						var ID = $("#advertise_ID").val();
 						url+="/"+ID;						
-					}				
+					}					
 					
 					$.ajax({
                         url:url,
                         method: "POST",
-                        data: JSON.stringify(user_info),
+                        data: JSON.stringify(advertise_info),
                         headers: {
                             "Content-type":"application/json"
                         },
                         success:function(data)
                         {									
-                            $('#user_form')[0].reset();
-                            $('#userModal').modal('hide');
+                            $('#advertise_form')[0].reset();
+                            $('#advertiseModal').modal('hide');
                             dataTable.ajax.reload();
                         }
                     });
@@ -82,20 +80,18 @@
 					var ID = $(this).attr("ID");					
 					
 					$.ajax({
-                        url:"/api/users/"+ID,
+                        url:"/api/advertises/"+ID,
                         method:'GET',
                         dataType: "json",								
                         success:function(data)
                         {
                             //Заголовок окна
-                            $('.modal-title').text("Редактировать пользователя");
+                            $('.modal-title').text("Редактировать рекламу");
                             
-                            $("#username").val(data.UserName);
-                            $("#login").val(data.Login);
-							$("#password").val("");
-                            $("#roleid").val(data.RoleID);
-                            $("#state").val(data.State);
-                            $('#user_ID').val(ID);									
+                            $("#user_id").val(data.UserID);
+                            $("#title").val(data.Title);
+                            $("#content").val(data.Content);
+                            $('#advertise_ID').val(ID);									
                             
                             //Флаг операции (1 - редактирование)
                             $("#operation").val("1");
@@ -104,7 +100,7 @@
                             $("#action").val("Сохранить изменения");
                             
                             //Отобразить форму
-                            $('#userModal').modal('show');									
+                            $('#advertiseModal').modal('show');									
                         }
                     });
 					
@@ -114,15 +110,13 @@
 				$("#add_button").click(function() {
 					//Режим добавления (кнопка Добавить)
 									
-					$("#username").val("");
-					$("#login").val("");
-					$("#password").val("");
-					$("#roleid").val("");
-					$("#state").val("");
-					$('#user_ID').val("");
-
+					$("#user_id").val("");
+                    $("#title").val("");
+                    $("#content").val("");
+                    $('#advertise_ID').val("");	
+					
 					//Заголовок окна
-					$('.modal-title').text("Добавить пользователя");
+					$('.modal-title').text("Добавить рекламу");
 					//Текст на кнопке
 					$("#action").val("Добавить");
 					//Флаг операции (0- добавление)
@@ -131,12 +125,12 @@
 				
 				$(document).on("click",".delete",function() {
 					//Режим удаления (кнопка Удалить)
-					var user_ID = $(this).attr("ID");					
+					var advertise_ID = $(this).attr("ID");					
 					
 					if(confirm("Действительно удалить?"))
 					{
 						$.ajax({
-							url:"/api/users/"+user_ID,
+							url:"/api/advertises/"+advertise_ID,
 							method:"DELETE",							
 							success:function(data)
 							{								
@@ -150,36 +144,30 @@
 					}
 				});
 				
-				$( "#user_form" ).validate({
+				$( "#advertise_form" ).validate({
 					rules: {
-						username: "required",
-						login: "required",
-						password: "required",
-						roleid: {
-							required: true,
+						user_id: {
+							required: true,							
 							number: true,
-							min: 1,
-							max: 4
+							min: 0
 						},
-						state: {
-							required: true,
-							number: true,
-						},
+						title: "required",
+						content: {
+								required: true
+						}
 					},
 					messages: {
-						username: "Пожалуйста укажите ФИО пользователя",
-						login: "Пожалуйста укажите логин пользователя",
-						password: "Пожалуйста, укажите пароль пользователя",
-						roleid: {
-							required: "Пожалуйста укажите номер роли пользователя",
-							number: "Номер роли должен быть числом",
-							min: "Номер роли должен быть 1 или более",
-							max: "Номер роли должен быть 4 или менее"						
+						user_id:{ 
+							required: "Пожалуйста укажите id",
+							number: "id должен быть числом",
+							min: "id не может быть меньше нуля"
 						},
-						state: {
-							required: "Пожалуйста укажите состояние пользователя",
-							number: "Состояние пользователя должно быть числом"
+						title: {
+							required: "Пожалуйста укажите заголовок"
 						},
+						content: { 
+							required: "Пожалуйста укажите описание"
+						}
 					},
 					errorElement: "em",
 					errorPlacement: function ( error, element ) {
@@ -198,31 +186,31 @@
 						$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
 					}
 				});
-				$('#userModal').on('hidden.bs.modal',function(){
+				$('#advertiseModal').on('hidden.bs.modal',function(){
 					//Очистка полей формы
 					$(".form-control").val("");
-					$( "#userModal .field input" ).removeClass( "is-valid" ).removeClass( "is-invalid" );
+					$( "#advertiseModal .field input" ).removeClass( "is-valid" ).removeClass( "is-invalid" );
 					$(this).find("em").remove();
 				});
 			});
 		</script>
 	</head>
 	<body>
-		<?include("../views/user_menu.inc.php");?>
+		<?include("../views/user_menu.inc");?>
 		<div class="container box">
 			<div class="table-responsive">
 				<br />
 				<div align="right">
-					<button type="button" id="add_button" data-toggle="modal" data-target="#userModal" class="btn btn-info btn-lg">Добавить</button>
+					<button type="button" id="add_button" data-toggle="modal" data-target="#advertiseModal" class="btn btn-info btn-lg">Добавить</button>
 				</div>
 				<br /><br />
-				<table id="user_data" class="table table-bordered table-striped">
+				<table id="advertise_data" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th width="10%">ФИО пользователя</th>
-							<th width="10%">Логин</th>
-							<th width="10%">Роль</th>
-							<th width="10%">Состояние</th>
+							<th width="10%">Пользователь</th>
+							<th width="10%">Заголовок</th>
+							<th width="10%">Описание</th>
+							<th width="10%">Дата публикации</th>
 							<th width="10%"></th>
 							<th width="10%"></th>
 						</tr>
@@ -231,38 +219,31 @@
 			</div>
 		</div>
 		
-		<div id="userModal" class="modal fade">
+		<div id="advertiseModal" class="modal fade">
 			<div class="modal-dialog">
-				<form method="post" id="user_form" enctype="multipart/form-data">
+				<form method="post" id="advertise_form" enctype="multipart/form-data">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title">Добавить пользователя</h4>
+							<h4 class="modal-title">Добавить товар</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<div class="modal-body">
 							<div class="field">
-								<label>ФИО пользователя</label>
-								<input type="text" name="username" id="username" class="form-control" />
+								<label>Пользователь</label>
+								<input type="text" name="user_id" id="user_id" class="form-control" />
 							</div>
 							<div class="field">
-								<label>Логин</label>
-								<input type="text" name="login" id="login" class="form-control" />
+								<label>Заголовок</label>
+								<input type="text" name="title" id="title" class="form-control" />
 							</div>
 							<div class="field">
-								<label>Пароль</label>
-								<input type="text" name="password" id="password" class="form-control" />
+								<label>Описание</label>
+								<input type="text" name="content" id="content" class="form-control" />
 							</div>
-							<div class="field">
-								<label>Номер роли</label>
-								<input type="text" name="roleid" id="roleid" class="form-control" />
-							</div>
-							<div class="field">
-								<label>Состояние</label>
-								<input type="text" name="state" id="state" class="form-control" />
-							</div>
+							
 						</div>
 						<div class="modal-footer">
-							<input type="hidden" name="user_ID" id="user_ID" />
+							<input type="hidden" name="advertise_ID" id="advertise_ID" />
 							<input type="hidden" name="operation" id="operation" />
 							<input type="submit" name="action" id="action" class="btn btn-success" value="Добавить" />
 							<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

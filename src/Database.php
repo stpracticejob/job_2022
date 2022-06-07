@@ -111,10 +111,10 @@ class DB extends PDO
             'SELECT advertise.ID,
 		    users.ID As UserID,
 		    users.login As UserLogin,
-		    advertise.Title,	
-		    advertise.Content,		
+		    advertise.Title,
+		    advertise.Content,
 		    advertise.DateTime
-	        FROM advertise, users 
+	        FROM advertise, users
 	        WHERE advertise.UserID=users.ID '
             .($with_outdated ? '' : 'AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
             'ORDER BY DateTime DESC'
@@ -185,7 +185,7 @@ class DB extends PDO
         return $stmt->fetch()[0];
     }
 
-    public function fetchVacancies($with_outdated = false)
+    public function fetchVacancies($with_outdated = false, $limit = -1)
     {
         $stmt = $this->prepare(
             'SELECT vacancy.ID As ID,
@@ -204,8 +204,12 @@ class DB extends PDO
 	        FROM vacancy, sections, users
             WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID '
             .($with_outdated ? '' : 'AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
-            'ORDER BY DateTime DESC'
+            'ORDER BY DateTime DESC '
+            .($limit > 0 ? 'LIMIT :limit ' : '')
         );
+        if ($limit > 0) {
+            $stmt->bindValue('limit', intval($limit), PDO::PARAM_INT);
+        }
         $stmt->execute();
         return $stmt;
     }
@@ -261,7 +265,7 @@ class DB extends PDO
         return $stmt->fetch()[0];
     }
 
-    public function fetchCvs($with_outdated = false)
+    public function fetchCvs($with_outdated = false, $limit = -1)
     {
         $stmt = $this->prepare(
             'SELECT cv.ID, cv.UserID, users.UserName,
@@ -270,8 +274,12 @@ class DB extends PDO
             FROM cv, sections, users
             WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID '
             .($with_outdated ? '' : 'AND cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
-            'ORDER BY DateTime DESC'
+            'ORDER BY DateTime DESC '
+            .($limit > 0 ? 'LIMIT :limit ' : '')
         );
+        if ($limit > 0) {
+            $stmt->bindValue('limit', intval($limit), PDO::PARAM_INT);
+        }
         $stmt->execute();
         return $stmt;
     }
