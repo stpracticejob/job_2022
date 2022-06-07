@@ -292,7 +292,7 @@
 				</table>
 			</div>
 		</div>
-
+        <?include('../views/footer.inc');?>
 		<div id="vacancyModal" class="modal fade">
 			<div class="modal-dialog">
 				<form method="post" id="vacancy_form" enctype="multipart/form-data">
