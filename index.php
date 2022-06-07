@@ -290,5 +290,9 @@ Flight::route('GET|POST /edit/vacancy/@id:[0-9]+', function ($id) {
     Flight::render('edit/vacancy', ['id' => $id]);
 });
 
+Flight::route('GET /chat', function () {
+    Flight::render('chat/index');
+});
+
 
 Flight::start();
