@@ -265,7 +265,7 @@ class DB extends PDO
         return $stmt->fetch()[0];
     }
 
-    public function fetchCvs($with_outdated = false)
+    public function fetchCvs($with_outdated = false, $limit = -1)
     {
         $stmt = $this->prepare(
             'SELECT cv.ID, cv.UserID, users.UserName,
@@ -274,8 +274,12 @@ class DB extends PDO
             FROM cv, sections, users
             WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID '
             .($with_outdated ? '' : 'AND cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
-            'ORDER BY DateTime DESC'
+            'ORDER BY DateTime DESC '
+            .($limit > 0 ? 'LIMIT :limit ' : '')
         );
+        if ($limit > 0) {
+            $stmt->bindValue('limit', intval($limit), PDO::PARAM_INT);
+        }
         $stmt->execute();
         return $stmt;
     }
