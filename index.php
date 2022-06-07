@@ -258,6 +258,12 @@ Flight::route('GET /cv', function () {
 });
 
 Flight::route('GET /vacancy', function () {
+    $user = Flight::user();
+
+    if (!$user->isUserAdmin()) {
+        Flight::accessDenied();
+        return;
+    }
     Flight::render('vacancy/index');
 });
 
