@@ -123,6 +123,6 @@
 		</div>
         <?endforeach;?>
 
-		<?include('footer.inc');?>
+		<?include('footer.inc.php');?>
 	</body>
 </html>

@@ -271,6 +271,6 @@
 				</form>
 			</div>
 		</div>
-		<?include("../views/footer.inc");?>
+		<?include("../views/footer.inc.php");?>
 	</body>
 </html>
