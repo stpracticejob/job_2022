@@ -1,5 +1,5 @@
-<footer class="footer mt-auto py-3 fixed-bottom">
+<footer class="footer py-3 bg-dark text-light">
     <div class="container">
-        &copy; ЭУ-141
+        <div class="row">&copy; ЭУ-141</div>
     </div>
 </footer>
