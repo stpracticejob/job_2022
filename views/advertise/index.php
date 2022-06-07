@@ -146,15 +146,15 @@
 				
 				$( "#advertise_form" ).validate({
 					rules: {
-							user_id: {
+						user_id: {
 							required: true,							
 							number: true,
 							min: 0
-							},
-							title: "required",
-							content: {
+						},
+						title: "required",
+						content: {
 								required: true
-							}
+						}
 					},
 					messages: {
 						user_id:{ 
@@ -162,13 +162,9 @@
 							number: "id должен быть числом",
 							min: "id не может быть меньше нуля"
 						},
-
 						title: {
 							required: "Пожалуйста укажите заголовок"
 						},
-				
-						
-
 						content: { 
 							required: "Пожалуйста укажите описание"
 						}
@@ -177,7 +173,6 @@
 					errorPlacement: function ( error, element ) {
 						// Add the `help-block` class to the error element
 						error.addClass( "help-block" );
-
 						if ( element.prop( "type" ) === "checkbox" ) {
 							error.insertAfter( element.parent( "label" ) );
 						} else {
@@ -191,7 +186,6 @@
 						$( element ).parents( ".field" ).addClass( "has-success" ).removeClass( "has-error" );
 					}
 				});
-
 				$('#advertiseModal').on('hidden.bs.modal',function(){
 					//Очистка полей формы
 					$(".form-control").val("");
@@ -202,6 +196,7 @@
 		</script>
 	</head>
 	<body>
+		<?include("../views/user_menu.inc");?>
 		<div class="container box">
 			<div class="table-responsive">
 				<br />
@@ -229,8 +224,8 @@
 				<form method="post" id="advertise_form" enctype="multipart/form-data">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
 							<h4 class="modal-title">Добавить товар</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<div class="modal-body">
 							<div class="field">
