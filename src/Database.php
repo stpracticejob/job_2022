@@ -105,7 +105,7 @@ class DB extends PDO
         return $stmt->fetch()[0];
     }
 
-    public function fetchAdvertises($with_outdated = false, $limit = -1)
+    public function fetchAdvertises($with_outdated = false)
     {
         $stmt = $this->prepare(
             'SELECT advertise.ID,
@@ -117,12 +117,8 @@ class DB extends PDO
 	        FROM advertise, users 
 	        WHERE advertise.UserID=users.ID '
             .($with_outdated ? '' : 'AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
-            'ORDER BY DateTime DESC '
-            .($limit > 0 ? 'LIMIT :limit ' : '')
+            'ORDER BY DateTime DESC'
         );
-        if ($limit > 0) {
-            $stmt->bindValue('limit', intval($limit), PDO::PARAM_INT);
-        }
         $stmt->execute();
         return $stmt;
     }

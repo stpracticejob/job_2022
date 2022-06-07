@@ -172,7 +172,7 @@
 					errorElement: "em",
 					errorPlacement: function ( error, element ) {
 						// Add the `help-block` class to the error element
-						error.addClass( "invalid-feedback" );
+						error.addClass( "help-block" );
 						if ( element.prop( "type" ) === "checkbox" ) {
 							error.insertAfter( element.parent( "label" ) );
 						} else {
@@ -180,17 +180,16 @@
 						}
 					},
 					highlight: function ( element, errorClass, validClass ) {
-						$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+						$( element ).parents( ".field" ).addClass( "has-error" ).removeClass( "has-success" );
 					},
 					unhighlight: function (element, errorClass, validClass) {
-						$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+						$( element ).parents( ".field" ).addClass( "has-success" ).removeClass( "has-error" );
 					}
 				});
-
 				$('#advertiseModal').on('hidden.bs.modal',function(){
 					//Очистка полей формы
 					$(".form-control").val("");
-					$( "#advertiseModal .field input" ).removeClass( "is-valid" ).removeClass( "is-invalid" );
+					$( ".field" ).removeClass( "has-success" ).removeClass( "has-error" );
 					$(this).find("em").remove();
 				});
 			});
@@ -211,7 +210,7 @@
 							<th width="10%">Пользователь</th>
 							<th width="10%">Заголовок</th>
 							<th width="10%">Описание</th>
-							<th width="10%">Дата публикации</th>
+							<th width="10%">Дата</th>
 							<th width="10%"></th>
 							<th width="10%"></th>
 						</tr>
