@@ -27,6 +27,10 @@ Flight::map('validate', function ($params) {
     echo "hello $params!";
 });
 
+Flight::map('accessDenied', function () {
+    Flight::render('errors/403');
+});
+
 Flight::before('start', function (&$params, &$output) {
     session_start();
     header('Access-Control-Allow-Origin: *');
@@ -92,12 +96,12 @@ Flight::route('GET /api/advertises?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
     $query = $request->query;
-
+    $with_outdated = boolval($query->with_outdated);
     Flight::json([
         'draw' => intval($query->draw),
-        'recordsTotal' => $db->countAdvertises(),
+        'recordsTotal' => $db->countAdvertises($with_outdated),
         'recordsFiltered' => 0,
-        'data' => $db->fetchAdvertises()->fetchAll(PDO::FETCH_ASSOC),
+        'data' => $db->fetchAdvertises($with_outdated)->fetchAll(PDO::FETCH_ASSOC),
     ]);
 });
 
@@ -131,12 +135,12 @@ Flight::route('GET /api/vacancy?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
     $query = $request->query;
-
+    $with_outdated = boolval($query->with_outdated);
     Flight::json([
         'draw' => intval($query->draw),
-        'recordsTotal' => $db->countVacancy(),
+        'recordsTotal' => $db->countVacancy($with_outdated),
         'recordsFiltered' => 0,
-        'data' => $db->fetchVacancies()->fetchAll(PDO::FETCH_ASSOC),
+        'data' => $db->fetchVacancies($with_outdated)->fetchAll(PDO::FETCH_ASSOC),
     ]);
 });
 
@@ -172,12 +176,13 @@ Flight::route('OPTIONS /api/cvs/@id:[0-9]+', function ($id) {
 Flight::route('GET /api/cvs?.+', function () {
     $request = Flight::request();
     $db = Flight::db();
-
+    $query = $request->query;
+    $with_outdated = boolval($query->with_outdated);
     Flight::json([
-        'draw' => intval($request->query->draw),
-        'recordsTotal' => $db->countCv(),
+        'draw' => intval($query->draw),
+        'recordsTotal' => $db->countCv($with_outdated),
         'recordsFiltered' => 0,
-        'data' => $db->fetchCvs()->fetchAll(PDO::FETCH_ASSOC),
+        'data' => $db->fetchCvs($with_outdated)->fetchAll(PDO::FETCH_ASSOC),
     ]);
 });
 
@@ -196,6 +201,13 @@ Flight::route('GET /', function () {
 });
 
 Flight::route('GET /login', function () {
+    $user = Flight::user();
+
+    if ($user->isUserAuthorized()) {
+        Flight::accessDenied();
+        return;
+    }
+
     Flight::render('auth_user');
 });
 
@@ -205,9 +217,14 @@ Flight::route('GET /profile/admin', function () {
 
 
 Flight::route('POST /login', function () {
-    if (isset($_POST['user_login']) && isset($_POST['user_password'])) {
-        $user = Flight::user();
+    $user = Flight::user();
 
+    if ($user->isUserAuthorized()) {
+        Flight::accessDenied();
+        return;
+    }
+
+    if (isset($_POST['user_login']) && isset($_POST['user_password'])) {
         if (!$user->authUser($_POST['user_login'], $_POST['user_password'])) {
             Flight::render('auth_user', ['error' => 'Неверный логин или пароль']);
         } else {
@@ -217,15 +234,39 @@ Flight::route('POST /login', function () {
 });
 
 Flight::route('GET /logout', function () {
-    $user = Flight::user()->logout();
+    $user = Flight::user();
+
+    if (!$user->isUserAuthorized()) {
+        Flight::accessDenied();
+        return;
+    }
+
+    $user->logout();
     Flight::redirect('/');
 });
 
 
 Flight::route('GET /cv', function () {
+    $user = Flight::user();
+
+    if (!$user->isUserAdmin()) {
+        Flight::accessDenied();
+        return;
+    }
+
     Flight::render('cv/index');
 });
 
+Flight::route('GET /users', function () {
+    $user = Flight::user();
+
+    if (!$user->isUserAdmin()) {
+        Flight::accessDenied();
+        return;
+    }
+
+    Flight::render('users/index');
+});
 
 Flight::route('/edit/vacancy', function () {
     Flight::render('edit/vacancy');

@@ -44,8 +44,11 @@ class DB extends PDO
 		   users.UserName,
 		   users.Login,
 		   users.RoleID,
+           user_roles.Name as RoleName,
            users.State
-	    FROM users');
+           FROM users, user_roles
+           WHERE user_roles.ID = users.RoleID
+           ORDER BY users.ID DESC');
         $stmt->execute();
         return $stmt;
     }
@@ -62,8 +65,11 @@ class DB extends PDO
         return $this->prepare(
             'INSERT INTO users(UserName, Login, Password, RoleID, State) VALUES (:username, :login, :password, :roleid, :state)'
         )->execute([
-            'username' => $username, 'login' => $login, 'password' => md5($password),
-            'roleid' => $roleid, 'state' => $state
+            'username' => $username,
+            'login' => $login,
+            'password' => md5($password),
+            'roleid' => $roleid,
+            'state' => $state
         ]);
     }
 
@@ -75,8 +81,10 @@ class DB extends PDO
             WHERE ID = :id'
         )->execute([
             'id' => $id,
-            'username' => $username, 'login' => $login,
-            'password' => md5($password), 'roleid' => $roleid,
+            'username' => $username,
+            'login' => $login,
+            'password' => md5($password),
+            'roleid' => $roleid,
             'state' => $state
         ]);
     }
@@ -87,25 +95,30 @@ class DB extends PDO
             ->execute(['id' => $id]);
     }
 
-    public function countAdvertises()
+    public function countAdvertises($with_outdated = false)
     {
-        $stmt = $this->prepare('SELECT COUNT(*) FROM advertise');
+        $stmt = $this->prepare(
+            'SELECT COUNT(*) FROM advertise'
+            .($with_outdated ? '' : ' WHERE advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH)')
+        );
         $stmt->execute();
         return $stmt->fetch()[0];
     }
 
-    public function fetchAdvertises()
+    public function fetchAdvertises($with_outdated = false)
     {
-        $stmt = $this->prepare('
-	    SELECT advertise.ID,
-		   users.ID As UserID,
-		   users.login As UserLogin,
-		   advertise.Title,	
-		   advertise.Content,		
-		   advertise.DateTime
-	    FROM advertise, users 
-	    WHERE advertise.UserID=users.ID
-	    ORDER BY DateTime DESC');
+        $stmt = $this->prepare(
+            'SELECT advertise.ID,
+		    users.ID As UserID,
+		    users.login As UserLogin,
+		    advertise.Title,	
+		    advertise.Content,		
+		    advertise.DateTime
+	        FROM advertise, users 
+	        WHERE advertise.UserID=users.ID '
+            .($with_outdated ? '' : 'AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
+            'ORDER BY DateTime DESC'
+        );
         $stmt->execute();
         return $stmt;
     }
@@ -162,32 +175,37 @@ class DB extends PDO
         return $stmt;
     }
 
-    public function countVacancy()
+    public function countVacancy($with_outdated = false)
     {
-        $stmt = $this->prepare('SELECT COUNT(*) FROM vacancy');
+        $stmt = $this->prepare(
+            'SELECT COUNT(*) FROM vacancy'
+            .($with_outdated ? '' : ' WHERE vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ')
+        );
         $stmt->execute();
         return $stmt->fetch()[0];
     }
 
-    public function fetchVacancies()
+    public function fetchVacancies($with_outdated = false)
     {
-        $stmt = $this->prepare("
-	    SELECT vacancy.ID As ID,
-		   users.Login As UserLogin,
-		   users.ID As UserID,
-           sections.ID As SectionID,
-           sections.Name As SectionName,
-		   vacancy.Title As Title,
-		   vacancy.Content As Content,
-		   vacancy.Salary As Salary,
-		   vacancy.Experience As Experience,
-		   vacancy.IsMain As IsMain,
-		   vacancy.IsPartnership As IsPartnership,
-		   vacancy.IsRemote As IsRemote,
-		   vacancy.DateTime As DateTime
-	    FROM vacancy, sections, users
-            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID
-            ORDER BY DateTime DESC");
+        $stmt = $this->prepare(
+            'SELECT vacancy.ID As ID,
+		    users.Login As UserLogin,
+		    users.ID As UserID,
+            sections.ID As SectionID,
+            sections.Name As SectionName,
+		    vacancy.Title As Title,
+		    vacancy.Content As Content,
+		    vacancy.Salary As Salary,
+		    vacancy.Experience As Experience,
+		    vacancy.IsMain As IsMain,
+		    vacancy.IsPartnership As IsPartnership,
+		    vacancy.IsRemote As IsRemote,
+		    vacancy.DateTime As DateTime
+	        FROM vacancy, sections, users
+            WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID '
+            .($with_outdated ? '' : 'AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
+            'ORDER BY DateTime DESC'
+        );
         $stmt->execute();
         return $stmt;
     }
@@ -233,22 +251,26 @@ class DB extends PDO
             ->execute(['id' => $id]);
     }
 
-    public function countCv()
+    public function countCv($with_outdated = false)
     {
-        $stmt = $this->prepare('SELECT COUNT(*) FROM cv');
+        $stmt = $this->prepare(
+            'SELECT COUNT(*) FROM cv'
+            .($with_outdated ? '' : ' WHERE cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ')
+        );
         $stmt->execute();
         return $stmt->fetch()[0];
     }
 
-    public function fetchCvs()
+    public function fetchCvs($with_outdated = false)
     {
         $stmt = $this->prepare(
             'SELECT cv.ID, cv.UserID, users.UserName,
             cv.SectionID, sections.Name as SectionName,
             cv.Title, cv.Content, cv.DateTime
             FROM cv, sections, users
-            WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID
-            ORDER BY DateTime DESC'
+            WHERE cv.SectionID = Sections.ID AND cv.UserID = users.ID '
+            .($with_outdated ? '' : 'AND cv.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
+            'ORDER BY DateTime DESC'
         );
         $stmt->execute();
         return $stmt;
