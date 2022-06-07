@@ -251,7 +251,7 @@ Flight::route('GET /profile', function () {
     } else if ($user->isUserAdvertiser()) {
         Flight::render('profile/advertiser');
     } else {
-        Flight::render('error403');
+        Flight::render('errors/403');
     }
 });
 
