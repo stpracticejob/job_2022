@@ -42,11 +42,11 @@
                             "orderable": false,
                         },
                     ],
-				});	
-				
+				});
+
 				$(document).on('submit', '#cv_form', function(event){
-					event.preventDefault();					
-					
+					event.preventDefault();
+
 					var cv_info = {
 						"user_id":$("#user_id").val(),
 						"section_id":$("#section_id").val(),
@@ -54,15 +54,15 @@
 						"content":$("#content").val(),
 						"datetime":$("#datetime").val()
 					}
-					
+
 					var url="/api/cvs";
-					
+
 					//Флаг операции (1 - редактирование)
 					if($("#operation").val()==1) {
 						var ID = $("#cv_ID").val();
-						url+="/"+ID;					
-					}					
-					
+						url+="/"+ID;
+					}
+
 					$.ajax({
                         url:url,
                         method: "POST",
@@ -71,7 +71,7 @@
                             "Content-type":"application/json"
                         },
                         success:function(data)
-                        {									
+                        {
                             $('#cv_form')[0].reset();
                             $('#cvModal').modal('hide');
                             dataTable.ajax.reload();
@@ -92,23 +92,23 @@
 							console.log(data);
                             //Заголовок окна
                             $('.modal-title').text("Редактировать резюме");
-                            
+
                             $("#user_id").val(data.UserID);
                             $("#section_id").val(data.SectionID);
                             $("#title").val(data.Title);
                             $("#content").val(data.Content);
-                            $('#cv_ID').val(ID);									
-                            
+                            $('#cv_ID').val(ID);
+
                             //Флаг операции (1 - редактирование)
                             $("#operation").val("1");
-                            
+
                             //Текст на кнопке
                             $("#action").val("Сохранить изменения");
-                            
+
                             //Отобразить форму
-                            $('#cvModal').modal('show');					
+                            $('#cvModal').modal('show');
                         }
-						
+
                     });
 
 					event.preventDefault();
@@ -116,13 +116,13 @@
 
 				$("#add_button").click(function() {
 					//Режим добавления (кнопка Добавить)
-									
+
 					$("#user_id").val("");
 					$("#section_id").val("");
 					$("#title").val("");
 					$("#content").val("");
-					$('#cv_ID').val("");		
-					
+					$('#cv_ID').val("");
+
 					//Заголовок окна
 					$('.modal-title').text("Добавить резюме");
 					//Текст на кнопке
@@ -133,13 +133,13 @@
 
 				$(document).on("click",".delete",function() {
 					//Режим удаления (кнопка Удалить)
-					var cv_ID = $(this).attr("ID");					
-					
+					var cv_ID = $(this).attr("ID");
+
 					if(confirm("Действительно удалить?"))
 					{
 						$.ajax({
 							url:"/api/cvs/"+cv_ID,
-							method:"DELETE",							
+							method:"DELETE",
 							success:function(data)
 							{
 								dataTable.ajax.reload();
@@ -151,20 +151,20 @@
 						return false;
 					}
 				});
-				
+
 				$( "#cv_form" ).validate({
 					rules: {
 						user_id: {
-							required: true,							
+							required: true,
 							number: true,
 							min: 0
 						},
 						section_id: {
-							required: true,							
+							required: true,
 							number: true,
 							min: 0
 						},
-						title: "required",												
+						title: "required",
 						content: "required"
 					},
 					messages: {
@@ -179,8 +179,8 @@
 							min: "Категория не может быть меньше нуля"
 						},
 						title: {
-							required: "Пожалуйста укажите Заголовок",						
-						},						
+							required: "Пожалуйста укажите Заголовок",
+						},
 						content: "Пожалуйста укажите описание"
 					},
 					errorElement: "em",
@@ -235,7 +235,7 @@
 				</table>
 			</div>
 		</div>
-		
+
 		<div id="cvModal" class="modal fade">
 			<div class="modal-dialog">
 				<form method="post" id="cv_form" enctype="multipart/form-data">
@@ -256,7 +256,7 @@
 							<div class="field">
 								<label>Заголовок</label>
 								<input type="text" name="title" id="title" class="form-control" />
-							</div>	
+							</div>
 							<div class="field">
 								<label>Описание</label>
 								<input type="text" name="content" id="content" class="form-control" />
