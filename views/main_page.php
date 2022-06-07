@@ -10,7 +10,7 @@
 		<?include('user_menu.inc');?>
 			<h1>Реклама</h1>
 
-			<?foreach ($db->fetchAdvertises() as $item):?>
+			<?foreach ($db->fetchAdvertises(false, 3) as $item):?>
 
 				<h2><?=$item['Title'] ?></h2>
 				<?=$item['Content'] ?>
@@ -46,7 +46,8 @@
 					</div>
 				</div>
                 <?endforeach;?>
-                <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <?foreach ($db->fetchVacancies(false, 3) as $item):?>
+        <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 			  <div class="modal-header">
@@ -57,14 +58,12 @@
 				</button>
 			  </div>
 			  <div class="modal-body">
-				<?foreach ($db->fetchVacancies(false, 3) as $item):?>
                 <h5>Категория: <?=$item['SectionName'] ?></5>
 				<h5>Должность: <?=$item['Title'] ?></h5>
 				<h5>Описание: <?=$item['Content'] ?></h5>
 				<h5>Требуемый опыт работы: <?=$item['Experience'] ?></h5>
 				<h3>Зарплата: <?=$item['Salary'] ?> </br>
 				<h5>Дата публикации вакансии: <?=$item['DateTime'] ?></h5><hr/>
-				<?endforeach;?>
 			  </div>
 			  <div class="modal-footer">
 				<a href="/views/vacancy" class="card-link">Страница с Вакансиями</a>
@@ -73,6 +72,6 @@
 			</div>
 		  </div>
 		</div>
-
+    <?endforeach;?>
 	</body>
 </html>
