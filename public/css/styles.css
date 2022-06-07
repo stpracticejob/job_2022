@@ -1,3 +1,18 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #ffffff;
+  display: flex;
+  flex-flow: column;
+}
+
+footer {
+  margin-top: auto;
+  background-color: #23f;
+}
+
 div#envelope {
 	margin-top: 10px
 }
