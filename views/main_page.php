@@ -8,14 +8,57 @@
 	</head>
 	<body>
 		<?include('user_menu.inc');?>
-			<h1>Реклама</h1>
+			
+        <?php $advertises = $db->fetchAdvertises(false, 3)->fetchAll(); ?>
+        <div>
+			<div class="container">
+			    <h1 class="text-center">Последняя Реклама</h1>
+				<div class="row">
+                    <?foreach ($advertises as $item):?>
+                    <div class="col-md-4 col-lg-4 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                Реклама
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title"><?=$item['Title'] ?></h4>
+                                <p class="card-text">
+                                    <?=$item['Content'] ?>
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#modalAdvertises<?= $item['ID'] ?>">Подробности</button>
+                            </div>
+                        </div>
+                    </div>
+                    <?endforeach;?>
+                </div>
+            </div>
+        </div>
 
-			<?foreach ($db->fetchAdvertises() as $item):?>
-
-				<h2><?=$item['Title'] ?></h2>
-				<?=$item['Content'] ?>
-				<hr/>
-			<?endforeach;?>
+        <?foreach ($advertises as $item):?>
+        <div class="modal fade" id="modalAdvertises<?= $item['ID'] ?>" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Реклама</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Заголовок: <?= $item['Title'] ?><br>
+                        Описание: <?= $item['Content'] ?><br>
+                        Дата публикации вакансии: <?= $item['DateTime'] ?>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+		</div>
+        <?endforeach;?>
 
         <?php $cvs = $db->fetchCvs(false, 3)->fetchAll(); ?>
         <div>
