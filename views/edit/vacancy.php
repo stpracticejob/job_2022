@@ -129,7 +129,7 @@
 		<?endif;?>
 	</head>
 	<body>
-		<?include('views/user_menu.inc');?>
+		<?include('views/user_menu.inc.php');?>
 		<?//Если юзер - админ, форму будем отображать только для редактирования
         if (isset($form_fields['f_ID']) || !$user->isUserAdmin()):?>
 		<form action="" method="POST">

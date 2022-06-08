@@ -1,3 +1,18 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #ffffff;
+  display: flex;
+  flex-flow: column;
+}
+
+footer {
+  margin-top: auto;
+  background-color: #23f;
+}
+
 div#envelope {
 	margin-top: 10px
 }
@@ -9,7 +24,7 @@ div#sidebar {
 
 div#content {
 	margin-left: 255px;
-	padding: 0 10px; 
+	padding: 0 10px;
 }
 
 div#sidebar ul{
@@ -21,10 +36,10 @@ div#sidebar ul{
 div#sidebar ul li{
 	margin-bottom: 3px;
 	padding: 3px;
-} 
+}
 
 div.points{
-	background-color: #005;				
+	background-color: #005;
 	color:#FFF;
 	padding: 3px;
 	margin-bottom: 3px;

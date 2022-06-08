@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<?include("../views/head.inc");?>
-	<?include("../views/head_datatable.inc");?>
+	<?include("../views/head.inc.php");?>
+	<?include("../views/head_datatable.inc.php");?>
 		
 		<script type="text/javascript">
 			$(function() {
@@ -196,7 +196,7 @@
 		</script>
 	</head>
 	<body>
-		<?include("../views/user_menu.inc");?>
+		<?include("../views/user_menu.inc.php");?>
 		<div class="container box">
 			<div class="table-responsive">
 				<br />
@@ -252,6 +252,6 @@
 				</form>
 			</div>
 		</div>
-		<?include("../views/footer.inc");?>
+		<?include("../views/footer.inc.php");?>
 	</body>
 </html>

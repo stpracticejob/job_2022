@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
-		<link rel="stylesheet" href="/css/style.css"/>
+		<title>Сайт поиска работы</title>
 		<meta charset="utf-8" />
-		<?include("head.inc");?>
+		<? include("head.inc.php") ?>
 	</head>
 	<body>
-		<?include('user_menu.inc');?>
-			<h1>Реклама</h1>
+		<? include('user_menu.inc.php') ?>
+        <div class="container">
+            <h1>Реклама</h1>
+            <? foreach ($db->fetchAdvertises() as $item): ?>
 
-			<?foreach ($db->fetchAdvertises() as $item):?>
+                <h2><?=$item['Title'] ?></h2>
+                <?=$item['Content'] ?>
+                <hr/>
+            <? endforeach ?>
+        </div>
 
-				<h2><?=$item['Title'] ?></h2>
-				<?=$item['Content'] ?>
-				<hr/>
-			<?endforeach;?>
-
-        <?php $cvs = $db->fetchCvs(false, 3)->fetchAll(); ?>
+        <? $cvs = $db->fetchCvs(false, 3)->fetchAll(); ?>
         <div>
 			<div class="container">
 			    <h1 class="text-center">Последние Резюме</h1>
 				<div class="row">
-                    <?foreach ($cvs as $item):?>
+                    <? foreach ($cvs as $item): ?>
                     <div class="col-md-4 col-lg-4 col-sm-12">
                         <div class="card">
                             <div class="card-header">
@@ -40,13 +40,13 @@
                             </div>
                         </div>
                     </div>
-                    <?endforeach;?>
+                    <? endforeach ?>
                 </div>
 
                 <h1 class="text-center">Последние Вакансии</h1>
 				<div class="row">
-                    <?php $Vacancies = $db->fetchVacancies(false, 3)->fetchAll(); ?>
-                    <?foreach ($Vacancies as $item):?>
+                    <? $vacancies = $db->fetchVacancies(false, 3)->fetchAll() ?>
+                    <? foreach ($vacancies as $item): ?>
                         <div class="col-md-4 col-lg-4 col-sm-12">
                         <div class="card">
                             <div class="card-header">
@@ -61,16 +61,20 @@
                                 </p>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modalVacancy<?= $item['ID'] ?>">Подробности</button>
+                                <button type="button" class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#modalVacancy<?= $item['ID'] ?>">
+                                    Подробности
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <?endforeach;?>
+                    <? endforeach ?>
                 </div>
             </div>
         </div>
-        <?foreach ($cvs as $item):?>
+
+        <? foreach ($cvs as $item): ?>
         <div class="modal fade" id="modalCv<?= $item['ID'] ?>" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -88,14 +92,16 @@
                         Дата публикации вакансии: <?= $item['DateTime'] ?>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Закрыть
+                        </button>
                     </div>
                 </div>
             </div>
 		</div>
-        <?endforeach;?>
+        <? endforeach ?>
 
-        <?foreach ($Vacancies as $item):?>
+        <? foreach ($vacancies as $item): ?>
         <div class="modal fade" id="modalVacancy<?= $item['ID'] ?>" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -119,8 +125,8 @@
                 </div>
             </div>
 		</div>
-        <?endforeach;?>
+        <? endforeach ?>
 
-		<?include('footer.inc');?>
+		<? include('footer.inc.php') ?>
 	</body>
 </html>
