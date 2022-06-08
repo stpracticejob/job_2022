@@ -35,8 +35,6 @@
                 </div>
 
                 <?php $advertises = $db->fetchAdvertises(false, 3)->fetchAll(); ?>
-        <div>
-			<div class="container">
 			    <h1 class="text-center">Последняя Реклама</h1>
 				<div class="row">
                     <?foreach ($advertises as $item):?>
@@ -52,9 +50,7 @@
                     </div>
                     <?endforeach;?>
                 </div>
-            </div>
-        </div> 
-        
+
                 <h1 class="text-center">Последние Вакансии</h1>
 				<div class="row">
                     <? $vacancies = $db->fetchVacancies(false, 3)->fetchAll() ?>
