@@ -211,11 +211,6 @@ Flight::route('GET /login', function () {
     Flight::render('auth_user');
 });
 
-Flight::route('GET /profile/admin', function () {
-    Flight::render('profile/admin');
-});
-
-
 Flight::route('POST /login', function () {
     $user = Flight::user();
 
@@ -245,6 +240,20 @@ Flight::route('GET /logout', function () {
     Flight::redirect('/');
 });
 
+Flight::route('GET /profile', function () {
+    $user = Flight::user();
+    if ($user->isUserAdmin()) {
+        Flight::render('profile/admin');
+    } else if ($user->isUserAspirant()) {
+        Flight::render('profile/aspirant');
+    } else if ($user->isUserEmployer()) {
+        Flight::render('profile/employer');
+    } else if ($user->isUserAdvertiser()) {
+        Flight::render('profile/advertiser');
+    } else {
+        Flight::render('errors/403');
+    }
+});
 
 Flight::route('GET /cv', function () {
     $user = Flight::user();

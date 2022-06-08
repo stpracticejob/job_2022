@@ -86,7 +86,7 @@
 		<?endif;?>
 	</head>
 	<body>
-		<?require_once("$_SERVER[DOCUMENT_ROOT]/../includes/usermenu.inc");?>
+		<?require_once("$_SERVER[DOCUMENT_ROOT]/../includes/usermenu.inc.php");?>
 		<br/>
 		
 		<form action="" method="POST">
