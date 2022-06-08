@@ -7,15 +7,6 @@
 	</head>
 	<body>
 		<? include('user_menu.inc.php') ?>
-        <div class="container">
-            <h1>Реклама</h1>
-            <? foreach ($db->fetchAdvertises() as $item): ?>
-
-                <h2><?=$item['Title'] ?></h2>
-                <?=$item['Content'] ?>
-                <hr/>
-            <? endforeach ?>
-        </div>
 
         <? $cvs = $db->fetchCvs(false, 3)->fetchAll(); ?>
         <div>
@@ -41,6 +32,23 @@
                         </div>
                     </div>
                     <? endforeach ?>
+                </div>
+
+                <?php $advertises = $db->fetchAdvertises(false, 3)->fetchAll(); ?>
+			    <h1 class="text-center">Последняя Реклама</h1>
+				<div class="row">
+                    <?foreach ($advertises as $item):?>
+                    <div class="col-md-4 col-lg-4 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title"><?=$item['Title'] ?></h4>
+                                <p class="card-text">
+                                    <?=$item['Content'] ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <?endforeach;?>
                 </div>
 
                 <h1 class="text-center">Последние Вакансии</h1>
