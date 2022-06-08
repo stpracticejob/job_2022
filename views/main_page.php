@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
-		<link rel="stylesheet" href="/css/style.css"/>
+		<title>Сайт поиска работы</title>
 		<meta charset="utf-8" />
 		<? include("head.inc.php") ?>
 	</head>
