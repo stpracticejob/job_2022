@@ -43,7 +43,9 @@
                             <div class="card-body">
                                 <h4 class="card-title"><?=$item['Title'] ?></h4>
                                 <p class="card-text">
+                                    <div class="mb-3">
                                     <?=$item['Content'] ?>
+                                    </div>
                                 </p>
                             </div>
                         </div>
