@@ -19,10 +19,6 @@ class SendMessageBody(BaseModel):
 
 @module.route('/', methods=['GET', 'POST', 'OPTIONS'])
 def chat_api():
-    request.headers.add('Access-Control-Allow-Origin', '*')
-    request.headers.add('Access-Control-Allow-Methods', '*')
-    request.headers.add('Access-Control-Allow-Headers', '*')
-    request.headers.add('Access-Control-Max-Age', '1728000')
     if request.method == 'OPTIONS':
         return form_response(200, True, '')
     token = request.headers.get('Authorization')
@@ -59,10 +55,6 @@ def chat_api():
 
 @module.route('/recipients', methods=['GET', 'OPTIONS'])
 def recipients_api():
-    request.headers.add('Access-Control-Allow-Origin', '*')
-    request.headers.add('Access-Control-Allow-Methods', '*')
-    request.headers.add('Access-Control-Allow-Headers', '*')
-    request.headers.add('Access-Control-Max-Age', '1728000')
     if request.method == 'OPTIONS':
         return form_response(200, True, '')
     token = request.headers.get('Authorization', '')
