@@ -87,7 +87,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Вакансия</h4>
+                        <h4 class="modal-title">Резюме</h4>
                         <button type="button" class="close" data-dismiss="modal">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -97,7 +97,7 @@
                         Должность: <?= $item['Title'] ?><br>
                         Описание: <?= $item['Content'] ?><br>
                         Пользователь: <?= $item['UserName'] ?><br>
-                        Дата публикации вакансии: <?= $item['DateTime'] ?>
+                        Дата публикации резюме: <?= $item['DateTime'] ?>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
