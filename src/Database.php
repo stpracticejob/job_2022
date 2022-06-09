@@ -105,7 +105,7 @@ class DB extends PDO
         return $stmt->fetch()[0];
     }
 
-    public function fetchAdvertises($with_outdated = false)
+    public function fetchAdvertises($with_outdated = false, $limit = -1)
     {
         $stmt = $this->prepare(
             'SELECT advertise.ID,
@@ -117,8 +117,12 @@ class DB extends PDO
 	        FROM advertise, users
 	        WHERE advertise.UserID=users.ID '
             .($with_outdated ? '' : 'AND advertise.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
-            'ORDER BY DateTime DESC'
+            'ORDER BY DateTime DESC '
+            .($limit > 0 ? 'LIMIT :limit ' : '')
         );
+        if ($limit > 0) {
+            $stmt->bindValue('limit', intval($limit), PDO::PARAM_INT);
+        }
         $stmt->execute();
         return $stmt;
     }
@@ -185,7 +189,7 @@ class DB extends PDO
         return $stmt->fetch()[0];
     }
 
-    public function fetchVacancies($with_outdated = false)
+    public function fetchVacancies($with_outdated = false, $limit = -1)
     {
         $stmt = $this->prepare(
             'SELECT vacancy.ID As ID,
@@ -204,8 +208,12 @@ class DB extends PDO
 	        FROM vacancy, sections, users
             WHERE vacancy.SectionID = sections.ID AND vacancy.UserID = users.ID '
             .($with_outdated ? '' : 'AND vacancy.DateTime > (CURRENT_DATE - INTERVAL 6 MONTH) ').
-            'ORDER BY DateTime DESC'
+            'ORDER BY DateTime DESC '
+            .($limit > 0 ? 'LIMIT :limit ' : '')
         );
+        if ($limit > 0) {
+            $stmt->bindValue('limit', intval($limit), PDO::PARAM_INT);
+        }
         $stmt->execute();
         return $stmt;
     }

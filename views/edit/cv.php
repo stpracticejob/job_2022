@@ -102,7 +102,7 @@
 		<?endif;?>
 	</head>
 	<body>
-		<?require_once("$_SERVER[DOCUMENT_ROOT]/../includes/usermenu.inc");?>
+		<?require_once("$_SERVER[DOCUMENT_ROOT]/../includes/usermenu.inc.php");?>
 		<?//Если юзер - админ, форму будем отображать только для редактирования
         if (isset($form_fields['f_ID']) || !user_is_admin()):?>
 		<form action="" method="POST">
