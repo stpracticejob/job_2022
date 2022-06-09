@@ -2,8 +2,4 @@
 /vendor/
 .vs
 .env
-/chat-api-app/env
-/chat-api-app/config.ini
-__pycache__/
-*.pyc
 
