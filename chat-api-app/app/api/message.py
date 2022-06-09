@@ -22,7 +22,7 @@ def chat_api():
     if request.method == 'OPTIONS':
         return form_response(200, True, '')
     token = request.headers.get('Authorization')
-    user: User = User.query.filter_by(token=token).first()
+    user: User = User.query.filter_by(id=token).first()
     if not user:
         return form_response(status.HTTP_401_UNAUTHORIZED, False, HTTP_ERRORS['not_auth'])
     if request.method == 'POST':
@@ -58,7 +58,7 @@ def recipients_api():
     if request.method == 'OPTIONS':
         return form_response(200, True, '')
     token = request.headers.get('Authorization', '')
-    user: User = User.query.filter_by(token=token).first()
+    user: User = User.query.filter_by(id=token).first()
     if not user:
         return form_response(status.HTTP_401_UNAUTHORIZED, False, HTTP_ERRORS['not_auth'])
     query = """
