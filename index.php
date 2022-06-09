@@ -22,6 +22,7 @@ Flight::register('user', User::class);
 
 Flight::view()->set('db', Flight::db());
 Flight::view()->set('user', Flight::user());
+Flight::view()->set('chat_backend_url', $CHAT_BACKEND_URL);
 
 Flight::map('validate', function ($params) {
     echo "hello $params!";
@@ -308,6 +309,10 @@ Flight::route('GET|POST /edit/vacancy/@id:[0-9]+', function ($id) {
         return;
     }
     Flight::render('edit/vacancy', ['id' => $id]);
+});
+
+Flight::route('GET /chat', function () {
+    Flight::render('chat/index');
 });
 
 

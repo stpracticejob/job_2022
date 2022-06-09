@@ -1,0 +1,316 @@
+openapi: "3.0.2"
+info:
+  title: Jobs Mail Sender
+  version: "1.0.0"
+servers:
+  - url: http://127.0.0.1:5000
+paths:
+  /ping:
+    get:
+      tags:
+        - System
+      summary: Проверить связь с сервером.
+
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: "Выполнен ли корректный доступ к серверу"
+                  error:
+                    type: string
+                    example: ""
+                    description: "Сообщение об ошибке"
+
+  /api/message:
+    get:
+      tags:
+        - Messages
+      summary: Получить переписку с указанным пользователем.
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          required: true
+          description: Системный токен.
+        - name: recipient_id
+          in: query
+          schema:
+            type: integer
+          required: true
+          description: Id получателя.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: "Выполнен ли доступ корректно"
+                  error:
+                    type: string
+                    example: ""
+                    description: "Описание произошедшей ошибки"
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        message:
+                          type: string
+                          example: "Сообщение"
+                        sender_id:
+                          type: integer
+                          example: 1
+                        recipient_id:
+                          type: integer
+                          example: 2
+                        date_send:
+                          type: string
+                          example: "2022-02-02T10:00:00"
+        "400":
+          description: Ошибка в теле запроса
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: "Выполнен ли доступ корректно"
+                  error:
+                    type: string
+                    example: "Ошибка в теле запроса"
+                    description: "Описание произошедшей ошибки"
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        loc:
+                          type: array
+                          items:
+                            type: string
+                            example: "recipients"
+                        msg:
+                          type: string
+                          example: "field required"
+                        type:
+                          type: string
+                          example: "value_error.missing"
+                    description: "Массив с информацией по ошибке запроса"
+
+        "401":
+          description: Не пройдена авторизация (отсутствует токен)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: "Выполнен ли доступ корректно"
+                  error:
+                    type: string
+                    example: "Доступ запрещен. Авторизуйтесь в системе"
+                    description: "Описание произошедшей ошибки"
+
+    post:
+      tags:
+        - Messages
+      summary: Отправить сообщение пользователю.
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          required: true
+          description: Системный токен.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - "message"
+              properties:
+                recipient_id:
+                  type: integer
+                  example: 1
+                  description: 'Id получателя'
+                recipient_login:
+                  type: integer
+                  example: "user_login"
+                  description: 'Логин пользователя'
+                message:
+                  type: string
+                  example: "Сообщение"
+                  description: 'Текст сообщения'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: "Выполнен ли доступ корректно"
+                  error:
+                    type: string
+                    example: ""
+                    description: "Описание произошедшей ошибки"
+        "400":
+          description: Ошибка в теле запроса
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: "Выполнен ли доступ корректно"
+                  error:
+                    type: string
+                    example: "Ошибка в теле запроса"
+                    description: "Описание произошедшей ошибки"
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        loc:
+                          type: array
+                          items:
+                            type: string
+                            example: "recipients"
+                        msg:
+                          type: string
+                          example: "field required"
+                        type:
+                          type: string
+                          example: "value_error.missing"
+                    description: "Массив с информацией по ошибке запроса"
+
+        "401":
+          description: Не пройдена авторизация (отсутствует токен)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: "Выполнен ли доступ корректно"
+                  error:
+                    type: string
+                    example: "Доступ запрещен. Авторизуйтесь в системе"
+                    description: "Описание произошедшей ошибки"
+
+  /api/message/recipients:
+    get:
+      tags:
+        - Messages
+      summary: Получить список чатов с пользователями.
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          required: true
+          description: Системный токен.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: "Выполнен ли доступ корректно"
+                  error:
+                    type: string
+                    example: ""
+                    description: "Описание произошедшей ошибки"
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: "Иванов Иван Иванович"
+        "400":
+          description: Ошибка в теле запроса
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: "Выполнен ли доступ корректно"
+                  error:
+                    type: string
+                    example: "Ошибка в теле запроса"
+                    description: "Описание произошедшей ошибки"
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        loc:
+                          type: array
+                          items:
+                            type: string
+                            example: "recipients"
+                        msg:
+                          type: string
+                          example: "field required"
+                        type:
+                          type: string
+                          example: "value_error.missing"
+                    description: "Массив с информацией по ошибке запроса"
+
+        "401":
+          description: Не пройдена авторизация (отсутствует токен)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: "Выполнен ли доступ корректно"
+                  error:
+                    type: string
+                    example: "Доступ запрещен. Авторизуйтесь в системе"
+                    description: "Описание произошедшей ошибки"
