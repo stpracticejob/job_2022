@@ -1,10 +1,6 @@
 <script type="application/javascript">
     $(document).ready(function(){
-        // TODO: Перенести url в конфигурацию
-        let base_url = 'http://127.0.0.1:5000'
-        // TODO: Убрать тестовый токен
-        localStorage.setItem('token', 'asdjklasjdj')
-
+        let base_url = "<?= $chat_backend_url ?>"
         $("#new-chat-send").on('click', function (){
             let login = $('#new_chat_login').val();
             let message = $('#new_chat_message').val();
@@ -14,7 +10,7 @@
             fetch(`${base_url}/message/`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': localStorage.getItem('token'),
+                    'Authorization': "<?= $user->getUserInfo()['ID'] ?>",
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -35,7 +31,7 @@
 
         fetch(`${base_url}/message/recipients`, {
             headers: {
-                'Authorization': localStorage.getItem('token'),
+                'Authorization': "<?= $user->getUserInfo()['ID'] ?>",
                 'Content-Type': 'application/json'
             },
         })
@@ -65,7 +61,7 @@
                     '     </div>');
                 fetch(`${base_url}/message/?id=${$(this).attr('id')}`, {
                     headers: {
-                        'Authorization': localStorage.getItem('token'),
+                        'Authorization': "<?= $user->getUserInfo()['ID'] ?>",
                         'Content-Type': 'application/json'
                     },
                 })
@@ -98,7 +94,7 @@
                     fetch(`${base_url}/message/`, {
                         method: 'POST',
                         headers: {
-                            'Authorization': localStorage.getItem('token'),
+                            'Authorization': "<?= $user->getUserInfo()['ID'] ?>",
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
