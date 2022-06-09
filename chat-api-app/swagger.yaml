@@ -28,7 +28,7 @@ paths:
                     example: ""
                     description: "Сообщение об ошибке"
 
-  /api/message:
+  /message:
     get:
       tags:
         - Messages
@@ -39,7 +39,7 @@ paths:
           schema:
             type: string
           required: true
-          description: Системный токен.
+          description: ID пользователя в бд
         - name: recipient_id
           in: query
           schema:
@@ -141,7 +141,7 @@ paths:
           schema:
             type: string
           required: true
-          description: Системный токен.
+          description: ID пользователя в бд
       requestBody:
         content:
           application/json:
@@ -227,7 +227,7 @@ paths:
                     example: "Доступ запрещен. Авторизуйтесь в системе"
                     description: "Описание произошедшей ошибки"
 
-  /api/message/recipients:
+  /message/recipients:
     get:
       tags:
         - Messages
@@ -238,7 +238,7 @@ paths:
           schema:
             type: string
           required: true
-          description: Системный токен.
+          description: ID пользователя в бд
       responses:
         "200":
           description: OK
