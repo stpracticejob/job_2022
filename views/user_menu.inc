@@ -120,7 +120,7 @@
                         <a class="nav-link" href="">Настройки</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Сообщения(2)</a>
+                        <a class="nav-link" href="/chat">Сообщения</a>
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
