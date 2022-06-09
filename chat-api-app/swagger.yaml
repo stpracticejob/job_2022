@@ -5,7 +5,7 @@ info:
 servers:
   - url: http://127.0.0.1:5000
 paths:
-  /api/ping:
+  /ping:
     get:
       tags:
         - System
@@ -45,7 +45,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Системный токен.
+          description: Id получателя.
       responses:
         "200":
           description: OK
