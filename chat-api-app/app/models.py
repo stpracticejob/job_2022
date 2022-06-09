@@ -20,7 +20,6 @@ class User(db.Model):
     role_id = db.Column('RoleID', db.Integer, db.ForeignKey('user_roles.ID'))
     role = db.relationship('Role', backref=db.backref('users', lazy=True))
     state = db.Column('State', db.Integer)
-    token = db.Column(db.String(1000))
 
     def __repr__(self):
         return '<User %r>' % self.name
