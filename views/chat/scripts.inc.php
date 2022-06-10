@@ -40,6 +40,7 @@
                 return response.json();
             })
             .then((data) => {
+                console.log(data);
                 data.result.map(item => {
                     $(".list-unstyled").append(
                         `<li id="${item.id}" class="user clearfix" name="${item.name}">
@@ -53,6 +54,7 @@
 
             $(".user").on('click', function () {
                 recipient_id = $(this).attr('id');
+                console.log(recipient_id);
                 $('.chat-about-desc').html(`${$(this).attr('name')}`);
                 $(".messageWithUser").html('<div style="width: 100%; height: 580px;" class="center">\n' +
                     '         <div class="spinner-border" role="status">\n' +
