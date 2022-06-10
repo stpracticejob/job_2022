@@ -1,7 +1,8 @@
 <script type="application/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
         let base_url = "<?= $chat_backend_url ?>"
-        $("#new-chat-send").on('click', function (){
+        let recipient_id = 0
+        $("#new-chat-send").on('click', function () {
             let login = $('#new_chat_login').val();
             let message = $('#new_chat_message').val();
             if (!login || !message) {
@@ -17,7 +18,7 @@
                     "recipient_login": login,
                     "message": message,
                 })
-            }).then( res => {
+            }).then(res => {
                 return res.json();
             }).then(json => {
                 if (!json.success) {
@@ -39,7 +40,6 @@
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
                 data.result.map(item => {
                     $(".list-unstyled").append(
                         `<li id="${item.id}" class="user clearfix" name="${item.name}">
@@ -51,8 +51,8 @@
                 });
             }).then(() => {
 
-            $(".user").on('click', function(){
-                localStorage.setItem('userId', $(this).attr('id').toString());
+            $(".user").on('click', function () {
+                recipient_id = $(this).attr('id');
                 $('.chat-about-desc').html(`${$(this).attr('name')}`);
                 $(".messageWithUser").html('<div style="width: 100%; height: 580px;" class="center">\n' +
                     '         <div class="spinner-border" role="status">\n' +
@@ -85,7 +85,7 @@
             });
 
             $('.form-control').on('keypress', function (e) {
-                if(e.which === 13){
+                if (e.which === 13) {
                     $(this).attr("disabled", "disabled");
                     $('.spin-modal').modal('show');
                     setTimeout(function () {
@@ -98,13 +98,12 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            "recipient_id": parseInt(localStorage.getItem('userId')),
+                            "recipient_id": recipient_id,
                             "message": $(this).val(),
                         })
-                    }).then( res => {
+                    }).then(res => {
                         return res.json();
                     }).then(json => {
-                        console.log(json);
                         $(".messageWithUser").append(
                             `<li class="clearfix"">
                              <div class="message-data text-right">
