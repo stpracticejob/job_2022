@@ -40,7 +40,6 @@
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
                 data.result.map(item => {
                     $(".list-unstyled").append(
                         `<li id="${item.id}" class="user clearfix" name="${item.name}">
@@ -54,14 +53,13 @@
 
             $(".user").on('click', function () {
                 recipient_id = $(this).attr('id');
-                console.log(recipient_id);
                 $('.chat-about-desc').html(`${$(this).attr('name')}`);
                 $(".messageWithUser").html('<div style="width: 100%; height: 580px;" class="center">\n' +
                     '         <div class="spinner-border" role="status">\n' +
                     '             <span class="sr-only">Loading...</span>\n' +
                     '         </div>\n' +
                     '     </div>');
-                fetch(`${base_url}/message/?id=${$(this).attr('id')}`, {
+                fetch(`${base_url}/message/${recipient_id}`, {
                     headers: {
                         'Authorization': "<?= $user->getUserInfo()['ID'] ?>",
                         'Content-Type': 'application/json'
@@ -88,6 +86,10 @@
 
             $('.form-control').on('keypress', function (e) {
                 if (e.which === 13) {
+                    if (!recipient_id){
+                        alert('Сначала выберете пользователя!');
+                        return
+                    }
                     $(this).attr("disabled", "disabled");
                     $('.spin-modal').modal('show');
                     setTimeout(function () {
