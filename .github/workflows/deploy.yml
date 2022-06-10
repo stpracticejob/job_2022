@@ -54,5 +54,6 @@ jobs:
             DB_USER="${{secrets.DB_USER}}"
             DB_PASSWORD="${{secrets.DB_PASSWORD}}"
             DEBUG="${{secrets.DEBUG}}"
+            CHAT_BACKEND_URL="${{secrets.CHAT_BACKEND_URL}}"
             EOF
             docker exec -i job-site_php /usr/local/bin/composer install --working-dir=/var/www/html/${{env.BRANCH_NAME}}
