@@ -87,7 +87,7 @@
                         <a class="nav-link" href="/login">Вход</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">Регистрация</a>
+                        <a class="nav-link" href="/signup">Регистрация</a>
                     </li>
 	            <? endif ?>
 			</ul>

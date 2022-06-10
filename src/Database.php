@@ -325,4 +325,20 @@ class DB extends PDO
         return $this->prepare('DELETE FROM cv WHERE ID = :id LIMIT 1')
             ->execute(['id' => $id]);
     }
+
+    public function getUserRoles()
+    {
+        $stmt = $this->prepare('SELECT * FROM user_roles');
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function checkUser($login)
+    {
+        $stmt = $this->prepare(
+            "SELECT COUNT(*) AS N FROM users WHERE Login= :login"
+        );
+        $stmt->execute(['login' => $login]);
+        return $stmt->fetch()[0];
+    }
 }
