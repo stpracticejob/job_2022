@@ -43,8 +43,15 @@ def chat_api():
         db.session.add(new_message)
         db.session.commit()
         return form_response(200, True, '')
+
+
+@module.route('/<int:recipient_id>', methods=['GET', 'POST', 'OPTIONS'])
+def get_message(recipient_id: int):
+    if request.method == 'OPTIONS':
+        return form_response(200, True, '')
+    token = request.headers.get('Authorization')
+    user: User = User.query.filter_by(id=token).first()
     if request.method == 'GET':
-        recipient_id = int(request.args.get('id', "-1"))
         messages = UserMessage.query.filter(
             ((UserMessage.recipient_id == recipient_id) & (UserMessage.sender_id == user.id)) |
             ((UserMessage.recipient_id == user.id) & (UserMessage.sender_id == recipient_id))

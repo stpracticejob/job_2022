@@ -29,108 +29,6 @@ paths:
                     description: "Сообщение об ошибке"
 
   /message:
-    get:
-      tags:
-        - Messages
-      summary: Получить переписку с указанным пользователем.
-      parameters:
-        - name: Authorization
-          in: header
-          schema:
-            type: string
-          required: true
-          description: ID пользователя в бд
-        - name: recipient_id
-          in: query
-          schema:
-            type: integer
-          required: true
-          description: Id получателя.
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                    description: "Выполнен ли доступ корректно"
-                  error:
-                    type: string
-                    example: ""
-                    description: "Описание произошедшей ошибки"
-                  result:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        message:
-                          type: string
-                          example: "Сообщение"
-                        sender_id:
-                          type: integer
-                          example: 1
-                        recipient_id:
-                          type: integer
-                          example: 2
-                        date_send:
-                          type: string
-                          example: "2022-02-02T10:00:00"
-        "400":
-          description: Ошибка в теле запроса
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                    description: "Выполнен ли доступ корректно"
-                  error:
-                    type: string
-                    example: "Ошибка в теле запроса"
-                    description: "Описание произошедшей ошибки"
-                  details:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        loc:
-                          type: array
-                          items:
-                            type: string
-                            example: "recipients"
-                        msg:
-                          type: string
-                          example: "field required"
-                        type:
-                          type: string
-                          example: "value_error.missing"
-                    description: "Массив с информацией по ошибке запроса"
-
-        "401":
-          description: Не пройдена авторизация (отсутствует токен)
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                    description: "Выполнен ли доступ корректно"
-                  error:
-                    type: string
-                    example: "Доступ запрещен. Авторизуйтесь в системе"
-                    description: "Описание произошедшей ошибки"
-
     post:
       tags:
         - Messages
@@ -226,6 +124,103 @@ paths:
                     type: string
                     example: "Доступ запрещен. Авторизуйтесь в системе"
                     description: "Описание произошедшей ошибки"
+
+  /message/<int:recipient_id>:
+      get:
+          tags:
+              - Messages
+          summary: Получить переписку с указанным пользователем.
+          parameters:
+              -   name: Authorization
+                  in: header
+                  schema:
+                      type: string
+                  required: true
+                  description: ID пользователя в бд
+          responses:
+              "200":
+                  description: OK
+                  content:
+                      application/json:
+                          schema:
+                              type: object
+                              properties:
+                                  success:
+                                      type: boolean
+                                      example: true
+                                      description: "Выполнен ли доступ корректно"
+                                  error:
+                                      type: string
+                                      example: ""
+                                      description: "Описание произошедшей ошибки"
+                                  result:
+                                      type: array
+                                      items:
+                                          type: object
+                                          properties:
+                                              id:
+                                                  type: integer
+                                                  example: 1
+                                              message:
+                                                  type: string
+                                                  example: "Сообщение"
+                                              sender_id:
+                                                  type: integer
+                                                  example: 1
+                                              recipient_id:
+                                                  type: integer
+                                                  example: 2
+                                              date_send:
+                                                  type: string
+                                                  example: "2022-02-02T10:00:00"
+              "400":
+                  description: Ошибка в теле запроса
+                  content:
+                      application/json:
+                          schema:
+                              type: object
+                              properties:
+                                  success:
+                                      type: boolean
+                                      example: false
+                                      description: "Выполнен ли доступ корректно"
+                                  error:
+                                      type: string
+                                      example: "Ошибка в теле запроса"
+                                      description: "Описание произошедшей ошибки"
+                                  details:
+                                      type: array
+                                      items:
+                                          type: object
+                                          properties:
+                                              loc:
+                                                  type: array
+                                                  items:
+                                                      type: string
+                                                      example: "recipients"
+                                              msg:
+                                                  type: string
+                                                  example: "field required"
+                                              type:
+                                                  type: string
+                                                  example: "value_error.missing"
+                                      description: "Массив с информацией по ошибке запроса"
+
+              "401":
+                  description: Не пройдена авторизация (отсутствует токен)
+                  content:
+                      application/json:
+                          schema:
+                              type: object
+                              properties:
+                                  success:
+                                      type: boolean
+                                      example: false
+                                      description: "Выполнен ли доступ корректно"
+                                  error:
+                                      type: string
+                                      example: "Доступ запрещен. Авторизуйтесь в системе"
+                                      description: "Описание произошедшей ошибки"
 
   /message/recipients:
     get:
