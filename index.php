@@ -241,15 +241,84 @@ Flight::route('GET /logout', function () {
     Flight::redirect('/');
 });
 
+Flight::route('GET /signup', function () {
+    $user = Flight::user();
+    if ($user->isUserAuthorized()) {
+        Flight::redirect('/');
+        return;
+    }
+
+    Flight::render('signup', ['form_fields' => [], 'errors' => []]);
+});
+
+Flight::route('POST /signup', function () {
+    $user = Flight::user();
+
+    if ($user->isUserAuthorized()) {
+        Flight::redirect('/');
+        return;
+    }
+
+    $form_fields = Flight::request()->data;
+    $db = Flight::db();
+
+    $errors = [];
+
+    if (trim($form_fields["fullname"]) == "") {
+        $errors['fullname'] = "Не указано полное имя";
+    }
+
+    if (!preg_match("/^[A-Za-z0-9\._-]+@[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/", $form_fields["email"])) {
+        $errors['email'] = "Поле E-mail не заполнено или содержит недопустимые символы";
+    } elseif ($db->checkUser($form_fields["email"]) > 0) {
+        $errors['email'] = "Пользователь с таким E-mail уже зарегистрирован";
+    }
+
+    if (strlen($form_fields["password"]) < 5) {
+        $errors['password'] = "Пароль должен содержать не менее 5 символов";
+    } elseif ($form_fields["password"] != $form_fields["password2"]) {
+        $errors['password2'] = "Пароль не совпадает с подтверждением";
+    }
+
+    if (!isset($form_fields["roleId"])) {
+        $errors['roleId'] = "Не выбран тип создаваемой учётной записи";
+    }
+
+    if (count($errors) == 0) {
+        $db->addUser(
+            $form_fields['fullname'],
+            $form_fields['email'],
+            $form_fields['password'],
+            $form_fields['roleId'],
+            0,
+        );
+        Flight::render(
+            'success_page',
+            [
+                'header' => 'Пользователь успешно зарегистрирован',
+                'message' => 'Добро пожаловать на сайт!',
+                'button_label' => 'Войти на сайт',
+                'url' => '/login',
+            ]
+        );
+    } else {
+        Flight::render(
+            'signup',
+            ['form_fields' => $form_fields, 'errors' => $errors]
+        );
+    }
+});
+
+
 Flight::route('GET /profile', function () {
     $user = Flight::user();
     if ($user->isUserAdmin()) {
         Flight::render('profile/admin');
-    } else if ($user->isUserAspirant()) {
+    } elseif ($user->isUserAspirant()) {
         Flight::render('profile/aspirant');
-    } else if ($user->isUserEmployer()) {
+    } elseif ($user->isUserEmployer()) {
         Flight::render('profile/employer');
-    } else if ($user->isUserAdvertiser()) {
+    } elseif ($user->isUserAdvertiser()) {
         Flight::render('profile/advertiser');
     } else {
         Flight::render('errors/403');
@@ -295,7 +364,7 @@ Flight::route('GET /advertise', function () {
         Flight::accessDenied();
         return;
     }
-    
+
     Flight::render('advertise/index');
 });
 

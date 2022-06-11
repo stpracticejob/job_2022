@@ -26,7 +26,7 @@
 
                     </div>
 
-                    <input class="btn btn-primary" name="Enter" type="Submit"/>
+                    <input class="btn btn-primary" name="Enter" type="submit"/>
                 </form>
             </div>
         </main>
