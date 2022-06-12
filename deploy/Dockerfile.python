@@ -1,0 +1,15 @@
+FROM python:3.10.5-alpine
+
+RUN adduser chat --disabled-password --home /app
+
+COPY . /app
+WORKDIR /app
+
+RUN apk add --no-cache mariadb-connector-c && \
+    apk add --no-cache --virtual build-deps gcc musl-dev mariadb-connector-c-dev && \
+    pip install --no-cache-dir -r requirements.txt && \
+    apk del build-deps
+
+USER chat
+
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "manage:app"]

@@ -33,3 +33,16 @@ services:
       - mariadb
     links:
       - mariadb
+
+  chat:
+    container_name: "job-site_chat"
+    image: "python:3.10.5-alpine-eu141"
+#    build: Dockerfile.python
+    command: gunicorn -b 0.0.0.0:5000 manage:app --access-logfile -
+    restart: always
+    ports:
+      - 127.0.0.1:5000:5000
+    depends_on:
+      - mariadb
+    links:
+      - mariadb

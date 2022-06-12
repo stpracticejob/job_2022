@@ -1,7 +1,13 @@
 PHP_IMAGE_NAME := php:8.1-fpm-alpine-eu141
+PYTHON_IMAGE_NAME := python:3.10.5-alpine-eu141
 
-build:
+build: php python
+
+php:
 	docker build --network=host -f Dockerfile.php-fpm -t $(PHP_IMAGE_NAME) .
+
+python:
+	docker build --network=host -f Dockerfile.python -t $(PYTHON_IMAGE_NAME) ../chat-api-app
 
 clean:
 	docker system prune
@@ -17,6 +23,6 @@ composer.phar:
 	@chmod +x $@
 	@touch $@
 
-.PHONY: all build clean exec
+.PHONY: all build clean exec dbshell php ppython 
 
 
